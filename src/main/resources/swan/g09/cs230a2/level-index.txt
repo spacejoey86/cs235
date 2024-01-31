@@ -1,0 +1,8 @@
+levels/level1.txt, An unassuming corridor
+levels/level2.txt, Escape room
+levels/level3.txt, Bug hunter
+levels/level4.txt, Timing traps
+levels/level5.txt, Slippery Slopes
+levels/level6.txt, Road Blocks
+levels/level7.txt, Binley Mega Chippy
+levels/level8.txt, Loss

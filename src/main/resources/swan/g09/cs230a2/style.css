@@ -1,0 +1,28 @@
+.title-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.table-column .label {
+    -fx-alignment: center-left;
+    -fx-padding: 2px;
+}
+
+.subheading {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.error {
+    -fx-text-fill: red;
+}
+
+.white {
+    -fx-text-fill: white;
+}
+
+.border-left {
+    -fx-border-style: hidden none none solid;
+    -fx-border-width: 1;
+    -fx-border-color: lightgray;
+}
