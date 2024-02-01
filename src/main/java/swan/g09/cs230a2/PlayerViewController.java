@@ -92,7 +92,7 @@ public class PlayerViewController {
         String name = nameInput.getText();
         nameInput.setText("");
 
-        if (name.isEmpty() || PlayerProfileManager.hasPlayerProfile(name)) {
+        if (name.isEmpty() || PlayerProfileManager.hasPlayerProfile(name) || name.matches("^(.*\\s+.*)+$")) {
             return;
         }
 
