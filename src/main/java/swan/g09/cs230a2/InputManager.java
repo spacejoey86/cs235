@@ -1,13 +1,13 @@
 package swan.g09.cs230a2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * The InputManager class allows other classes to create handlers for input events
@@ -17,7 +17,7 @@ import java.util.HashSet;
  * @author Barnaby Morley-Smith
  * @version 0.1
  */
-public class InputManager {
+public final class InputManager {
     /**
      * Stores a mapping from key codes to a list of handlers to run when a key is pressed.
      */
@@ -34,6 +34,13 @@ public class InputManager {
      * Stores the currently pressed keys.
      */
     private static final HashSet<KeyCode> PRESSED_KEYS = new HashSet<>();
+
+    /**
+     * Overides the default constructor to enforce that this class will never be instantiated
+     */
+    private InputManager() {
+        throw new AssertionError();
+    }
 
     /**
      * EventHandler for handling general key events from the scene.
