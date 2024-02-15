@@ -11,30 +11,66 @@ public class Key extends Item {
     /**
      * The colour of the key.
      * */
-    private final char colour;
+    private final KeyColour colour;
+
+    /**
+     * The colour of a key
+     */
+    public enum KeyColour {
+        /**
+         * Red key
+         */
+        RED,
+
+        /**
+         * Green key
+         */
+        GREEN,
+
+        /**
+         * Yellow key
+         */
+        YELLOW,
+
+        /**
+         * Blue key
+         */
+        BLUE;
+
+        /**
+         * the path of the key type
+         * @return the key
+         */
+        private String path;
+
+        static {
+            RED.path = "sprites/Key_Red.png";
+            GREEN.path = "sprites/Key_Green.png";
+            YELLOW.path = "sprites/Key_Yellow.png";
+            BLUE.path = "sprites/Key_Blue.png";
+        }
+
+        /**
+         * the export string of the key type
+         * @return the export string
+         */
+        private char export;
+
+        static {
+            RED.export = 'R';
+            GREEN.export = 'G';
+            YELLOW.export = 'Y';
+            BLUE.export = 'B';
+        }
+    }
 
     /**
      * Default constructor for class Key.
      * @param pos the position of the door.
      * @param col the colour of the door.
      * */
-    Key(Point2D pos, char col) {
-        super(TileType.KEY, "sprites/Key_Red.png", pos);
-        switch (col) {
-            default:
-            case 'R':
-                updateImagePath("sprites/Key_Red.png");
-                break;
-            case 'G':
-                updateImagePath("sprites/Key_Green.png");
-                break;
-            case 'Y':
-                updateImagePath("sprites/Key_Yellow.png");
-                break;
-            case 'B':
-                updateImagePath("sprites/Key_Blue.png");
-                break;
-        }
+    Key(Point2D pos, KeyColour col) {
+        super(TileType.KEY, col.path, pos);
         colour = col;
     }
 
@@ -42,7 +78,7 @@ public class Key extends Item {
      * Gets the colour of the key.
      * @return char for colour
      * */
-    public char getColour() {
+    public KeyColour getColour() {
         return colour;
     }
 
@@ -51,6 +87,6 @@ public class Key extends Item {
      * @return char for saving
      * */
     public char toChar() {
-        return Character.toLowerCase(colour);
+        return colour.export;
     }
 }

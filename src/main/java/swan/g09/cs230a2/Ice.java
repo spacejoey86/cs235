@@ -41,26 +41,7 @@ public class Ice extends ActionTile {
      * @param type the type of ice block.
      */
     public Ice(Point2D position, IceType type) {
-        super(TileType.ICE, "sprites/Ice.png", position);
-
-        switch (type) {
-            default:
-            case NORMAL:
-                updateImagePath("sprites/Ice.png");
-                break;
-            case BOTTOM_LEFT:
-                updateImagePath("sprites/Ice_BottomLeft.png");
-                break;
-            case BOTTOM_RIGHT:
-                updateImagePath("sprites/Ice_BottomRight.png");
-                break;
-            case TOP_LEFT:
-                updateImagePath("sprites/Ice_TopLeft.png");
-                break;
-            case TOP_RIGHT:
-                updateImagePath("sprites/Ice_TopRight.png");
-                break;
-        }
+        super(TileType.ICE, type.path, position);
         iceType = type;
     }
 
@@ -91,7 +72,21 @@ public class Ice extends ActionTile {
         /**
          * Top Right corner ice tile.
          */
-        TOP_RIGHT
+        TOP_RIGHT;
+
+        /**
+         * the path of the ice type
+         * @return the path
+         */
+        private String path;
+
+        static {
+            NORMAL.path = "sprites/Ice.png";
+            BOTTOM_LEFT.path = "sprites/Ice_BottomLeft.png";
+            BOTTOM_RIGHT.path = "sprites/Ice_BottomRight.png";
+            TOP_LEFT.path = "sprites/Ice_TopLeft.png";
+            TOP_RIGHT.path = "sprites/Ice_TopRight.png";
+        }
     }
 
     /**

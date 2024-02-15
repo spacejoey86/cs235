@@ -1,10 +1,10 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-import javafx.scene.input.KeyCode;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
 
 /**
  * Player is an actor which is controlled by the user and
@@ -210,16 +210,16 @@ public class Player extends Actor {
         } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
             Key key = (Key) nextItem;
             switch (key.getColour()) {
-                case 'R':
+                case RED:
                     inventory[InventorySlot.RED_KEY.ordinal()]++;
                     break;
-                case 'G':
+                case GREEN:
                     inventory[InventorySlot.GREEN_KEY.ordinal()]++;
                     break;
-                case 'Y':
+                case YELLOW:
                     inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
                     break;
-                case 'B':
+                case BLUE:
                     inventory[InventorySlot.BLUE_KEY.ordinal()]++;
                     break;
                 default:

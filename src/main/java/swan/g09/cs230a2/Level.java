@@ -1,20 +1,21 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javafx.geometry.Point2D;
+import swan.g09.cs230a2.Key.KeyColour;
 
 /**
  * The level class handles reading and parsing level format data.
@@ -397,10 +398,10 @@ public class Level {
     private Item parseItemFromChar(Character gridChar, Point2D coordinate) {
         return switch (gridChar) {
             case 'c' -> new ComputerChip(coordinate);
-            case 'r' -> new Key(coordinate, 'R');
-            case 'g' -> new Key(coordinate, 'G');
-            case 'y' -> new Key(coordinate, 'Y');
-            case 'b' -> new Key(coordinate, 'B');
+            case 'r' -> new Key(coordinate, KeyColour.RED);
+            case 'g' -> new Key(coordinate, KeyColour.GREEN);
+            case 'y' -> new Key(coordinate, KeyColour.YELLOW);
+            case 'b' -> new Key(coordinate, KeyColour.BLUE);
             default -> null;
         };
     }

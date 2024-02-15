@@ -13,11 +13,11 @@ abstract class ActionTile extends Tile {
     /**
      * Default constructor for class ActionTile.
      * @param type The type of actor to be used
-     * @param url the relative URL to the image of the actor
+     * @param path the relative path to the image of the actor
      * @param position The position of the tile
      * */
-    ActionTile(TileType type, String url, Point2D position) {
-        super(type, url, position);
+    ActionTile(TileType type, String path, Point2D position) {
+        super(type, path, position);
     }
 
     /**
