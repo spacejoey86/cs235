@@ -49,7 +49,7 @@ public abstract class Tile {
     }
 
     /**
-     * Sets the position of the tile using an array of coordinates.
+     * Sets the position of the tile.
      *
      * @param tilePosition A Point2D containing the position
      */
@@ -58,9 +58,9 @@ public abstract class Tile {
     }
 
     /**
-     * Retrieves the position of the tile as an array of coordinates.
+     * Returns the position of the tile.
      *
-     * @return An array containing the X and Y coordinates of the tile.
+     * @return the position of the tile.
      */
     public Point2D getPosition() {
         return position;
