@@ -169,6 +169,9 @@ public final class InputManager {
      * @param keyCode The key code to listen for.
      * @param handler The handler to be run when events are received.
      */
+    // tried adding an interval parameter
+    // java doesn't have enough features to implement this easily
+    // hours wasted: 2
     public static void addTickHandler(KeyCode keyCode, Runnable handler) {
         // Ensure a list of handlers exists in the map for the specified key code
         if (!TICK_HANDLERS.containsKey(keyCode)) {
