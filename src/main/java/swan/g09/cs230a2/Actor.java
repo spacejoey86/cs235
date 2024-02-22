@@ -1,8 +1,8 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.ArrayList;
+
+import javafx.geometry.Point2D;
 
 /**
  * The Actor Class is an abstract class that defines the behaviours for each of the on-screen actors.
@@ -145,35 +145,6 @@ abstract class Actor extends Tile {
     protected boolean isTileOccupiedByActor(final Point2D position) {
         Actor actorAtPosition = GameManager.checkActor(position);
         return actorAtPosition != null;
-    }
-
-    /**
-     * Calculates the new position after moving in a specific direction.
-     *
-     * @param dir The direction in which the Bug intends to move.
-     * @return The new position after moving in the specified direction.
-     */
-    protected Point2D calculateNewPosition(final Direction dir) {
-        double newX = getPosition().getX();
-        double newY = getPosition().getY();
-
-        switch (dir) {
-            case NORTH:
-                newY--;
-                break;
-            case EAST:
-                newX++;
-                break;
-            case SOUTH:
-                newY++;
-                break;
-            case WEST:
-                newX--;
-                break;
-            default:
-        }
-
-        return new Point2D(newX, newY);
     }
 
     /**

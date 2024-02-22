@@ -1,12 +1,13 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.PriorityQueue;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PriorityQueue;
+
+import javafx.geometry.Point2D;
 
 /**
  * The Frog class represents a type of monster that tries to move
@@ -74,7 +75,7 @@ public class Frog extends Actor {
      */
     @Override
     protected boolean checkMove(Direction dir) {
-        Point2D newPosition = calculateNewPosition(dir);
+        Point2D newPosition = dir.calculateNewPosition(this.getPosition());
         GameManager.checkTile(newPosition);
 
         TileType newTileType = checkPosition(newPosition);
