@@ -55,7 +55,6 @@ public class BoatPath extends ActionTile {
             Tile nextTile = GameManager.checkTile(nextPosition);
             if (ticksSinceMove > BoatPath.MOVE_INTERVAL && !this.movedThisTick && nextTile instanceof BoatPath nextBoatTile) {
                 this.ticksSinceMove = 0;
-                System.out.println("test");
                 nextBoatTile.moveBoatTo();
                 this.moveBoatAway();
             } else {
