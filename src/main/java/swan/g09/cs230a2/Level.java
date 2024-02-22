@@ -1,20 +1,20 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javafx.geometry.Point2D;
 
 /**
  * The level class handles reading and parsing level format data.
@@ -366,6 +366,14 @@ public class Level {
             case 'J' -> new Ice(coordinate, Ice.IceType.TOP_RIGHT);
             case 'K' -> new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
             case 'L' -> new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
+            case 'A' -> new BoatPath(coordinate, Direction.NORTH, false);
+            case 'F' -> new BoatPath(coordinate, Direction.EAST, false);
+            case 'H' -> new BoatPath(coordinate, Direction.SOUTH, false);
+            case 'M' -> new BoatPath(coordinate, Direction.WEST, false);
+            case 'N' -> new BoatPath(coordinate, Direction.NORTH, true);
+            case 'Q' -> new BoatPath(coordinate, Direction.EAST, true);
+            case 'V' -> new BoatPath(coordinate, Direction.SOUTH, true);
+            case 'X' -> new BoatPath(coordinate, Direction.WEST, true);
             default -> null;
         };
     }

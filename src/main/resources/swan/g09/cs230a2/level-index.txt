@@ -6,3 +6,4 @@ levels/level5.txt, Slippery Slopes
 levels/level6.txt, Road Blocks
 levels/level7.txt, Binley Mega Chippy
 levels/level8.txt, Loss
+levels/level9.txt, Boat Ride
