@@ -100,7 +100,7 @@ public class Ice extends ActionTile {
         if (actorOnTop != null) {
             int adjustedMoveInterval = MOVE_INTERVAL;
 
-            // If the actor moved east or right from another tile, wait another tick to account for update order.
+            // If the actor moved east or south from another tile, wait another tick to account for update order.
             Direction actorDir = actorOnTop.getFacingDir();
             if (actorDir == Direction.EAST || actorDir == Direction.SOUTH) {
                 adjustedMoveInterval++;

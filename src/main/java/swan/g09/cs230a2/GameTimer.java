@@ -1,9 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Point2D;
 
 /**
  * A Timer that ticks every entity in the level on a variable interval.
@@ -81,6 +81,7 @@ public class GameTimer extends TimerTask {
             }
 
             // Tick all actors and ice tiles
+            // origin is top left
             for (int x = 0; x < GameManager.getLevelWidth(); x++) {
                 for (int y = 0; y < GameManager.getLevelHeight(); y++) {
                     Point2D coordinate = new Point2D(x, y);
