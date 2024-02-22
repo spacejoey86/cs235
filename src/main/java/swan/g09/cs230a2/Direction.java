@@ -38,4 +38,17 @@ public enum Direction {
 
         return new Point2D(newX, newY);
     }
+
+    /**
+     * Allow the actors facing direction to be flipped when it should be bounced.
+     * @return The new direction.
+     */
+    public Direction flipDirection() {
+        return switch (this) {
+            case NORTH -> Direction.SOUTH;
+            case EAST -> Direction.WEST;
+            case SOUTH -> Direction.NORTH;
+            case WEST -> Direction.EAST;
+        };
+    }
 };

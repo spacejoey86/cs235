@@ -128,7 +128,7 @@ public class Ice extends ActionTile {
             }
 
             // Bounce them
-            Direction bounceDirection = flipDirection(actorDir);
+            Direction bounceDirection = actorDir.flipDirection();
             // Only move if it's okay to do so
             if (actorOnTop.checkMove(bounceDirection)) {
                 actorOnTop.setFacingDir(bounceDirection);
@@ -169,20 +169,6 @@ public class Ice extends ActionTile {
                         case SOUTH -> Direction.WEST;
                         default -> dir;
                     };
-        };
-    }
-
-    /**
-     * Allow the actors facing direction to be flipped when it should be bounced.
-     * @param dir The original direction.
-     * @return The new direction.
-     */
-    public Direction flipDirection(Direction dir) {
-        return switch (dir) {
-            case NORTH -> Direction.SOUTH;
-            case EAST -> Direction.WEST;
-            case SOUTH -> Direction.NORTH;
-            case WEST -> Direction.EAST;
         };
     }
 
