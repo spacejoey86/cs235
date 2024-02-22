@@ -1,7 +1,8 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
 import java.util.ArrayList;
+
+import javafx.geometry.Point2D;
 
 /**
  * Class Button can be stepped on to disable traps.

@@ -98,6 +98,7 @@ public class Ice extends ActionTile {
      * Moves the actor at each tick.
      * Changes the direction of the actors movements if a corner is encountered.
      */
+    @Override
     public void tick() {
         currentTick++;
 

@@ -33,4 +33,11 @@ abstract class ActionTile extends Tile {
     public void walkedOff(Actor a) {
         // Do nothing by default
     }
+
+    /**
+     * Handler that gets called every tick
+     */
+    public void tick() {
+        // do nothing by default
+    }
 }
