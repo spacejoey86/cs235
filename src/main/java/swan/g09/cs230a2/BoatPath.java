@@ -7,7 +7,6 @@ import javafx.geometry.Point2D;
  * @author Dylan
  */
 public class BoatPath extends ActionTile {
-    private Actor ridingActor;
     private final Direction pushDirection;
     private Boolean boatHere;
     private Boolean movedThisTick = false;
@@ -16,24 +15,24 @@ public class BoatPath extends ActionTile {
 
     public BoatPath(Point2D position, Direction pushDirection, Boolean boatHere) {
         super(TileType.BOAT_PATH, "sprites/Water.png", position);
-        this.ridingActor = null;
         this.pushDirection = pushDirection;
         this.boatHere = boatHere;
+        if (this.boatHere) {
+            updateImagePath("sprites/Trap_Set.png");
+        }
     }
 
     @Override
     public void walkedOn(Actor actor) {
-        this.ridingActor = actor;
+        if (actor.getType() == TileType.PLAYER && !this.boatHere) {
+            GameManager.removeActor(getPosition());
+            GameManager.endGame(GameManager.DeathState.DROWN);
+        }
     }
 
-    @Override
-    public void walkedOff(Actor actor) {
-        this.ridingActor = null;
-    }
 
-    private void moveBoatTo(Actor actor) {
+    private void moveBoatTo() {
         this.boatHere = true;
-        this.ridingActor = actor;
         this.movedThisTick = true;
 
         updateImagePath("sprites/Trap_Set.png");
@@ -43,7 +42,8 @@ public class BoatPath extends ActionTile {
         this.boatHere = false;
         updateImagePath("sprites/Water.png");
 
-        if (this.ridingActor instanceof Actor rider) {
+        Actor rider = GameManager.checkActor(this.getPosition());
+        if (rider != null) {
             rider.move(this.pushDirection);
         }
     }
@@ -56,8 +56,8 @@ public class BoatPath extends ActionTile {
             if (ticksSinceMove > BoatPath.MOVE_INTERVAL && !this.movedThisTick && nextTile instanceof BoatPath nextBoatTile) {
                 this.ticksSinceMove = 0;
                 System.out.println("test");
+                nextBoatTile.moveBoatTo();
                 this.moveBoatAway();
-                nextBoatTile.moveBoatTo(this.ridingActor);
             } else {
                 this.movedThisTick = false;
                 this.ticksSinceMove += 1;

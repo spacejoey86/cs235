@@ -68,7 +68,7 @@ public class Player extends Actor {
             new ArrayList<>(List.of(TileType.PATH, TileType.BUTTON,
                     TileType.LOCKED_DOOR, TileType.CHIP_SOCKET,
                     TileType.DIRT, TileType.EXIT, TileType.TRAP,
-                    TileType.WATER, TileType.ICE));
+                    TileType.WATER, TileType.ICE, TileType.BOAT_PATH));
 
     /**
      * The current tick.
