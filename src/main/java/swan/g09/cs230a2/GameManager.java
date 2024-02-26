@@ -374,6 +374,19 @@ public class GameManager {
             gameTimer.stop();
         }
     }
+    public static void pauseTimer() {
+        if (gameTimer != null && gameTimer.isRunning()
+                && !gameTimer.isPaused()) {
+            gameTimer.pauseTimer();
+        }
+    }
+
+    public static void unpauseTimer() {
+        if (gameTimer != null && gameTimer.isRunning()
+            && gameTimer.isPaused()) {
+            gameTimer.unpauseTimer();
+        }
+    }
 
     /**
      * Gets the width of the currently loaded level.

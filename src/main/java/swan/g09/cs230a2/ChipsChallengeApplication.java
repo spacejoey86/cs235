@@ -1,11 +1,14 @@
 package swan.g09.cs230a2;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 /**
  * Application class for the JavaFX application.
@@ -131,5 +134,29 @@ public class ChipsChallengeApplication extends Application {
      */
     public static Stage getStage() {
         return primaryStage;
+    }
+
+    /**
+     * Opens the pause menu
+     */
+    public static void openPauseMenu() {
+        Platform.runLater( () -> {
+            GameManager.pauseTimer();
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            root.getChildren().add(new PauseMenu());
+        });
+    }
+
+    /**
+     * Closes the pause menu
+     */
+    public static void closePauseMenu() {
+        Platform.runLater( () -> {
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            if (root.getChildren().size() > 1) {
+                root.getChildren().remove(root.getChildren().size() -1 );
+                GameManager.unpauseTimer();
+            }
+        });
     }
 }
