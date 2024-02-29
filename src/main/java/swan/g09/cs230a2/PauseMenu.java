@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Pause screen for the level
+ * Pause screen for the level.
  * @author Connor Milford
  */
 
@@ -20,28 +20,28 @@ public class PauseMenu extends VBox {
 
     //TODO: Add save, restart from save, quit game, return to menu
 
-    /** Text displayed on the resume button */
+    /** Text displayed on the resume button. */
     private static final String RESUME_BUTTON_TEXT = "Resume";
 
-    /** Text displayed on the quit button */
+    /** Text displayed on the quit button. */
     private static final String  RETURN_BUTTON_TEXT = "Return";
 
-    /** Text displayed on the help menu button */
+    /** Text displayed on the help menu button. */
     private static final String HELP_MENU_BUTTON_TEXT = "Help menu";
 
-    /** Text displayed on the restart button */
+    /** Text displayed on the restart button. */
     private static final String RESTART_BUTTON_TEXT = "Restart";
 
-    /** Text displayed on the restart button */
+    /** Text displayed on the restart button. */
     private static final String SAVE_BUTTON_TEXT = "Save";
 
-    /** Text displayed on the load from save button */
+    /** Text displayed on the load from save button. */
     private static final String LOAD_FROM_SAVE_BUTTON_TEXT = "Load from save";
 
-    /** Text displayed on popup when saved from pause menu */
+    /** Text displayed on popup when saved from pause menu. */
     private static final String SAVE_ALERT_TEXT = "Game data saved.";
 
-    /** Text displayed on popup when save loaded from pause menu */
+    /** Text displayed on popup when save loaded from pause menu. */
     private static final String LOAD_ALERT_TEXT = "Game loaded from save.";
 
     /** Pause menu item width, relative to the window. */
@@ -50,15 +50,14 @@ public class PauseMenu extends VBox {
     /** Pause menu item height, relative to the window. */
     private static final double PAUSE_MENU_WIDGET_HEIGHT = 10;
 
-    /** Pause menu item spacing */
+    /** Pause menu item spacing. */
     private static final int PAUSE_MENU_SPACING = 50;
 
     /**
      * Constructor for the pause menu.
      */
-    public PauseMenu(){
+    public PauseMenu() {
         final StackPane root = (StackPane) ChipsChallengeApplication.getStage().getScene().getRoot();
-        
         final Button resumeButton = new Button(RESUME_BUTTON_TEXT);
         final Button returnButton = new Button(RETURN_BUTTON_TEXT);
         final Button helpMenuButton = new Button(HELP_MENU_BUTTON_TEXT);
@@ -66,12 +65,12 @@ public class PauseMenu extends VBox {
         final Button saveButton = new Button(SAVE_BUTTON_TEXT);
         final Button loadFromSaveButton = new Button(LOAD_FROM_SAVE_BUTTON_TEXT);
 
-        resumeButton.setOnAction( e -> resumeGame());
-        returnButton.setOnAction( e -> quitGame());
-        helpMenuButton.setOnAction( e -> openHelpMenu());
-        restartButton.setOnAction( e -> restartLevel());
-        saveButton.setOnAction( e -> saveGame());
-        loadFromSaveButton.setOnAction( e -> loadFromSave());
+        resumeButton.setOnAction(e -> resumeGame());
+        returnButton.setOnAction(e -> quitGame());
+        helpMenuButton.setOnAction(e -> openHelpMenu());
+        restartButton.setOnAction(e -> restartLevel());
+        saveButton.setOnAction(e -> saveGame());
+        loadFromSaveButton.setOnAction(e -> loadFromSave());
 
         resumeButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
         resumeButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
@@ -157,7 +156,7 @@ public class PauseMenu extends VBox {
     }
 
     /**
-     * Chooses a save file to be loaded
+     * Chooses a save file to be loaded.
      * @return path, the path of the file chosen
      */
     private String filePicker() {
@@ -181,8 +180,4 @@ public class PauseMenu extends VBox {
 
         return path;
     }
-
-
-
-
 }
