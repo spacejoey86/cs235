@@ -10,6 +10,7 @@ public class BoatPath extends ActionTile {
     private final Direction pushDirection;
     private Boolean boatHere;
     private Boolean movedThisTick = false;
+    private Boolean reverse = false;
     private int ticksSinceMove = 0;
     private static final int MOVE_INTERVAL = 7;
 
@@ -18,7 +19,7 @@ public class BoatPath extends ActionTile {
         this.pushDirection = pushDirection;
         this.boatHere = boatHere;
         if (this.boatHere) {
-            updateImagePath("sprites/Trap_Set.png");
+            updateImagePath("sprites/Boat.png");
         }
     }
 
@@ -31,11 +32,12 @@ public class BoatPath extends ActionTile {
     }
 
 
-    private void moveBoatTo() {
+    private void moveBoatTo(Boolean reverse) {
         this.boatHere = true;
         this.movedThisTick = true;
+        this.reverse = reverse;
 
-        updateImagePath("sprites/Trap_Set.png");
+        updateImagePath("sprites/Boat.png");
     }
 
     private void moveBoatAway() {
@@ -44,7 +46,11 @@ public class BoatPath extends ActionTile {
 
         Actor rider = GameManager.checkActor(this.getPosition());
         if (rider != null) {
-            rider.move(this.pushDirection);
+            if (this.reverse) {
+                rider.move(this.pushDirection.flipDirection());
+            } else {
+                rider.move(this.pushDirection);
+            }
         }
     }
 
@@ -52,10 +58,23 @@ public class BoatPath extends ActionTile {
     public void tick() {
         if (this.boatHere) {
             Point2D nextPosition = this.pushDirection.calculateNewPosition(this.getPosition());
+            if (this.reverse) {
+                nextPosition = this.pushDirection.flipDirection().calculateNewPosition(this.getPosition());
+            }
             Tile nextTile = GameManager.checkTile(nextPosition);
+
+            if (!(nextTile instanceof BoatPath)) {
+                this.reverse = !this.reverse;
+            }
+
+            if (this.reverse) {
+                nextPosition = this.pushDirection.flipDirection().calculateNewPosition(this.getPosition());
+                nextTile = GameManager.checkTile(nextPosition);
+            }
+
             if (ticksSinceMove > BoatPath.MOVE_INTERVAL && !this.movedThisTick && nextTile instanceof BoatPath nextBoatTile) {
                 this.ticksSinceMove = 0;
-                nextBoatTile.moveBoatTo();
+                nextBoatTile.moveBoatTo(this.reverse);
                 this.moveBoatAway();
             } else {
                 this.movedThisTick = false;
