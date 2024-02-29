@@ -44,6 +44,11 @@ public class ChipsChallengeApplication extends Application {
     private static Stage primaryStage;
 
     /**
+     * Whether the game is paused or not
+     */
+    private static boolean paused = false;
+
+    /**
      * Runs when the JavaFX program is started.
      *
      * @param stage the primary stage for this application, onto which
@@ -123,7 +128,6 @@ public class ChipsChallengeApplication extends Application {
         } else {
             primaryStage.centerOnScreen();
         }
-
         // Update scene in input manager
         InputManager.setScene(scene);
     }
@@ -139,11 +143,16 @@ public class ChipsChallengeApplication extends Application {
     /**
      * Opens the pause menu
      */
+
     public static void openPauseMenu() {
+        // ensures thread is open
         Platform.runLater( () -> {
-            GameManager.pauseTimer();
-            final StackPane root = (StackPane) getStage().getScene().getRoot();
-            root.getChildren().add(new PauseMenu());
+            if (!paused) {
+                GameManager.pauseTimer();
+                final StackPane root = (StackPane) getStage().getScene().getRoot();
+                root.getChildren().add(new PauseMenu());
+                paused = true;
+            }
         });
     }
 
@@ -151,11 +160,13 @@ public class ChipsChallengeApplication extends Application {
      * Closes the pause menu
      */
     public static void closePauseMenu() {
+        // ensures thread is open
         Platform.runLater( () -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
-            if (root.getChildren().size() > 1) {
+            if (root.getChildren().size() > 1 && paused) {
                 root.getChildren().remove(root.getChildren().size() -1 );
                 GameManager.unpauseTimer();
+                paused = false;
             }
         });
     }

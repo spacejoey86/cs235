@@ -14,20 +14,25 @@ import java.io.IOException;
 
 public class PauseMenu extends VBox {
 
+    //TODO: Add save, restart from save, quit game, return to menu
+
     /** Text displayed on the resume button */
     private static final String RESUME_BUTTON_TEXT = "Resume";
 
     /** Text displayed on the quit button */
-    private static final String  QUIT_BUTTON_TEXT = "Quit";
+    private static final String  RETURN_BUTTON_TEXT = "Return";
 
     /** Text displayed on the help menu button */
     private static final String HELP_MENU_BUTTON_TEXT = "Help menu";
 
+    /** Text displayed on the restart button */
+    private static final String RESTART_BUTTON_TEXT = "Restart";
+
     /** Pause menu item width, relative to the window. */
-    private static final int PAUSE_MENU_WIDGET_WIDTH = 8;
+    private static final int PAUSE_MENU_WIDGET_WIDTH = 10;
 
     /** Pause menu item height, relative to the window. */
-    private static final int PAUSE_MENU_WIDGET_HEIGHT = 4;
+    private static final double PAUSE_MENU_WIDGET_HEIGHT = 10;
 
     /** Pause menu item spacing */
     private static final int PAUSE_MENU_SPACING = 50;
@@ -39,24 +44,29 @@ public class PauseMenu extends VBox {
         final StackPane root = (StackPane) ChipsChallengeApplication.getStage().getScene().getRoot();
         
         final Button resumeButton = new Button(RESUME_BUTTON_TEXT);
-        final Button quitButton = new Button(QUIT_BUTTON_TEXT);
+        final Button returnButton = new Button(RETURN_BUTTON_TEXT);
         final Button helpMenuButton = new Button(HELP_MENU_BUTTON_TEXT);
+        final Button restartButton = new Button(RESTART_BUTTON_TEXT);
 
         resumeButton.setOnAction( e -> resumeGame());
-        quitButton.setOnAction( e -> quitGame());
+        returnButton.setOnAction( e -> quitGame());
         helpMenuButton.setOnAction( e -> openHelpMenu());
+        restartButton.setOnAction( e -> restartLevel());
 
         resumeButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
         resumeButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
 
-        quitButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
-        quitButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
+        returnButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
+        returnButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
 
         helpMenuButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
         helpMenuButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
 
+        restartButton.prefHeightProperty().bind(root.heightProperty().divide(PAUSE_MENU_WIDGET_HEIGHT));
+        restartButton.prefWidthProperty().bind(root.widthProperty().divide(PAUSE_MENU_WIDGET_WIDTH));
+
         this.setAlignment(Pos.CENTER);
-        this.getChildren().addAll(resumeButton, helpMenuButton,quitButton);
+        this.getChildren().addAll(resumeButton, restartButton, helpMenuButton, returnButton);
         this.setSpacing(PAUSE_MENU_SPACING);
     }
 
@@ -79,7 +89,15 @@ public class PauseMenu extends VBox {
         } catch (IOException e) {
             System.out.println("Failed to load levels view: \n" + e.getMessage());
         }
+    }
 
+    /**
+     * Restarts the current level.
+     */
+    private void restartLevel() {
+        GameManager.restartLevel();
+        GameManager.resetTimer();
+        resumeGame();
     }
 
     /**

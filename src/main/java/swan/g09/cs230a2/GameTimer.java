@@ -230,7 +230,14 @@ public class GameTimer extends TimerTask {
      * Returns true if timer is paused, otherwise false.
      * @return paused, Whether the timer is paused.
      */
-    public boolean isPaused(){
+    public boolean isPaused() {
         return paused;
+    }
+
+    /**
+     * Restarts the timer to the level default.
+     */
+    public void resetLevelTimer() {
+        levelStartTick = currentTick;
     }
 }

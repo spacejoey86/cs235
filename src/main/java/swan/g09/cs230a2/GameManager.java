@@ -374,6 +374,10 @@ public class GameManager {
             gameTimer.stop();
         }
     }
+
+    /**
+     * Pauses the game timer.
+     */
     public static void pauseTimer() {
         if (gameTimer != null && gameTimer.isRunning()
                 && !gameTimer.isPaused()) {
@@ -381,10 +385,23 @@ public class GameManager {
         }
     }
 
+    /**
+     * Unpauses the game timer.
+     */
     public static void unpauseTimer() {
         if (gameTimer != null && gameTimer.isRunning()
             && gameTimer.isPaused()) {
             gameTimer.unpauseTimer();
+        }
+    }
+
+    /**
+     * Resets the game timer.
+     */
+    public static void resetTimer() {
+        if (gameTimer != null && gameTimer.isRunning()
+                && !gameTimer.isPaused()) {
+            gameTimer.resetLevelTimer();
         }
     }
 
