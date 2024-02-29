@@ -44,7 +44,7 @@ public class ChipsChallengeApplication extends Application {
     private static Stage primaryStage;
 
     /**
-     * Whether the game is paused or not
+     * Whether the game is paused or not.
      */
     private static boolean paused = false;
 
@@ -141,12 +141,12 @@ public class ChipsChallengeApplication extends Application {
     }
 
     /**
-     * Opens the pause menu
+     * Opens the pause menu.
      */
 
     public static void openPauseMenu() {
         // ensures thread is open
-        Platform.runLater( () -> {
+        Platform.runLater(() -> {
             if (!paused) {
                 GameManager.pauseTimer();
                 final StackPane root = (StackPane) getStage().getScene().getRoot();
@@ -157,11 +157,11 @@ public class ChipsChallengeApplication extends Application {
     }
 
     /**
-     * Closes the pause menu
+     * Closes the pause menu.
      */
     public static void closePauseMenu() {
         // ensures thread is open
-        Platform.runLater( () -> {
+        Platform.runLater(() -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
             if (root.getChildren().size() > 1 && paused) {
                 root.getChildren().remove(root.getChildren().size() -1 );
