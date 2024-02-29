@@ -93,6 +93,8 @@ public class Player extends Actor {
      * */
     public Player(Point2D position) {
         super(TileType.PLAYER, "sprites/Player.png", WALKABLE_TILES, position);
+
+        // Add tick handlers for arrow keys
         InputManager.addTickHandler(KeyCode.LEFT, () -> {
             handleMovement(Direction.WEST);
         });
@@ -103,6 +105,20 @@ public class Player extends Actor {
             handleMovement(Direction.NORTH);
         });
         InputManager.addTickHandler(KeyCode.DOWN, () -> {
+            handleMovement(Direction.SOUTH);
+        });
+
+        // Add tick handlers for WASD keys
+        InputManager.addTickHandler(KeyCode.A, () -> {
+            handleMovement(Direction.WEST);
+        });
+        InputManager.addTickHandler(KeyCode.D, () -> {
+            handleMovement(Direction.EAST);
+        });
+        InputManager.addTickHandler(KeyCode.W, () -> {
+            handleMovement(Direction.NORTH);
+        });
+        InputManager.addTickHandler(KeyCode.S, () -> {
             handleMovement(Direction.SOUTH);
         });
 
