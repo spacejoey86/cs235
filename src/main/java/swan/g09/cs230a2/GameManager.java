@@ -48,7 +48,7 @@ public class GameManager {
     private static int levelHeight;
 
     /**
-     * The fov of the loaded level
+     * The fov of the loaded level.
      */
     private static double levelFov;
 
@@ -404,7 +404,7 @@ public class GameManager {
      *
      * @return The fov of the level.
      */
-    public static double getLevelFov(){
+    public static double getLevelFov() {
         return level.getLevelFov();
     }
 

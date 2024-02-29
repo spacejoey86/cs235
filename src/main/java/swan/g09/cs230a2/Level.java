@@ -202,7 +202,7 @@ public class Level {
 
             //Read FOV
             levelFov = reader.nextDouble();
-            lineNumber +=2;
+            lineNumber += 2;
             reader.nextLine();
             reader.nextLine();
 
@@ -564,7 +564,7 @@ public class Level {
      * Gets the fov of the currently loaded level.
      * @return The height of the level.
      */
-    public double getLevelFov(){
+    public double getLevelFov() {
         return levelFov;
     }
 }
