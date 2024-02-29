@@ -7,13 +7,42 @@ import javafx.geometry.Point2D;
  * @author Dylan
  */
 public class BoatPath extends ActionTile {
+    /**
+     * The direction the boat should travel after this tile
+     */
     private final Direction pushDirection;
+
+    /**
+     * Whether a boat is currently on this tile
+     */
     private Boolean boatHere;
+
+    /**
+     * Keeps track on whether this tile has already been moved this tick to maintain update order
+     */
     private Boolean movedThisTick = false;
+
+    /**
+     * If the boat's path is not a loop, this keeps track of which direction it is currently going
+     */
     private Boolean reverse = false;
+
+    /**
+     * How long since the boat has last moved, so it can move every MOVE_INTERVAL ticks
+     */
     private int ticksSinceMove = 0;
+
+    /**
+     * The interval between each time the boat moves
+     */
     private static final int MOVE_INTERVAL = 7;
 
+    /**
+     * Constructor for a BoatPath
+     * @param position The coordinate this BoatPath is located at
+     * @param pushDirection The direction the boat should take from this path
+     * @param boatHere Whether this tile should currently have a boat on it
+     */
     public BoatPath(Point2D position, Direction pushDirection, Boolean boatHere) {
         super(TileType.BOAT_PATH, "sprites/Water.png", position);
         this.pushDirection = pushDirection;
@@ -31,7 +60,12 @@ public class BoatPath extends ActionTile {
         }
     }
 
-
+    /**
+     * Method to move a boat onto this tile
+     * This is where the sprite is updated
+     * Should be called before moveBoatAway in tick so any rider doesn't drown
+     * @param reverse whether the boat is currently reversing (for non-loop paths)
+     */
     private void moveBoatTo(Boolean reverse) {
         this.boatHere = true;
         this.movedThisTick = true;
@@ -40,6 +74,10 @@ public class BoatPath extends ActionTile {
         updateImagePath("sprites/Boat.png");
     }
 
+    /**
+     * Method to update a tile when a boat moves away from it
+     * Should be called after moveBoatTo in tick so any rider doesn't drown
+     */
     private void moveBoatAway() {
         this.boatHere = false;
         updateImagePath("sprites/Water.png");
@@ -83,6 +121,10 @@ public class BoatPath extends ActionTile {
         }
     }
 
+    /**
+     * Get the save file representation of the current tile
+     * @return the character representing the tile in its current state
+     */
     public char toChar() {
         if (this.boatHere) {
             return switch (this.pushDirection) {
