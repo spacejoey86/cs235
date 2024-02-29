@@ -1,39 +1,38 @@
 10,10
-120
+80
 
 WWWWWWWWWW
-WQFFFFOOOW
-WPPPPPDPPW
-WPPPPPWOOW
-WPPPPPPPDW
-WWTWWPPPDW
-WPPPWWWYWW
-WPEPWPPPPW
-WPPPWPCPPW
+WOOOWPPEPW
+WPPPPPPPPW
+OQFFFFFFFO
+WPPPPPPPPW
+WRWWWWWWWW
+OFFFFFQFFO
+QFFFFFFFMO
+WPPPWPPPPW
 WWWWWWWWWW
 
+----------
+----------
+----------
+----------
+--------@-
+----------
 ----------
 ----------
 --*-------
 ----------
-----------
-----------
-----------
-----------
---%-------
-----------
 
 ----------
 ----------
---------y-
 ----------
 ----------
 ----------
 ----------
 ----------
 ----------
+-------r--
 ----------
 
-(2,2) @ S
-(8,2) @ E
-(6,8) -> (2,5)
+(2,8) @ S
+(8,4) @ E
