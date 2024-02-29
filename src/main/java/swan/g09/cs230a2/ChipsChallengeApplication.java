@@ -164,7 +164,7 @@ public class ChipsChallengeApplication extends Application {
         Platform.runLater(() -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
             if (root.getChildren().size() > 1 && paused) {
-                root.getChildren().remove(root.getChildren().size() -1 );
+                root.getChildren().remove(root.getChildren().size() -1);
                 GameManager.unpauseTimer();
                 paused = false;
             }
