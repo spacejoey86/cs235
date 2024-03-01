@@ -1,11 +1,14 @@
 package swan.g09.cs230a2;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 /**
  * Application class for the JavaFX application.
@@ -39,6 +42,11 @@ public class ChipsChallengeApplication extends Application {
      * The stage being shown to the user.
      */
     private static Stage primaryStage;
+
+    /**
+     * Whether the game is paused or not.
+     */
+    private static boolean paused = false;
 
     /**
      * Runs when the JavaFX program is started.
@@ -120,7 +128,6 @@ public class ChipsChallengeApplication extends Application {
         } else {
             primaryStage.centerOnScreen();
         }
-
         // Update scene in input manager
         InputManager.setScene(scene);
     }
@@ -131,5 +138,36 @@ public class ChipsChallengeApplication extends Application {
      */
     public static Stage getStage() {
         return primaryStage;
+    }
+
+    /**
+     * Opens the pause menu.
+     */
+
+    public static void openPauseMenu() {
+        // ensures thread is open
+        Platform.runLater(() -> {
+            if (!paused) {
+                GameManager.pauseTimer();
+                final StackPane root = (StackPane) getStage().getScene().getRoot();
+                root.getChildren().add(new PauseMenu());
+                paused = true;
+            }
+        });
+    }
+
+    /**
+     * Closes the pause menu.
+     */
+    public static void closePauseMenu() {
+        // ensures thread is open
+        Platform.runLater(() -> {
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            if (root.getChildren().size() > 1 && paused) {
+                root.getChildren().remove(root.getChildren().size() - 1);
+                GameManager.unpauseTimer();
+                paused = false;
+            }
+        });
     }
 }
