@@ -74,12 +74,35 @@ public class BoatPath extends ActionTile {
      * Should be called before moveBoatAway in tick so any rider doesn't drown
      * @param reverse whether the boat is currently reversing (for non-loop paths)
      */
-    private void moveBoatTo(Boolean reverse) {
+    public void moveBoatTo(Boolean reverse) {
         this.boatHere = true;
         this.movedThisTick = true;
         this.reverse = reverse;
 
         updateImagePath("sprites/Boat.png");
+    }
+
+    /**
+     * Getter for whether a boat is on this tile
+     * @return whether there is a boat on this tile
+     */
+    public Boolean getBoatPresence() {
+        return this.boatHere;
+    }
+
+    /**
+     * Getter for whether the boat is currently reversing
+     * @return whether this boat is reversing
+     */
+    public Boolean getReversing() {
+        return this.reverse;
+    }
+
+    /**
+     * Set the boat to reversing along the path
+     */
+    public void setReverse() {
+        this.reverse = true;
     }
 
     /**
@@ -134,20 +157,11 @@ public class BoatPath extends ActionTile {
      * @return the character representing the tile in its current state
      */
     public char toChar() {
-        if (this.boatHere) {
-            return switch (this.pushDirection) {
-                case Direction.NORTH -> 'N';
-                case Direction.EAST -> 'Q';
-                case Direction.SOUTH -> 'V';
-                case Direction.WEST -> 'X';
-            };
-        } else {
-            return switch (this.pushDirection) {
-                case Direction.NORTH -> 'A';
-                case Direction.EAST -> 'F';
-                case Direction.SOUTH -> 'H';
-                case Direction.WEST -> 'M';
-            };
-        }
+        return switch (this.pushDirection) {
+            case Direction.NORTH -> 'A';
+            case Direction.EAST -> 'F';
+            case Direction.SOUTH -> 'H';
+            case Direction.WEST -> 'M';
+        };
     }
 }

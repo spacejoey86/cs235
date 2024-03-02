@@ -4,10 +4,10 @@
 WWMWEPPP
 PPAWPPPP
 PPAWWPPP
-PPNWOOOP
+PPAWOOOP
 WWAWPAAO
 PPAWWAAW
-PPPPPNNW
+PPPPPAAW
 
 --------
 *#----%-
@@ -26,3 +26,6 @@ PPPPPNNW
 --------
 
 (1,1) @ E
+(2,3) _
+(5,6) _
+(6,6) _

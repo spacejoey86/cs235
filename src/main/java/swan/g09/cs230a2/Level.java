@@ -47,10 +47,16 @@ public class Level {
             Pattern.compile("^([crygb]) */ *(\\d+)");
 
     /**
-     * Regex pattern for matching lines containing a slot in the inventory.
+     * In save files, whether this was from a custom save and if not, whether it is the last level
      */
     private static final Pattern LEVEL_FLAGS_PATTERN =
             Pattern.compile("(\\d+|null), *([01])");
+
+    /**
+     * Whether a boat path currently has a boat on it
+     */
+    private static final Pattern BOAT_PRESENCE_PATTERN =
+            Pattern.compile("^\\((\\d+), *(\\d+)\\) _(\\??)");
 
     /**
      * Index used for groups in regex matching.
@@ -111,6 +117,11 @@ public class Level {
      * Map storing the connections to traps for buttons at given coordinates.
      */
     private final Map<Point2D, LinkedList<Point2D>> buttonConnections = new HashMap<>();
+
+    /**
+     * Map storing the precense of boats and whether it is reversing
+     */
+    private final Map<Point2D, Boolean> boatPresences = new HashMap<>();
 
     /**
      * The inventory read from the level file. (Defaults to empty inventory.
@@ -221,7 +232,7 @@ public class Level {
                 itemGrid.add(reader.nextLine());
             }
 
-            // Read button connections and socket counts
+            // Read meta data (button connections, socket counts etc.)
             while (reader.hasNextLine()) {
                 lineNumber++;
                 String line = reader.nextLine();
@@ -247,6 +258,9 @@ public class Level {
                         }
                         isLastLevel = matcher.group(REGEX_MATCHER_GROUP_2).equals("1");
                     }
+                } else if (line.matches(BOAT_PRESENCE_PATTERN.pattern())) {
+                    // Boat on boat path
+                    setBoatPresence(line);
                 }
             }
         } catch (InputMismatchException e) {
@@ -342,6 +356,21 @@ public class Level {
     }
 
     /**
+     * Puts a boat on a boat path based on the provided line
+     * @param line The line to be parsed
+     */
+    private void setBoatPresence(String line) {
+        Matcher matcher = BOAT_PRESENCE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            int boatPathX = Integer.parseInt(matcher.group(REGEX_MATCHER_GROUP_1));
+            int boatPathY = Integer.parseInt(matcher.group(REGEX_MATCHER_GROUP_2));
+            Boolean boatPathReversing = matcher.group(REGEX_MATCHER_GROUP_3).equals("?");
+
+            boatPresences.put(new Point2D(boatPathX, boatPathY), boatPathReversing);
+        }
+    }
+
+    /**
      * Creates the correct Tile for the corresponding character in the level format key.
      * @param gridChar The character to convert.
      * @param coordinate The coordinate of the tile.
@@ -370,10 +399,6 @@ public class Level {
             case 'F' -> new BoatPath(coordinate, Direction.EAST, false);
             case 'H' -> new BoatPath(coordinate, Direction.SOUTH, false);
             case 'M' -> new BoatPath(coordinate, Direction.WEST, false);
-            case 'N' -> new BoatPath(coordinate, Direction.NORTH, true);
-            case 'Q' -> new BoatPath(coordinate, Direction.EAST, true);
-            case 'V' -> new BoatPath(coordinate, Direction.SOUTH, true);
-            case 'X' -> new BoatPath(coordinate, Direction.WEST, true);
             default -> null;
         };
     }
@@ -428,10 +453,18 @@ public class Level {
 
                 if (tile != null) {
                     if (tile.getType() == TileType.CHIP_SOCKET && socketCounts.containsKey(coordinate)) {
-                         int socketCount = socketCounts.get(coordinate);
-                         ChipSocket socket = (ChipSocket) tile;
-                         socket.setRequiredChips(socketCount);
-                     }
+                        int socketCount = socketCounts.get(coordinate);
+                        ChipSocket socket = (ChipSocket) tile;
+                        socket.setRequiredChips(socketCount);
+                    }
+
+                    if (tile.getType() == TileType.BOAT_PATH && boatPresences.containsKey(coordinate)) {
+                        BoatPath boatPath = (BoatPath) tile;
+                        boatPath.moveBoatTo(false);
+                        if (boatPresences.get(coordinate)) {
+                            boatPath.setReverse();
+                        }
+                    }
 
                     layer.setAtPosition(coordinate, tile);
                 }
