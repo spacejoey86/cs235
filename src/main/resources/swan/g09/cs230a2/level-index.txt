@@ -8,3 +8,4 @@ levels/level7.txt, Binley Mega Chippy
 levels/level8.txt, Loss
 levels/level9.txt, Crossy Road
 levels/level10.txt, Boat Ride
+levels/level11.txt, Landlubber

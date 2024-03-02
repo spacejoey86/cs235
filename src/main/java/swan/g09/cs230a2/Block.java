@@ -17,7 +17,8 @@ public class Block extends Actor {
      * */
     private static final ArrayList<TileType> WALKABLE =
             new ArrayList<>(List.of(TileType.PATH, TileType.BUTTON,
-                    TileType.TRAP, TileType.WATER, TileType.DIRT, TileType.ICE));
+                    TileType.TRAP, TileType.WATER, TileType.DIRT,
+                    TileType.ICE, TileType.BOAT_PATH));
 
     /**
      * Default constructor for class Block.

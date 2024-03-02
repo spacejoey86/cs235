@@ -52,9 +52,17 @@ public class BoatPath extends ActionTile {
         }
     }
 
+    /**
+     * Handles the water being walked on.
+     * Becomes a path if block, ends game if player.
+     * @param a The actor walking over the tile.
+     * */
     @Override
-    public void walkedOn(Actor actor) {
-        if (actor.getType() == TileType.PLAYER && !this.boatHere) {
+    public void walkedOn(Actor a) {
+        if (a.getType() == TileType.BLOCK && !this.boatHere) {
+            GameManager.removeActor(getPosition());
+            GameManager.setPath(getPosition());
+        } else if (a.getType() == TileType.PLAYER && !this.boatHere) {
             GameManager.removeActor(getPosition());
             GameManager.endGame(GameManager.DeathState.DROWN);
         }
