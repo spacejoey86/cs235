@@ -20,7 +20,24 @@ public class Player extends Actor {
      * */
     private static int MOVE_INTERVAL = 4;
 
+    /**
+     * The player's speed powerup status.
+     */
     private boolean hasSpeedPowerup = false;
+
+    /**
+     * The duration of the IncreaseTime powerup.
+     */
+    //private int increaseTimePowerupDuration = 0;
+
+    /**
+     * The player's increase time powerup status.
+     */
+    //private boolean hasIncreaseTimePowerup = false;
+
+    /**
+     * The duration of the speed powerup.
+     */
     private int speedPowerupDuration = 0;
 
     /**
@@ -76,7 +93,7 @@ public class Player extends Actor {
             new ArrayList<>(List.of(TileType.PATH, TileType.BUTTON,
                     TileType.LOCKED_DOOR, TileType.CHIP_SOCKET,
                     TileType.DIRT, TileType.EXIT, TileType.TRAP,
-                    TileType.WATER, TileType.ICE, TileType.SPEED));
+                    TileType.WATER, TileType.ICE, TileType.SPEED, TileType.INVINC, TileType.EXTRA, TileType.INCREASETIME));
 
     /**
      * The current tick.
@@ -200,6 +217,25 @@ public class Player extends Actor {
                     MOVE_INTERVAL = 2;
                     GameManager.replaceTile(nextPos, new Path(nextPos));
                 }
+                return true;
+            }
+            case INVINC -> {
+                System.out.println("Player encountered INVINC tile");
+                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the invincibility from the level
+                return true;
+            }
+            case EXTRA -> {
+                System.out.println("Player encountered EXTRA tile");
+                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the extra life from the level
+                return true;
+            }
+            case INCREASETIME -> {
+                System.out.println("Player encountered INCREASETIME tile");
+                int updatedTime = GameTimer.addTime(30);
+                if (updatedTime != -1) {
+                    System.out.println("Added 30 seconds. Updated time: " + updatedTime);
+                }
+                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the IncreaseTime from the level
                 return true;
             }
             default -> {

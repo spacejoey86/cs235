@@ -35,12 +35,12 @@ public class GameTimer extends TimerTask {
     /**
      * The tick for the start of a level.
      * */
-    private int levelStartTick;
+    private static int levelStartTick;
 
     /**
      * The tick for the end of a level.
      * */
-    private int levelEndTick;
+    private static int levelEndTick;
 
     /**
      * Boolean used to control the state of the timer.
@@ -50,7 +50,7 @@ public class GameTimer extends TimerTask {
     /**
      * A boolean used for detecting whether a level is being timed.
      * */
-    private boolean timingLevel;
+    private static boolean timingLevel;
 
     /**
      * The view controller for rendering the game.
@@ -103,6 +103,7 @@ public class GameTimer extends TimerTask {
         }
     }
 
+
     /**
      * Set the view controller that draws the game.
      * @param controller The view controller to request redraws upon.
@@ -137,6 +138,18 @@ public class GameTimer extends TimerTask {
         }
         levelStartTick = currentTick;
         timingLevel = true;
+    }
+
+    /**
+     * Adds time to the level timer.
+     * @param seconds The number of seconds to add to the timer.
+     * */
+    public static int addTime(int seconds) {
+        if (timingLevel) {
+            levelStartTick += (seconds * (int) (MILLIS_IN_SECOND / TICK_RATE));
+            return levelStartTick;
+        }
+        return -1;  // Indicate that time wasn't added (e.g., if not in a timed level)
     }
 
     /**

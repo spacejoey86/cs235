@@ -361,6 +361,9 @@ public class Level {
             case 'K' -> new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
             case 'L' -> new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
             case ']' -> new Speed(coordinate);
+            case 'V' -> new Invinc(coordinate);
+            case 'X' -> new ExtraLife(coordinate);
+            case '+' -> new IncreaseTime(coordinate);
             default -> null;
         };
     }

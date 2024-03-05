@@ -93,8 +93,22 @@ public enum TileType {
     FROG,
 
     /**
-     * Represents a frog.
+     * Represents Speed.
      */
-    SPEED
+    SPEED,
 
+    /**
+     * Represents Invincible.
+     */
+    INVINC,
+
+    /**
+     * Represents Extra Life.
+     */
+    EXTRA,
+
+    /**
+     * Represents Increase Time.
+     */
+    INCREASETIME
 }
