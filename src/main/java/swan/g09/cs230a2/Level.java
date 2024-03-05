@@ -360,10 +360,6 @@ public class Level {
             case 'J' -> new Ice(coordinate, Ice.IceType.TOP_RIGHT);
             case 'K' -> new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
             case 'L' -> new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
-            case ']' -> new Speed(coordinate);
-            case 'V' -> new Invinc(coordinate);
-            case 'X' -> new ExtraLife(coordinate);
-            case '+' -> new IncreaseTime(coordinate);
             default -> null;
         };
     }
@@ -399,6 +395,10 @@ public class Level {
             case 'g' -> new Key(coordinate, 'G');
             case 'y' -> new Key(coordinate, 'Y');
             case 'b' -> new Key(coordinate, 'B');
+            case ']' -> new Speed(coordinate);
+            case 'v' -> new Invinc(coordinate);
+            case 'x' -> new ExtraLife(coordinate);
+            case '+' -> new IncreaseTime(coordinate);
             default -> null;
         };
     }

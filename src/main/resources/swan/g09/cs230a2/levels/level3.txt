@@ -2,11 +2,11 @@
 120
 
 WWWWWWWWWW
-WPPPPVPPPW
-WPPPPPSPPW
-WPPPP]PPPW
-WPPPPP+PPW
-WPPPPXPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
 WPPPPPPPPW
 WPPPPPPPPW
 WPPPPPPPPW
@@ -25,11 +25,11 @@ WWWWWWWWWW
 
 ----------
 ----------
-----------
-----------
-----------
-----------
-----------
+------+---
+----]-----
+-------x--
+------v---
+----c-----
 ----------
 ----------
 ----------

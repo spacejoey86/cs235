@@ -210,34 +210,6 @@ public class Player extends Actor {
                     return false;
                 }
             }
-            case SPEED -> {
-                if (!hasSpeedPowerup) {
-                    hasSpeedPowerup = true;
-                    speedPowerupDuration = 300;
-                    MOVE_INTERVAL = 2;
-                    GameManager.replaceTile(nextPos, new Path(nextPos));
-                }
-                return true;
-            }
-            case INVINC -> {
-                System.out.println("Player encountered INVINC tile");
-                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the invincibility from the level
-                return true;
-            }
-            case EXTRA -> {
-                System.out.println("Player encountered EXTRA tile");
-                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the extra life from the level
-                return true;
-            }
-            case INCREASETIME -> {
-                System.out.println("Player encountered INCREASETIME tile");
-                int updatedTime = GameTimer.addTime(30);
-                if (updatedTime != -1) {
-                    System.out.println("Added 30 seconds. Updated time: " + updatedTime);
-                }
-                GameManager.replaceTile(nextPos, new Path(nextPos)); // Remove the IncreaseTime from the level
-                return true;
-            }
             default -> {
             }
         }
@@ -272,22 +244,48 @@ public class Player extends Actor {
 
         //Check if the tile has an item on it
         Item nextItem = GameManager.checkItem(nextPos);
-        if (nextItem != null && nextItem.getType() == TileType.CHIP) {
-            inventory[0]++;
-            GameManager.removeItem(nextPos);
-        } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
-            Key key = (Key) nextItem;
-            switch (key.getColour()) {
-                case 'R' -> inventory[InventorySlot.RED_KEY.ordinal()]++;
-                case 'G' -> inventory[InventorySlot.GREEN_KEY.ordinal()]++;
-                case 'Y' -> inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
-                case 'B' -> inventory[InventorySlot.BLUE_KEY.ordinal()]++;
-                default -> {
+        if (nextItem != null) {
+            switch (nextItem.getType()) {
+                case CHIP -> {
+                    inventory[0]++;
+                    GameManager.removeItem(nextPos);
+                }
+                case KEY -> {
+                    Key key = (Key) nextItem;
+                    switch (key.getColour()) {
+                        case 'R' -> inventory[InventorySlot.RED_KEY.ordinal()]++;
+                        case 'G' -> inventory[InventorySlot.GREEN_KEY.ordinal()]++;
+                        case 'Y' -> inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
+                        case 'B' -> inventory[InventorySlot.BLUE_KEY.ordinal()]++;
+                    }
+                }
+                case SPEED -> {
+                    if (!hasSpeedPowerup) {
+                        hasSpeedPowerup = true;
+                        speedPowerupDuration = 300;
+                        MOVE_INTERVAL = 2;
+                    }
+                    GameManager.removeItem(nextPos); // Remove the speed powerup from the level
+                }
+                case INVINC -> {
+                    System.out.println("Player encountered INVINC tile");
+                    GameManager.removeItem(nextPos); // Remove the invincibility from the level
+                }
+                case EXTRA -> {
+                    System.out.println("Player encountered EXTRA tile");
+                    GameManager.removeItem(nextPos); // Remove the extra life from the level
+                }
+                case INCREASETIME -> {
+                    System.out.println("Player encountered INCREASETIME tile");
+                    int updatedTime = GameTimer.addTime(30);
+                    if (updatedTime != -1) {
+                        System.out.println("Added 30 seconds. Updated time: " + updatedTime);
+                    }
+                    GameManager.removeItem(nextPos); // Remove the increase time from the level
                 }
             }
-            GameManager.removeItem(nextPos);
+            return true;
         }
-
         return true;
     }
 
