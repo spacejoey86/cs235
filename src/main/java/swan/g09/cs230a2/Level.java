@@ -308,15 +308,9 @@ public class Level {
 
             Direction dir = Direction.NORTH;
             switch (matcher.group(REGEX_MATCHER_GROUP_3)) {
-                case "E" -> {
-                    dir = Direction.EAST;
-                }
-                case "S" -> {
-                    dir = Direction.SOUTH;
-                }
-                case "W" -> {
-                    dir = Direction.WEST;
-                }
+                case "E" -> dir = Direction.EAST;
+                case "S" -> dir = Direction.SOUTH;
+                case "W" -> dir = Direction.WEST;
                 default -> {
                     // Do nothing
                 }
@@ -366,6 +360,7 @@ public class Level {
             case 'J' -> new Ice(coordinate, Ice.IceType.TOP_RIGHT);
             case 'K' -> new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
             case 'L' -> new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
+            case ']' -> new Speed(coordinate);
             default -> null;
         };
     }

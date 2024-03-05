@@ -90,5 +90,11 @@ public enum TileType {
     /**
      * Represents a frog.
      */
-    FROG
+    FROG,
+
+    /**
+     * Represents a frog.
+     */
+    SPEED
+
 }

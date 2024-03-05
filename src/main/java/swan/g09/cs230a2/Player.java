@@ -18,7 +18,15 @@ public class Player extends Actor {
     /**
      * The player moves every x ticks.
      * */
-    private static final int MOVE_INTERVAL = 4;
+    private static int MOVE_INTERVAL = 4;
+
+    private boolean hasSpeedPowerup = false;
+    private int speedPowerupDuration = 0;
+
+    /**
+     * The original movement interval for the player.
+     */
+    private static final int ORIGINAL_MOVE_INTERVAL = 4;
 
     /**
      * The slots that different items take up in the inventory.
@@ -68,7 +76,7 @@ public class Player extends Actor {
             new ArrayList<>(List.of(TileType.PATH, TileType.BUTTON,
                     TileType.LOCKED_DOOR, TileType.CHIP_SOCKET,
                     TileType.DIRT, TileType.EXIT, TileType.TRAP,
-                    TileType.WATER, TileType.ICE));
+                    TileType.WATER, TileType.ICE, TileType.SPEED));
 
     /**
      * The current tick.
@@ -94,36 +102,25 @@ public class Player extends Actor {
     public Player(Point2D position) {
         super(TileType.PLAYER, "sprites/Player.png", WALKABLE_TILES, position);
 
+        MOVE_INTERVAL = ORIGINAL_MOVE_INTERVAL;
         // Add tick handlers for arrow keys
-        InputManager.addTickHandler(KeyCode.LEFT, () -> {
-            handleMovement(Direction.WEST);
-        });
-        InputManager.addTickHandler(KeyCode.RIGHT, () -> {
-            handleMovement(Direction.EAST);
-        });
-        InputManager.addTickHandler(KeyCode.UP, () -> {
-            handleMovement(Direction.NORTH);
-        });
-        InputManager.addTickHandler(KeyCode.DOWN, () -> {
-            handleMovement(Direction.SOUTH);
-        });
+        InputManager.addTickHandler(KeyCode.LEFT, () -> handleMovement(Direction.WEST));
+        InputManager.addTickHandler(KeyCode.RIGHT, () -> handleMovement(Direction.EAST));
+        InputManager.addTickHandler(KeyCode.UP, () -> handleMovement(Direction.NORTH));
+        InputManager.addTickHandler(KeyCode.DOWN, () -> handleMovement(Direction.SOUTH));
 
         // Add tick handlers for WASD keys
-        InputManager.addTickHandler(KeyCode.A, () -> {
-            handleMovement(Direction.WEST);
-        });
-        InputManager.addTickHandler(KeyCode.D, () -> {
-            handleMovement(Direction.EAST);
-        });
-        InputManager.addTickHandler(KeyCode.W, () -> {
-            handleMovement(Direction.NORTH);
-        });
-        InputManager.addTickHandler(KeyCode.S, () -> {
-            handleMovement(Direction.SOUTH);
-        });
+        InputManager.addTickHandler(KeyCode.A, () -> handleMovement(Direction.WEST));
+        InputManager.addTickHandler(KeyCode.D, () -> handleMovement(Direction.EAST));
+        InputManager.addTickHandler(KeyCode.W, () -> handleMovement(Direction.NORTH));
+        InputManager.addTickHandler(KeyCode.S, () -> handleMovement(Direction.SOUTH));
 
         // Set lastMoveTick to allow moving on the first tick
-        lastMoveTick = -MOVE_INTERVAL;
+        lastMoveTick = -ORIGINAL_MOVE_INTERVAL;
+    }
+
+    private void resetMovementInterval() {
+        MOVE_INTERVAL = ORIGINAL_MOVE_INTERVAL;
     }
 
     /**
@@ -132,10 +129,19 @@ public class Player extends Actor {
      * */
     private void handleMovement(Direction dir) {
         if (GameManager.isLevelRunning() && currentTick - MOVE_INTERVAL >= lastMoveTick && !isTrapped()) {
+            // Use the modified checkMove method for speed power-up
             if (checkMove(dir)) {
                 lastMoveTick = currentTick;
                 move(dir);
                 setFacingDir(dir);
+            }
+        }
+
+        if (hasSpeedPowerup) {
+            speedPowerupDuration--;
+            if (speedPowerupDuration <= 0) {
+                resetMovementInterval();
+                hasSpeedPowerup = false;
             }
         }
     }
@@ -164,13 +170,13 @@ public class Player extends Actor {
 
         // If the player can walk over the tile, carry out any actions needed
         switch (nextTile.getType()) {
-            case LOCKED_DOOR:
+            case LOCKED_DOOR -> {
                 LockedDoor door = (LockedDoor) nextTile;
                 if (!door.testLock(inventory)) {
                     return false;
                 }
-                break;
-            case CHIP_SOCKET:
+            }
+            case CHIP_SOCKET -> {
                 ChipSocket socket = (ChipSocket) nextTile;
                 int oldChips = inventory[InventorySlot.CHIP.ordinal()];
                 inventory[InventorySlot.CHIP.ordinal()] = oldChips - socket.getRequiredChips();
@@ -180,14 +186,24 @@ public class Player extends Actor {
                 if (!socket.deductChips(oldChips)) {
                     return false;
                 }
-                break;
-            case ICE:
+            }
+            case ICE -> {
                 Ice iceTile = (Ice) nextTile;
                 if (!iceTile.canBeMovedOntoFrom(dir)) { // Don't allow moving onto ice from its "wall" side
                     return false;
                 }
-            default:
-                break;
+            }
+            case SPEED -> {
+                if (!hasSpeedPowerup) {
+                    hasSpeedPowerup = true;
+                    speedPowerupDuration = 300;
+                    MOVE_INTERVAL = 2;
+                    GameManager.replaceTile(nextPos, new Path(nextPos));
+                }
+                return true;
+            }
+            default -> {
+            }
         }
 
         // Check if the tile has an actor on it
@@ -226,20 +242,12 @@ public class Player extends Actor {
         } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
             Key key = (Key) nextItem;
             switch (key.getColour()) {
-                case 'R':
-                    inventory[InventorySlot.RED_KEY.ordinal()]++;
-                    break;
-                case 'G':
-                    inventory[InventorySlot.GREEN_KEY.ordinal()]++;
-                    break;
-                case 'Y':
-                    inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
-                    break;
-                case 'B':
-                    inventory[InventorySlot.BLUE_KEY.ordinal()]++;
-                    break;
-                default:
-                    break;
+                case 'R' -> inventory[InventorySlot.RED_KEY.ordinal()]++;
+                case 'G' -> inventory[InventorySlot.GREEN_KEY.ordinal()]++;
+                case 'Y' -> inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
+                case 'B' -> inventory[InventorySlot.BLUE_KEY.ordinal()]++;
+                default -> {
+                }
             }
             GameManager.removeItem(nextPos);
         }
