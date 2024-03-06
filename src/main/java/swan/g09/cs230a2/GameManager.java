@@ -604,7 +604,7 @@ public class GameManager {
     }
 
     /**
-     * Get boat path meta data
+     * Get boat path meta data.
      * @return A string containing the boat path meta data
      */
     private static String getBoatMetaData() {

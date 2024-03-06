@@ -93,7 +93,7 @@ public enum TileType {
     FROG,
 
     /**
-     * Represents a boat and its path
+     * Represents a boat and its path.
      */
     BOAT_PATH,
 }

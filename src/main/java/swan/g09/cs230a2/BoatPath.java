@@ -6,47 +6,47 @@ import javafx.geometry.Point2D;
  * A boat that moves back and forth, and the player can walk on and off it.
  * @author Dylan
  */
-public class BoatPath extends ActionTile {
+public final class BoatPath extends ActionTile {
     /**
-     * The direction the boat should travel after this tile
+     * The direction the boat should travel after this tile.
      */
     private final Direction pushDirection;
 
     /**
-     * Whether a boat is currently on this tile
+     * Whether a boat is currently on this tile.
      */
     private Boolean boatHere;
 
     /**
-     * Keeps track on whether this tile has already been moved this tick to maintain update order
+     * Keeps track on whether this tile has already been moved this tick to maintain update order.
      */
     private Boolean movedThisTick = false;
 
     /**
-     * If the boat's path is not a loop, this keeps track of which direction it is currently going
+     * If the boat's path is not a loop, this keeps track of which direction it is currently going.
      */
     private Boolean reverse = false;
 
     /**
-     * How long since the boat has last moved, so it can move every MOVE_INTERVAL ticks
+     * How long since the boat has last moved, so it can move every MOVE_INTERVAL ticks.
      */
     private int ticksSinceMove = 0;
 
     /**
-     * The interval between each time the boat moves
+     * The interval between each time the boat moves.
      */
     private static final int MOVE_INTERVAL = 7;
 
     /**
-     * Constructor for a BoatPath
-     * @param position The coordinate this BoatPath is located at
-     * @param pushDirection The direction the boat should take from this path
-     * @param boatHere Whether this tile should currently have a boat on it
+     * Constructor for a BoatPath.
+     * @param newPosition The coordinate this BoatPath is located at
+     * @param pathPushDirection The direction the boat should take from this path
+     * @param isBoatHere Whether this tile should currently have a boat on it
      */
-    public BoatPath(Point2D position, Direction pushDirection, Boolean boatHere) {
-        super(TileType.BOAT_PATH, "sprites/Water.png", position);
-        this.pushDirection = pushDirection;
-        this.boatHere = boatHere;
+    public BoatPath(Point2D newPosition, Direction pathPushDirection, Boolean isBoatHere) {
+        super(TileType.BOAT_PATH, "sprites/Water.png", newPosition);
+        this.pushDirection = pathPushDirection;
+        this.boatHere = isBoatHere;
         if (this.boatHere) {
             updateImagePath("sprites/Boat.png");
         }
@@ -69,21 +69,21 @@ public class BoatPath extends ActionTile {
     }
 
     /**
-     * Method to move a boat onto this tile
+     * Method to move a boat onto this tile.
      * This is where the sprite is updated
      * Should be called before moveBoatAway in tick so any rider doesn't drown
-     * @param reverse whether the boat is currently reversing (for non-loop paths)
+     * @param isReversing whether the boat is currently reversing (for non-loop paths)
      */
-    public void moveBoatTo(Boolean reverse) {
+    public void moveBoatTo(Boolean isReversing) {
         this.boatHere = true;
         this.movedThisTick = true;
-        this.reverse = reverse;
+        this.reverse = isReversing;
 
         updateImagePath("sprites/Boat.png");
     }
 
     /**
-     * Getter for whether a boat is on this tile
+     * Getter for whether a boat is on this tile.
      * @return whether there is a boat on this tile
      */
     public Boolean getBoatPresence() {
@@ -91,7 +91,7 @@ public class BoatPath extends ActionTile {
     }
 
     /**
-     * Getter for whether the boat is currently reversing
+     * Getter for whether the boat is currently reversing.
      * @return whether this boat is reversing
      */
     public Boolean getReversing() {
@@ -99,14 +99,14 @@ public class BoatPath extends ActionTile {
     }
 
     /**
-     * Set the boat to reversing along the path
+     * Set the boat to reversing along the path.
      */
     public void setReverse() {
         this.reverse = true;
     }
 
     /**
-     * Method to update a tile when a boat moves away from it
+     * Method to update a tile when a boat moves away from it.
      * Should be called after moveBoatTo in tick so any rider doesn't drown
      */
     private void moveBoatAway() {
@@ -141,7 +141,8 @@ public class BoatPath extends ActionTile {
                 nextTile = GameManager.checkTile(nextPosition);
             }
 
-            if (ticksSinceMove > BoatPath.MOVE_INTERVAL && !this.movedThisTick && nextTile instanceof BoatPath nextBoatTile) {
+            if (ticksSinceMove > BoatPath.MOVE_INTERVAL && !this.movedThisTick
+                && nextTile instanceof BoatPath nextBoatTile) {
                 this.ticksSinceMove = 0;
                 nextBoatTile.moveBoatTo(this.reverse);
                 this.moveBoatAway();
@@ -153,7 +154,7 @@ public class BoatPath extends ActionTile {
     }
 
     /**
-     * Get the save file representation of the current tile
+     * Get the save file representation of the current tile.
      * @return the character representing the tile in its current state
      */
     public char toChar() {

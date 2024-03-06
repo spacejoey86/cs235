@@ -35,7 +35,7 @@ abstract class ActionTile extends Tile {
     }
 
     /**
-     * Handler that gets called every tick
+     * Handler that gets called every tick.
      */
     public void tick() {
         // do nothing by default

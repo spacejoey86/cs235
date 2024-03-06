@@ -47,13 +47,13 @@ public class Level {
             Pattern.compile("^([crygb]) */ *(\\d+)");
 
     /**
-     * In save files, whether this was from a custom save and if not, whether it is the last level
+     * In save files, whether this was from a custom save and if not, whether it is the last level.
      */
     private static final Pattern LEVEL_FLAGS_PATTERN =
             Pattern.compile("(\\d+|null), *([01])");
 
     /**
-     * Whether a boat path currently has a boat on it
+     * Whether a boat path currently has a boat on it.
      */
     private static final Pattern BOAT_PRESENCE_PATTERN =
             Pattern.compile("^\\((\\d+), *(\\d+)\\) _(\\??)");
@@ -119,7 +119,7 @@ public class Level {
     private final Map<Point2D, LinkedList<Point2D>> buttonConnections = new HashMap<>();
 
     /**
-     * Map storing the precense of boats and whether it is reversing
+     * Map storing the precense of boats and whether it is reversing.
      */
     private final Map<Point2D, Boolean> boatPresences = new HashMap<>();
 
@@ -356,7 +356,7 @@ public class Level {
     }
 
     /**
-     * Puts a boat on a boat path based on the provided line
+     * Puts a boat on a boat path based on the provided line.
      * @param line The line to be parsed
      */
     private void setBoatPresence(String line) {
