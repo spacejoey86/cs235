@@ -121,6 +121,8 @@ public class Player extends Actor {
         InputManager.addTickHandler(KeyCode.S, () -> {
             handleMovement(Direction.SOUTH);
         });
+        InputManager.addTickHandler(KeyCode.ESCAPE,
+                ChipsChallengeApplication::openPauseMenu);
 
         // Set lastMoveTick to allow moving on the first tick
         lastMoveTick = -MOVE_INTERVAL;
