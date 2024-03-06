@@ -7,6 +7,7 @@ import java.io.Writer;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class GameManager {
         /** Player has been crushed by the block. */
         CRUSH,
         /** Player has been bounced on by the pink ball. */
-        BOUNCED
+        BOUNCED,
+        /** Player has died from an extra life. */
+        EXTRA
     }
 
     /**
@@ -347,7 +350,17 @@ public class GameManager {
         }
 
         Clock.setLevelDuration(level.getDuration());
+
+        // Logging player information
+        Point2D playerPosition = getPlayerPosition();
+        System.out.println("Player Position after restart: " + playerPosition);
+
+        Player player = (Player) checkActor(playerPosition);
+        if (player != null) {
+            System.out.println("Player Inventory after restart: " + Arrays.toString(player.getInventory()));
+        }
     }
+
 
     /**
      * Checks if a level has been loaded.
@@ -442,10 +455,24 @@ public class GameManager {
      *
      * @param deathState Enum death state pertaining to the way the player died.
      * @throws IllegalStateException if level not initiated.
-     * */
+     */
     public static void endGame(DeathState deathState) throws IllegalStateException {
         if (tileLayer == null) {
             throw new IllegalStateException("Level not loaded!");
+        }
+
+        System.out.println("End Game called with death state: " + deathState);
+
+        if (deathState != DeathState.EXTRA) {
+            if (Player.extraLives > 0) {
+                // If the player has an extra life, reset the player and decrement the extra lives
+                Player.extraLives--;
+                Player player = (Player) checkActor(getPlayerPosition());
+                player.setInventory(new int[]{0, 0, 0, 0, 0});
+                restartLevel();
+                System.out.println("Player used an extra life. Remaining extra lives: " + Player.extraLives);
+                return;
+            }
         }
         if (levelNumber != null) {
             PlayerViewController.tryDeleteAutoSave(levelNumber);
@@ -453,6 +480,7 @@ public class GameManager {
         stopTimer();
         gameViewController.gameLose(deathState);
     }
+
 
     /**
      * Processes score for the level, and loads the next.
@@ -610,4 +638,6 @@ public class GameManager {
     public static boolean isLevelRunning() {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
+
+
 }

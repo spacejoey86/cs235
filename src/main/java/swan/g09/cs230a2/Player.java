@@ -23,17 +23,19 @@ public class Player extends Actor {
     /**
      * The player's speed powerup status.
      */
-    private boolean hasSpeedPowerup = false;
+    private static boolean hasSpeedPowerup = false;
 
     /**
-     * The duration of the IncreaseTime powerup.
+     * The duration of the Invincible powerup.
      */
-    //private int increaseTimePowerupDuration = 0;
+    private int invincibleDuration = 0;
 
     /**
-     * The player's increase time powerup status.
+     * The player's Invincible status.
      */
-    //private boolean hasIncreaseTimePowerup = false;
+    private boolean isInvincible = false;
+
+
 
     /**
      * The duration of the speed powerup.
@@ -44,6 +46,11 @@ public class Player extends Actor {
      * The original movement interval for the player.
      */
     private static final int ORIGINAL_MOVE_INTERVAL = 4;
+
+    /**
+     * The number of extra lives the player has.
+     * */
+    static int extraLives = 0;
 
     /**
      * The slots that different items take up in the inventory.
@@ -58,7 +65,10 @@ public class Player extends Actor {
         /** The inventory slot of the yellow Key item. */
         YELLOW_KEY,
         /** The inventory slot of the blue Key item. */
-        BLUE_KEY;
+        BLUE_KEY,
+        /** The inventory slot of the extra life item. */
+        EXTRA_LIFE;
+
 
         /**
          * Convert an inventory slot to a string.
@@ -84,6 +94,7 @@ public class Player extends Actor {
                 default -> null;
             };
         }
+
     }
 
     /**
@@ -161,7 +172,17 @@ public class Player extends Actor {
                 hasSpeedPowerup = false;
             }
         }
+
+        if (isInvincible) {
+            invincibleDuration--;
+            System.out.println("Invincible Duration: " + invincibleDuration);
+            if (invincibleDuration <= 0) {
+                isInvincible = false;
+                System.out.println("Invincibility expired");
+            }
+        }
     }
+
 
     /**
      * Allows the timer to tick the player class.
@@ -178,6 +199,7 @@ public class Player extends Actor {
      */
     @Override
     protected boolean checkMove(Direction dir) {
+
         Point2D nextPos = calculateNewPosition(dir);
         Tile nextTile = GameManager.checkTile(nextPos);
 
@@ -214,33 +236,34 @@ public class Player extends Actor {
             }
         }
 
-        // Check if the tile has an actor on it
+// Check if the tile has an actor on it
         if (isTileOccupiedByActor(nextPos)) {
             Actor nextActor = GameManager.checkActor(nextPos);
-            switch (nextActor.getType()) {
-                case FROG:
-                    GameManager.endGame(GameManager.DeathState.FROG_KILL);
-                    GameManager.removeActor(getPosition());
-                    return false;
-                case BUG:
-                    GameManager.endGame(GameManager.DeathState.BUG_KILL);
-                    GameManager.removeActor(getPosition());
-                    return false;
-                case PINK_BALL:
-                    GameManager.endGame(GameManager.DeathState.BOUNCED);
-                    GameManager.removeActor((getPosition()));
-                    return false;
-                case BLOCK:
-                    if (!nextActor.checkMove(dir)) {
+
+                switch (nextActor.getType()) {
+                    case FROG:
+                        GameManager.endGame(GameManager.DeathState.FROG_KILL);
+                        GameManager.removeActor(getPosition());
                         return false;
-                    }
-                    nextActor.setFacingDir(dir);
-                    nextActor.move(dir);
-                    break;
-                default:
-                    return false;
+                    case BUG:
+                        GameManager.endGame(GameManager.DeathState.BUG_KILL);
+                        GameManager.removeActor(getPosition());
+                        return false;
+                    case PINK_BALL:
+                        GameManager.endGame(GameManager.DeathState.BOUNCED);
+                        GameManager.removeActor((getPosition()));
+                        return false;
+                    case BLOCK:
+                        if (!nextActor.checkMove(dir)) {
+                            return false;
+                        }
+                        nextActor.setFacingDir(dir);
+                        nextActor.move(dir);
+                        break;
+                    default:
+                        return false;
+                }
             }
-        }
 
         //Check if the tile has an item on it
         Item nextItem = GameManager.checkItem(nextPos);
@@ -269,14 +292,23 @@ public class Player extends Actor {
                 }
                 case INVINC -> {
                     System.out.println("Player encountered INVINC tile");
+                    isInvincible = true;
+                    invincibleDuration = 300;
                     GameManager.removeItem(nextPos); // Remove the invincibility from the level
                 }
                 case EXTRA -> {
-                    System.out.println("Player encountered EXTRA tile");
-                    GameManager.removeItem(nextPos); // Remove the extra life from the level
+                    if (extraLives < 1) {
+                        // Increment extra lives
+                        extraLives++;
+                        System.out.println("Extra life obtained. Remaining extra lives: " + extraLives);
+                    } else {
+                        // If the player already has an extra life, treat it as a regular item
+                        inventory[InventorySlot.EXTRA_LIFE.ordinal()]++;
+                    }
+                    GameManager.removeItem(nextPos);
+                    return true;
                 }
                 case INCREASETIME -> {
-                    System.out.println("Player encountered INCREASETIME tile");
                     int updatedTime = GameTimer.addTime(30);
                     if (updatedTime != -1) {
                         System.out.println("Added 30 seconds. Updated time: " + updatedTime);
