@@ -52,10 +52,16 @@ public class Clock {
     }
 
     /**
-     * Check if the level's timer has reached zero.
-     * @return Whether the clock's remaining time has run out.
+     * Resets the level duration to the original duration.
      */
-    public static boolean isFinished() {
-        return remainingTime == 0;
+    public static void resetLevelDuration() {
+        remainingTime = totalTime;
+    }
+
+    /**
+     * Resets the remaining time to the total time.
+     */
+    public static void resetRemainingTime() {
+        remainingTime = totalTime;
     }
 }

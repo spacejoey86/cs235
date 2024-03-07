@@ -183,7 +183,6 @@ public class Player extends Actor {
         }
     }
 
-
     /**
      * Allows the timer to tick the player class.
      */
@@ -199,7 +198,6 @@ public class Player extends Actor {
      */
     @Override
     protected boolean checkMove(Direction dir) {
-
         Point2D nextPos = calculateNewPosition(dir);
         Tile nextTile = GameManager.checkTile(nextPos);
 
@@ -236,34 +234,49 @@ public class Player extends Actor {
             }
         }
 
-// Check if the tile has an actor on it
+        // If the tile has an actor on it
         if (isTileOccupiedByActor(nextPos)) {
             Actor nextActor = GameManager.checkActor(nextPos);
 
-                switch (nextActor.getType()) {
-                    case FROG:
+            // Check if the player is invincible, and if so, skip death scenarios
+            if (nextActor instanceof Player && isInvincible) {
+                System.out.println("Player is invincible. No action taken.");
+                return true;
+            }
+
+            switch (nextActor.getType()) {
+                case FROG:
+                    if (!(nextActor instanceof Player) && !isInvincible) {
                         GameManager.endGame(GameManager.DeathState.FROG_KILL);
                         GameManager.removeActor(getPosition());
                         return false;
-                    case BUG:
+                    }
+                    break;
+                case BUG:
+                    if (!(nextActor instanceof Player) && !isInvincible) {
                         GameManager.endGame(GameManager.DeathState.BUG_KILL);
                         GameManager.removeActor(getPosition());
                         return false;
-                    case PINK_BALL:
+                    }
+                    break;
+                case PINK_BALL:
+                    if (!(nextActor instanceof Player) && !isInvincible) {
                         GameManager.endGame(GameManager.DeathState.BOUNCED);
-                        GameManager.removeActor((getPosition()));
+                        GameManager.removeActor(nextPos);  // Remove the PINK_BALL instead of the player
                         return false;
-                    case BLOCK:
-                        if (!nextActor.checkMove(dir)) {
-                            return false;
-                        }
-                        nextActor.setFacingDir(dir);
-                        nextActor.move(dir);
-                        break;
-                    default:
+                    }
+                    break;
+                case BLOCK:
+                    if (!nextActor.checkMove(dir)) {
                         return false;
-                }
+                    }
+                    nextActor.setFacingDir(dir);
+                    nextActor.move(dir);
+                    break;
+                default:
+                    return false;
             }
+        }
 
         //Check if the tile has an item on it
         Item nextItem = GameManager.checkItem(nextPos);
@@ -302,10 +315,9 @@ public class Player extends Actor {
                         extraLives++;
                         System.out.println("Extra life obtained. Remaining extra lives: " + extraLives);
                     } else {
-                        // If the player already has an extra life, treat it as a regular item
                         inventory[InventorySlot.EXTRA_LIFE.ordinal()]++;
                     }
-                    GameManager.removeItem(nextPos);
+                    GameManager.removeItem(nextPos); // Remove the extra life from the level
                     return true;
                 }
                 case INCREASETIME -> {
@@ -339,5 +351,9 @@ public class Player extends Actor {
                     + inv.length + " != " + inventory.length);
         }
         System.arraycopy(inv, 0, inventory, 0, inventory.length);
+    }
+
+    public boolean isInvincible() {
+        return isInvincible;
     }
 }

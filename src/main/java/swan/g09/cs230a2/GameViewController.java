@@ -199,7 +199,7 @@ public class GameViewController {
      */
     @FXML
     public void playAgain() {
-        GameManager.restartLevel();
+        GameManager.restartLevel(false);
         gameEndOverlay.setVisible(false);
 
         GameManager.startGame(this);

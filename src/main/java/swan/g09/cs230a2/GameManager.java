@@ -332,7 +332,7 @@ public class GameManager {
      * Restart the current level.
      * Resets the state of the level.
      */
-    public static void restartLevel() {
+    public static void restartLevel(boolean usedExtraLife) {
         if (level == null) {
             throw new IllegalStateException("Level has not yet been loaded!");
         }
@@ -349,7 +349,13 @@ public class GameManager {
             }
         }
 
-        Clock.setLevelDuration(level.getDuration());
+        // Reset the timer and level duration if an extra life was used
+        if (usedExtraLife) {
+            Clock.resetLevelDuration();
+            Clock.resetRemainingTime();
+        } else {
+            Clock.setLevelDuration(level.getDuration());
+        }
 
         // Logging player information
         Point2D playerPosition = getPlayerPosition();
@@ -360,6 +366,7 @@ public class GameManager {
             System.out.println("Player Inventory after restart: " + Arrays.toString(player.getInventory()));
         }
     }
+
 
 
     /**
@@ -465,21 +472,24 @@ public class GameManager {
 
         if (deathState != DeathState.EXTRA) {
             if (Player.extraLives > 0) {
-                // If the player has an extra life, reset the player and decrement the extra lives
+                // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
                 Player.extraLives--;
                 Player player = (Player) checkActor(getPlayerPosition());
                 player.setInventory(new int[]{0, 0, 0, 0, 0});
-                restartLevel();
+                restartLevel(true);
                 System.out.println("Player used an extra life. Remaining extra lives: " + Player.extraLives);
                 return;
             }
         }
+
         if (levelNumber != null) {
             PlayerViewController.tryDeleteAutoSave(levelNumber);
         }
+
         stopTimer();
         gameViewController.gameLose(deathState);
     }
+
 
 
     /**
