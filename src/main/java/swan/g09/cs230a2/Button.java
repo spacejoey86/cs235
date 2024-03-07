@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import java.util.ArrayList;
 
 /**
- * Class Button can be stepped on to disable traps.
+ * Button Class that can be stepped on to disable traps.
  *
  * @author Samuel Lomas
  * @version 0.1

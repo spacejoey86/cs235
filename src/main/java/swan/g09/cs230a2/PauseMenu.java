@@ -97,7 +97,7 @@ public class PauseMenu extends VBox {
     }
 
     /**
-     * Opens the pause menu.
+     * Closes the pause menu.
      */
     private void resumeGame() {
         ChipsChallengeApplication.closePauseMenu();

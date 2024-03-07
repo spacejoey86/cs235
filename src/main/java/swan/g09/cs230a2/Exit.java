@@ -3,7 +3,7 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 
 /**
- * The {@code Exit} class is a subclass of {@code ActionTile} representing an exit tile in the game.
+ * The {@code Exit} class is a tile that represents an exit in the game.
  * It can handle being walked over by an actor.
  * @author Abdulrahman Almutairi
  */

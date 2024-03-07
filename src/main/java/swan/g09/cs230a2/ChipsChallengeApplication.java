@@ -143,7 +143,6 @@ public class ChipsChallengeApplication extends Application {
     /**
      * Opens the pause menu.
      */
-
     public static void openPauseMenu() {
         // ensures thread is open
         Platform.runLater(() -> {

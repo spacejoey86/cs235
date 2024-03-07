@@ -1,7 +1,7 @@
 package swan.g09.cs230a2;
 
 /**
- * A clock that displays the remaining time for each level.
+ * A {@code Clock} that displays the remaining time for each level.
  * Stores this time for use in calculating score.
  * @author Caragh Waite
  * @author Barnaby Morley-Smith
