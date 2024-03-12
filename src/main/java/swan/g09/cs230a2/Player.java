@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Player is an actor which is controlled by the user and
  * interacts with other tiles and actors in the level.
@@ -83,7 +84,7 @@ public class Player extends Actor {
      * Stores the player's inventory.
      * This stores the amount of each item in the order [Chips, Key_R, Key_G, Key_Y, Key_B].
      * */
-    private final int[] inventory = new int[]{0, 0, 0, 0, 0};
+    private static final int[] inventory = new int[]{0, 0, 0, 0, 0};
 
     /**
      * Default Constructor for Player.
@@ -224,6 +225,7 @@ public class Player extends Actor {
         if (nextItem != null && nextItem.getType() == TileType.CHIP) {
             inventory[0]++;
             GameManager.removeItem(nextPos);
+            GameManager.updateInventoryDisplay();
         } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
             Key key = (Key) nextItem;
             switch (key.getColour()) {
@@ -243,8 +245,8 @@ public class Player extends Actor {
                     break;
             }
             GameManager.removeItem(nextPos);
+            GameManager.updateInventoryDisplay();
         }
-
         return true;
     }
 
@@ -252,7 +254,7 @@ public class Player extends Actor {
      * Get the player's inventory.
      * @return The player's inventory.
      */
-    public int[] getInventory() {
+    public static int[] getInventory() {
         return inventory;
     }
 

@@ -12,6 +12,7 @@
 <?import swan.g09.cs230a2.GameCanvas?>
 <?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="swan.g09.cs230a2.GameViewController"
            stylesheets="@style.css">
@@ -26,9 +27,20 @@
             <Button text="Start" fx:id="startButton" onAction="#startGame" />
             <Text styleClass="title-text" text="0:00" fx:id="clock" />
         </HBox>
-
+        <HBox fx:id="inventoryBox" spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            <ImageView fx:id="chipImage" visible="false"/>
+            <ImageView fx:id="redKeyImage" visible="false"/>
+            <ImageView fx:id="greenKeyImage" visible="false"/>
+            <ImageView fx:id="yellowKeyImage" visible="false"/>
+            <ImageView fx:id="blueKeyImage" visible="false"/>
+        </HBox>
         <Pane fx:id="canvasPane" VBox.vgrow="ALWAYS" />
     </VBox>
+
+
     <VBox fx:id="gameEndOverlay" style="-fx-background-color: rgba(0, 0, 0, 0.75);" alignment="CENTER" visible="false" spacing="8.0">
         <Label fx:id="winLoseText" styleClass="title-text, white">You won/lost!</Label>
         <Label fx:id="flavourText" styleClass="white">Flavour text :)</Label>

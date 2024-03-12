@@ -143,6 +143,12 @@ public class GameManager {
         return itemLayer.getAtPosition(position);
     }
 
+    public static void updateInventoryDisplay() {
+        if (gameViewController != null && playerProfile != null) {
+            gameViewController.updateInventoryDisplay(Player.getInventory());
+        }
+    }
+
     /**
      * Sets a Tile to a path at a position.
      *

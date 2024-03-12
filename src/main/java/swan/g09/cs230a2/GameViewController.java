@@ -5,11 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * The UI controller for the game view.
@@ -75,6 +78,13 @@ public class GameViewController {
      */
     @FXML
     private Button nextLevelBtn;
+
+    /**
+     * The image of the player's inventory.
+     */
+    @FXML
+    private ImageView chipImage, redKeyImage, greenKeyImage, yellowKeyImage, blueKeyImage;
+
 
     /**
      * If the canvas has drawn since the last tick.
@@ -176,6 +186,39 @@ public class GameViewController {
             nextLevelBtn.setVisible(false);
             nextLevelBtn.setManaged(false);
         });
+    }
+
+    public void updateInventoryDisplay(int[] inventory) {
+        chipImage.setVisible(inventory[Player.InventorySlot.CHIP.ordinal()] > 0);
+        redKeyImage.setVisible(inventory[Player.InventorySlot.RED_KEY.ordinal()] > 0);
+        greenKeyImage.setVisible(inventory[Player.InventorySlot.GREEN_KEY.ordinal()] > 0);
+        yellowKeyImage.setVisible(inventory[Player.InventorySlot.YELLOW_KEY.ordinal()] > 0);
+        blueKeyImage.setVisible(inventory[Player.InventorySlot.BLUE_KEY.ordinal()] > 0);
+
+        // Update images to reflect the count
+        chipImage.setImage(generateImageForInventoryItem(Player.InventorySlot.CHIP.ordinal(), inventory[Player.InventorySlot.CHIP.ordinal()]));
+        redKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.RED_KEY.ordinal(), inventory[Player.InventorySlot.RED_KEY.ordinal()]));
+        greenKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.GREEN_KEY.ordinal(), inventory[Player.InventorySlot.GREEN_KEY.ordinal()]));
+        yellowKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.YELLOW_KEY.ordinal(), inventory[Player.InventorySlot.YELLOW_KEY.ordinal()]));
+        blueKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.BLUE_KEY.ordinal(), inventory[Player.InventorySlot.BLUE_KEY.ordinal()]));
+    }
+
+    private Image generateImageForInventoryItem(int index, int count) {
+
+        String imagePath = switch (index) {
+            case 0 -> "sprites/Chip.png"; // Chips
+            case 1 -> "sprites/Key_Red.png"; // Red Key
+            case 2 -> "sprites/Key_Green.png"; // Green Key
+            case 3 -> "sprites/Key_Yellow.png"; // Yellow Key
+            case 4 -> "sprites/Key_Blue.png"; // Blue Key
+            default -> null; // Invalid item index
+        };
+
+        if (imagePath == null) {
+            return null; // Early exit for invalid index
+        }
+
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
     }
 
     /**
