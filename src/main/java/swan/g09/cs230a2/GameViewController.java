@@ -83,7 +83,13 @@ public class GameViewController {
      * The image of the player's inventory.
      */
     @FXML
-    private ImageView chipImage, redKeyImage, greenKeyImage, yellowKeyImage, blueKeyImage;
+    private ImageView chipImage,redKeyImage, greenKeyImage, yellowKeyImage, blueKeyImage;
+
+    /**
+     * The label for the chip count.
+     */
+    @FXML
+    private Label chipCountLabel;
 
 
     /**
@@ -190,6 +196,9 @@ public class GameViewController {
 
     public void updateInventoryDisplay(int[] inventory) {
         chipImage.setVisible(inventory[Player.InventorySlot.CHIP.ordinal()] > 0);
+        int chipCount = inventory[Player.InventorySlot.CHIP.ordinal()];
+        chipImage.setVisible(chipCount > 0);
+        chipCountLabel.setText(String.valueOf(chipCount));
         redKeyImage.setVisible(inventory[Player.InventorySlot.RED_KEY.ordinal()] > 0);
         greenKeyImage.setVisible(inventory[Player.InventorySlot.GREEN_KEY.ordinal()] > 0);
         yellowKeyImage.setVisible(inventory[Player.InventorySlot.YELLOW_KEY.ordinal()] > 0);
@@ -219,6 +228,15 @@ public class GameViewController {
         }
 
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
+    }
+
+    public void resetInventoryDisplay() {
+        // Hide or reset the inventory item images
+        chipImage.setVisible(false);
+        redKeyImage.setVisible(false);
+        greenKeyImage.setVisible(false);
+        yellowKeyImage.setVisible(false);
+        blueKeyImage.setVisible(false);
     }
 
     /**

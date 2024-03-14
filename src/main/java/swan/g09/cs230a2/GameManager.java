@@ -3,9 +3,9 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 
 import java.io.FileNotFoundException;
-import java.io.Writer;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -471,6 +471,7 @@ public class GameManager {
 
         gameTimer.start();
         gameTimer.startLevel();
+        gameViewController.resetInventoryDisplay();
     }
 
     /**
@@ -488,6 +489,7 @@ public class GameManager {
         }
         stopTimer();
         gameViewController.gameLose(deathState);
+        gameViewController.resetInventoryDisplay();
     }
 
     /**
@@ -548,14 +550,14 @@ public class GameManager {
      * @return String of actors and their directions.
      * */
     private static String getActorDirections() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
 
         for (Actor a : actorLayer.getAllElements()) {
             Point2D pos = a.getPosition();
             char d = Actor.directionToChar(a.getFacingDir());
-            outStr += String.format("(%d,%d) @ %s\n", (int) pos.getX(), (int) pos.getY(), d);
+            outStr.append(String.format("(%d,%d) @ %s\n", (int) pos.getX(), (int) pos.getY(), d));
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -563,15 +565,15 @@ public class GameManager {
      * @return list of chip readers and counts
      * */
     private static String getChipCounts() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         ArrayList<Point2D> chipSockets = tileLayer.findPositionsOf(TileType.CHIP_SOCKET);
         for (Point2D p : chipSockets) {
             if (tileLayer.getAtPosition(p) instanceof ChipSocket chipSocket) {
-                outStr += String.format("(%d,%d) # %d\n",
-                        (int) p.getX(), (int) p.getY(), chipSocket.getRequiredChips());
+                outStr.append(String.format("(%d,%d) # %d\n",
+                        (int) p.getX(), (int) p.getY(), chipSocket.getRequiredChips()));
             }
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -579,15 +581,15 @@ public class GameManager {
      * @return List of items in the player's inventory.
      */
     private static String getInventory() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         Actor playerActor = checkActor(getPlayerPosition());
         if (playerActor instanceof Player player) {
             int[] inv = player.getInventory();
             for (int i = 0; i < inv.length; i++) {
-                outStr += String.format("%s / %d\n", Player.InventorySlot.values()[i].toString(), inv[i]);
+                outStr.append(String.format("%s / %d\n", Player.InventorySlot.values()[i].toString(), inv[i]));
             }
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -595,18 +597,18 @@ public class GameManager {
      * @return A list of buttons and the traps they are linked to
      * */
     private static String getButtonAssocs() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         ArrayList<Point2D> buttons = tileLayer.findPositionsOf(TileType.BUTTON);
         for (Point2D p : buttons) {
             Button b = (Button) tileLayer.getAtPosition(p);
             ArrayList<Trap> linkedTraps = b.getLinkedTraps();
             for (Trap t : linkedTraps) {
                 Point2D pos = t.getPosition();
-                outStr += String.format("(%d,%d) -> (%d,%d)\n",
-                        (int) p.getX(), (int) p.getY(), (int) pos.getX(), (int) pos.getY());
+                outStr.append(String.format("(%d,%d) -> (%d,%d)\n",
+                        (int) p.getX(), (int) p.getY(), (int) pos.getX(), (int) pos.getY()));
             }
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
