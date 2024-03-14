@@ -25,7 +25,10 @@ import java.util.Objects;
  */
 public class GameViewController {
 
-    private static final Map<Integer, String> inventoryImagePathMap = Map.of(
+    /**
+     * The map of inventory item indices to their image paths.
+     */
+    private static final Map<Integer, String> INVENTORY_IMAGE_PATH_MAP = Map.of(
             0, "sprites/Chip.png",
             1, "sprites/Key_Red.png",
             2, "sprites/Key_Green.png",
@@ -266,13 +269,16 @@ public class GameViewController {
      * @return The image for the inventory item.
      */
     private Image generateImageForInventoryItem(int index, int count) {
-        String imagePath = inventoryImagePathMap.get(index);
+        String imagePath = INVENTORY_IMAGE_PATH_MAP.get(index);
         if (imagePath == null) {
             return null; // Or handle invalid index appropriately
         }
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
     }
 
+    /**
+     * Reset the inventory display.
+     */
     public void resetInventoryDisplay() {
         // Hide or reset the inventory item images
         chipImage.setVisible(false);
