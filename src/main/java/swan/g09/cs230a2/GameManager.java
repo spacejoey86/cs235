@@ -357,14 +357,6 @@ public class GameManager {
             Clock.setLevelDuration(level.getDuration());
         }
 
-        // Logging player information
-        Point2D playerPosition = getPlayerPosition();
-        System.out.println("Player Position after restart: " + playerPosition);
-
-        Player player = (Player) checkActor(playerPosition);
-        if (player != null) {
-            System.out.println("Player Inventory after restart: " + Arrays.toString(player.getInventory()));
-        }
     }
 
 
@@ -468,8 +460,6 @@ public class GameManager {
             throw new IllegalStateException("Level not loaded!");
         }
 
-        System.out.println("End Game called with death state: " + deathState);
-
         if (deathState != DeathState.EXTRA) {
             if (Player.extraLives > 0) {
                 // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
@@ -477,7 +467,6 @@ public class GameManager {
                 Player player = (Player) checkActor(getPlayerPosition());
                 player.setInventory(new int[]{0, 0, 0, 0, 0});
                 restartLevel(true);
-                System.out.println("Player used an extra life. Remaining extra lives: " + Player.extraLives);
                 return;
             }
         }

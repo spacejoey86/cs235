@@ -175,10 +175,8 @@ public class Player extends Actor {
 
         if (isInvincible) {
             invincibleDuration--;
-            System.out.println("Invincible Duration: " + invincibleDuration);
             if (invincibleDuration <= 0) {
                 isInvincible = false;
-                System.out.println("Invincibility expired");
             }
         }
     }
@@ -238,9 +236,8 @@ public class Player extends Actor {
         if (isTileOccupiedByActor(nextPos)) {
             Actor nextActor = GameManager.checkActor(nextPos);
 
-            // Check if the player is invincible, and if so, skip death scenarios
+            // Check if the player is invincible, and if so, skip death scenarios (killing the other actor)
             if (nextActor instanceof Player && isInvincible) {
-                System.out.println("Player is invincible. No action taken.");
                 return true;
             }
 
@@ -304,7 +301,6 @@ public class Player extends Actor {
                     GameManager.removeItem(nextPos); // Remove the speed powerup from the level
                 }
                 case INVINC -> {
-                    System.out.println("Player encountered INVINC tile");
                     isInvincible = true;
                     invincibleDuration = 300;
                     GameManager.removeItem(nextPos); // Remove the invincibility from the level
@@ -313,7 +309,6 @@ public class Player extends Actor {
                     if (extraLives < 1) {
                         // Increment extra lives
                         extraLives++;
-                        System.out.println("Extra life obtained. Remaining extra lives: " + extraLives);
                     } else {
                         inventory[InventorySlot.EXTRA_LIFE.ordinal()]++;
                     }
@@ -323,7 +318,6 @@ public class Player extends Actor {
                 case INCREASETIME -> {
                     int updatedTime = GameTimer.addTime(30);
                     if (updatedTime != -1) {
-                        System.out.println("Added 30 seconds. Updated time: " + updatedTime);
                     }
                     GameManager.removeItem(nextPos); // Remove the increase time from the level
                 }
