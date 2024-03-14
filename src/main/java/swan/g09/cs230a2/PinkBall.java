@@ -20,7 +20,7 @@ public class PinkBall extends Actor {
     /**
      * How many ticks should pass between each time the pink ball moves.
      */
-    private static final int MOVE_INTERVAL = 3;
+    private final int MOVE_INTERVAL;
 
     /**
      * The list of tiles that the bug can walk on.
@@ -39,8 +39,9 @@ public class PinkBall extends Actor {
      *
      * @param position The initial position of the pink ball
      */
-    public PinkBall(final Point2D position) {
+    public PinkBall(final Point2D position, int moveInterval) {
         super(TileType.PINK_BALL, "sprites/PinkBall.png", WALKABLE, position);
+        this.MOVE_INTERVAL = moveInterval;
     }
 
     /**
@@ -54,7 +55,7 @@ public class PinkBall extends Actor {
     protected void tick() {
         currentTick++;
 
-        if (currentTick % MOVE_INTERVAL != 0) {
+        if (currentTick % this.MOVE_INTERVAL != 0) {
             return;
         }
 
