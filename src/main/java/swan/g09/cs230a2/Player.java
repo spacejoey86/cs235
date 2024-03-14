@@ -84,7 +84,7 @@ public class Player extends Actor {
      * Stores the player's inventory.
      * This stores the amount of each item in the order [Chips, Key_R, Key_G, Key_Y, Key_B].
      * */
-    private static final int[] inventory = new int[]{0, 0, 0, 0, 0};
+    private static final int[] INVENTORY = new int[]{0, 0, 0, 0, 0};
 
     /**
      * Default Constructor for Player.
@@ -168,16 +168,16 @@ public class Player extends Actor {
         switch (nextTile.getType()) {
             case LOCKED_DOOR:
                 LockedDoor door = (LockedDoor) nextTile;
-                if (!door.testLock(inventory)) {
+                if (!door.testLock(INVENTORY)) {
                     return false;
                 }
                 break;
             case CHIP_SOCKET:
                 ChipSocket socket = (ChipSocket) nextTile;
-                int oldChips = inventory[InventorySlot.CHIP.ordinal()];
-                inventory[InventorySlot.CHIP.ordinal()] = oldChips - socket.getRequiredChips();
-                if (inventory[InventorySlot.CHIP.ordinal()] < 1) {
-                    inventory[InventorySlot.CHIP.ordinal()] = 0;
+                int oldChips = INVENTORY[InventorySlot.CHIP.ordinal()];
+                INVENTORY[InventorySlot.CHIP.ordinal()] = oldChips - socket.getRequiredChips();
+                if (INVENTORY[InventorySlot.CHIP.ordinal()] < 1) {
+                    INVENTORY[InventorySlot.CHIP.ordinal()] = 0;
                 }
                 if (!socket.deductChips(oldChips)) {
                     return false;
@@ -223,23 +223,23 @@ public class Player extends Actor {
         //Check if the tile has an item on it
         Item nextItem = GameManager.checkItem(nextPos);
         if (nextItem != null && nextItem.getType() == TileType.CHIP) {
-            inventory[0]++;
+            INVENTORY[0]++;
             GameManager.removeItem(nextPos);
             GameManager.updateInventoryDisplay();
         } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
             Key key = (Key) nextItem;
             switch (key.getColour()) {
                 case 'R':
-                    inventory[InventorySlot.RED_KEY.ordinal()]++;
+                    INVENTORY[InventorySlot.RED_KEY.ordinal()]++;
                     break;
                 case 'G':
-                    inventory[InventorySlot.GREEN_KEY.ordinal()]++;
+                    INVENTORY[InventorySlot.GREEN_KEY.ordinal()]++;
                     break;
                 case 'Y':
-                    inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
+                    INVENTORY[InventorySlot.YELLOW_KEY.ordinal()]++;
                     break;
                 case 'B':
-                    inventory[InventorySlot.BLUE_KEY.ordinal()]++;
+                    INVENTORY[InventorySlot.BLUE_KEY.ordinal()]++;
                     break;
                 default:
                     break;
@@ -255,7 +255,7 @@ public class Player extends Actor {
      * @return The player's inventory.
      */
     public static int[] getInventory() {
-        return inventory;
+        return INVENTORY;
     }
 
     /**
@@ -263,10 +263,10 @@ public class Player extends Actor {
      * @param inv The player's inventory.
      */
     public void setInventory(int[] inv) {
-        if (inv.length != inventory.length) {
+        if (inv.length != INVENTORY.length) {
             throw new RuntimeException("Inventory length didn't match expected: "
-                    + inv.length + " != " + inventory.length);
+                    + inv.length + " != " + INVENTORY.length);
         }
-        System.arraycopy(inv, 0, inventory, 0, inventory.length);
+        System.arraycopy(inv, 0, INVENTORY, 0, INVENTORY.length);
     }
 }

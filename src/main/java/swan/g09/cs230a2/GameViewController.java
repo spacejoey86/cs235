@@ -12,7 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
+
+
 
 /**
  * The UI controller for the game view.
@@ -21,6 +24,15 @@ import java.util.Objects;
  * @version 0.1
  */
 public class GameViewController {
+
+    private static final Map<Integer, String> inventoryImagePathMap = Map.of(
+            0, "sprites/Chip.png",
+            1, "sprites/Key_Red.png",
+            2, "sprites/Key_Green.png",
+            3, "sprites/Key_Yellow.png",
+            4, "sprites/Key_Blue.png"
+    );
+
     /**
      * Number of seconds in a minute.
      */
@@ -80,16 +92,42 @@ public class GameViewController {
     private Button nextLevelBtn;
 
     /**
-     * The image of the player's inventory.
+     * The image of the player's chip count.
      */
     @FXML
-    private ImageView chipImage,redKeyImage, greenKeyImage, yellowKeyImage, blueKeyImage;
+    private ImageView chipImage;
+
+    /**
+     * The image of the player's red key count.
+     */
+    @FXML
+    private ImageView redKeyImage;
+
+    /**
+     * The image of the player's green key count.
+     */
+    @FXML
+    private ImageView greenKeyImage;
+
+    /**
+     * The image of the player's yellow key count.
+     */
+    @FXML
+    private ImageView yellowKeyImage;
+
+    /**
+     * The image of the player's blue key count.
+     */
+    @FXML
+    private ImageView blueKeyImage;
 
     /**
      * The label for the chip count.
      */
     @FXML
     private Label chipCountLabel;
+
+
 
 
     /**
@@ -194,6 +232,10 @@ public class GameViewController {
         });
     }
 
+    /**
+     * Update the canvas to reflect the game state.
+     * @param inventory The player's inventory.
+     */
     public void updateInventoryDisplay(int[] inventory) {
         chipImage.setVisible(inventory[Player.InventorySlot.CHIP.ordinal()] > 0);
         int chipCount = inventory[Player.InventorySlot.CHIP.ordinal()];
@@ -205,28 +247,29 @@ public class GameViewController {
         blueKeyImage.setVisible(inventory[Player.InventorySlot.BLUE_KEY.ordinal()] > 0);
 
         // Update images to reflect the count
-        chipImage.setImage(generateImageForInventoryItem(Player.InventorySlot.CHIP.ordinal(), inventory[Player.InventorySlot.CHIP.ordinal()]));
-        redKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.RED_KEY.ordinal(), inventory[Player.InventorySlot.RED_KEY.ordinal()]));
-        greenKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.GREEN_KEY.ordinal(), inventory[Player.InventorySlot.GREEN_KEY.ordinal()]));
-        yellowKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.YELLOW_KEY.ordinal(), inventory[Player.InventorySlot.YELLOW_KEY.ordinal()]));
-        blueKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.BLUE_KEY.ordinal(), inventory[Player.InventorySlot.BLUE_KEY.ordinal()]));
+        chipImage.setImage(generateImageForInventoryItem(Player.InventorySlot.CHIP.ordinal(),
+                inventory[Player.InventorySlot.CHIP.ordinal()]));
+        redKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.RED_KEY.ordinal(),
+                inventory[Player.InventorySlot.RED_KEY.ordinal()]));
+        greenKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.GREEN_KEY.ordinal(),
+                inventory[Player.InventorySlot.GREEN_KEY.ordinal()]));
+        yellowKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.YELLOW_KEY.ordinal(),
+                inventory[Player.InventorySlot.YELLOW_KEY.ordinal()]));
+        blueKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.BLUE_KEY.ordinal(),
+                inventory[Player.InventorySlot.BLUE_KEY.ordinal()]));
     }
 
+    /**
+     * Generate an image for an inventory item.
+     * @param index The index of the item in the inventory.
+     * @param count The count of the item in the inventory.
+     * @return The image for the inventory item.
+     */
     private Image generateImageForInventoryItem(int index, int count) {
-
-        String imagePath = switch (index) {
-            case 0 -> "sprites/Chip.png"; // Chips
-            case 1 -> "sprites/Key_Red.png"; // Red Key
-            case 2 -> "sprites/Key_Green.png"; // Green Key
-            case 3 -> "sprites/Key_Yellow.png"; // Yellow Key
-            case 4 -> "sprites/Key_Blue.png"; // Blue Key
-            default -> null; // Invalid item index
-        };
-
+        String imagePath = inventoryImagePathMap.get(index);
         if (imagePath == null) {
-            return null; // Early exit for invalid index
+            return null; // Or handle invalid index appropriately
         }
-
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
     }
 

@@ -143,6 +143,9 @@ public class GameManager {
         return itemLayer.getAtPosition(position);
     }
 
+    /**
+      * Update the inventory display in the game view.
+     * */
     public static void updateInventoryDisplay() {
         if (gameViewController != null && playerProfile != null) {
             gameViewController.updateInventoryDisplay(Player.getInventory());
