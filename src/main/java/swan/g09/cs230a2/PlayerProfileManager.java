@@ -97,8 +97,8 @@ public final class PlayerProfileManager {
         for (PlayerProfile p : PLAYER_PROFILES.values()) {
             toWrite.append(p.toString()).append("\n");
         }
-        toWrite = new StringBuilder
-                (toWrite.substring(0, Math.max(0, toWrite.length() - 1)));
+        toWrite =
+                new StringBuilder(toWrite.substring(0, Math.max(0, toWrite.length() - 1)));
         fileWriter.write(toWrite.toString());
         fileWriter.close();
     }
@@ -125,16 +125,15 @@ public final class PlayerProfileManager {
      */
     public static void createPlayerProfile(final String playerName) throws IllegalArgumentException {
         if (!playerName.matches("^[a-zA-Z0-9_-]+$")) {
-            showAlert
-                    ("Profile name can only contain letters, numbers, hyphen and underscore!");
-            throw new IllegalArgumentException
-                    ("Profile name can only contain letters, numbers, hyphen and underscore!");
+            showAlert("Name can only contain letters," +
+                    " numbers, hyphen and underscore!");
+            throw new IllegalArgumentException ("" +
+                    "Name can only contain letters, " +
+                    "numbers, hyphen and underscore!");
         }
         if (hasPlayerProfile(playerName)) {
-            showAlert
-                    ("Profile already exists!");
-            throw new IllegalArgumentException
-                    ("Profile already exists!");
+            showAlert("Profile already exists!");
+            throw new IllegalArgumentException("Profile already exists!");
         }
         PlayerProfile profile = new PlayerProfile(playerName);
         PLAYER_PROFILES.put(playerName, profile);
