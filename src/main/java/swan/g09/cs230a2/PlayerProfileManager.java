@@ -1,5 +1,7 @@
 package swan.g09.cs230a2;
 
+import javafx.scene.control.Alert;
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,12 +93,12 @@ public final class PlayerProfileManager {
      * */
     public static void savePlayerProfiles() throws IOException {
         Writer fileWriter = new FileWriter(appDataDirectory + "users.csv", false);
-        String toWrite = "";
+        StringBuilder toWrite = new StringBuilder();
         for (PlayerProfile p : PLAYER_PROFILES.values()) {
-            toWrite += p.toString() + "\n";
+            toWrite.append(p.toString()).append("\n");
         }
-        toWrite = toWrite.substring(0, Math.max(0, toWrite.length() - 1)); //remove trailing linebreak
-        fileWriter.write(toWrite);
+        toWrite = new StringBuilder(toWrite.substring(0, Math.max(0, toWrite.length() - 1))); //remove trailing linebreak
+        fileWriter.write(toWrite.toString());
         fileWriter.close();
     }
 
