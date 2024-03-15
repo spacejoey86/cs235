@@ -87,7 +87,7 @@ public class HighScoresViewController {
 
     /**
      * Select a level to show high scores for.
-     * 
+     *
      * @param index The level index.
      */
     private void selectLevel(int index) {
@@ -102,7 +102,7 @@ public class HighScoresViewController {
 
     /**
      * Navigates to the main view.
-     * 
+     *
      * @param event The event from the action trigger.
      */
     @FXML

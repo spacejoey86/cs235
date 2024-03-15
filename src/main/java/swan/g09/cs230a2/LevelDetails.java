@@ -66,12 +66,12 @@ public class LevelDetails {
 
     /**
      * Default constructor for LevelDetails.
-     * 
+     *
      * @param resourcePath The path to the level in the project resources.
      * @param levelName    The name of the level.
      * @param lastLevel    Is this level the last
      * @param lvlNum       The number of the level in the load order
-     * @param tempscore    The highest score for this level
+     * @param tempScore    The highest score for this level
      * @throws IOException If the file doesn't exist.
      */
     public LevelDetails(String resourcePath, String levelName, boolean lastLevel, int lvlNum, int tempScore)
@@ -95,7 +95,7 @@ public class LevelDetails {
 
     /**
      * Turns seconds to minutes and seconds.
-     * 
+     *
      * @param seconds Level time remaining.
      * @return A string with the duration formatted.
      */
@@ -105,7 +105,7 @@ public class LevelDetails {
 
     /**
      * Get the level's resource path.
-     * 
+     *
      * @return The path to the level's resource.
      */
     public String getPath() {
@@ -114,7 +114,7 @@ public class LevelDetails {
 
     /**
      * Get the level number in ordering.
-     * 
+     *
      * @return levelNum
      */
     public int getLevelNum() {
@@ -123,7 +123,7 @@ public class LevelDetails {
 
     /**
      * Get the level's name.
-     * 
+     *
      * @return The name of the level.
      */
     public String getName() {
@@ -132,7 +132,7 @@ public class LevelDetails {
 
     /**
      * Get the level's duration.
-     * 
+     *
      * @return The duration on the level.
      */
     public String getDuration() {
@@ -141,7 +141,7 @@ public class LevelDetails {
 
     /**
      * Get the level's highest score.
-     * 
+     *
      * @return The highest score on the level.
      */
     public int getScore() {
@@ -150,7 +150,7 @@ public class LevelDetails {
 
     /**
      * Reads the level index file.
-     * 
+     *
      * @return The list of level details.
      * @throws IOException If the file couldn't be read successfully.
      */
@@ -191,7 +191,7 @@ public class LevelDetails {
 
     /**
      * returns true if this is the last level in the defined order.
-     * 
+     *
      * @return true if last level in levels file.
      */
     public boolean isLastLevel() {
@@ -200,7 +200,7 @@ public class LevelDetails {
 
     /**
      * Converts the LevelDetails to a string, gets the level name.
-     * 
+     *
      * @return The level name.
      */
     @Override

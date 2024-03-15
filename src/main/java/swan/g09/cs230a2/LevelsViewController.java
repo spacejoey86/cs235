@@ -125,7 +125,7 @@ public class LevelsViewController {
 
     /**
      * Loads a level from a file.
-     * 
+     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -157,7 +157,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the game view.
-     * 
+     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -189,7 +189,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the game view.
-     * 
+     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -210,7 +210,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the players view.
-     * 
+     *
      * @param event The event from the action trigger.
      */
     @FXML
