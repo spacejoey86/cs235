@@ -125,9 +125,9 @@ public final class PlayerProfileManager {
      */
     public static void createPlayerProfile(final String playerName) throws IllegalArgumentException {
         if (!playerName.matches("^[a-zA-Z0-9_-]+$")) {
-            showAlert ("Name can only contain letters,"
+            showAlert("Name can only contain letters,"
                     + " numbers, hyphen and underscore!");
-            throw new IllegalArgumentException (""
+            throw new IllegalArgumentException(""
                     + "Name can only contain letters, "
                     + "numbers, hyphen and underscore!");
         }
