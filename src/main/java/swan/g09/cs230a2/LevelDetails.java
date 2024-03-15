@@ -60,18 +60,25 @@ public class LevelDetails {
     private final int levelNum;
 
     /**
+     * The Highest score for this level.
+     */
+    private final int score;
+
+    /**
      * Default constructor for LevelDetails.
      * @param resourcePath The path to the level in the project resources.
      * @param levelName The name of the level.
      * @param lastLevel Is this level the last
      * @param lvlNum The number of the level in the load order
+     * @param tempscore The highest score for this level
      * @throws IOException If the file doesn't exist.
      */
-    public LevelDetails(String resourcePath, String levelName, boolean lastLevel, int lvlNum) throws IOException {
+    public LevelDetails(String resourcePath, String levelName, boolean lastLevel, int lvlNum, int tempScore) throws IOException {
         path = resourcePath;
         name = levelName;
         isLastLevel = lastLevel;
         levelNum = lvlNum;
+        score = tempScore;
 
         // Read the duration from the level file
         InputStream stream = getClass().getResourceAsStream(resourcePath);
@@ -126,6 +133,15 @@ public class LevelDetails {
     }
 
     /**
+     * Get the level's highest score.
+     * @return The highest score on the level.
+     */
+    public int getScore() {
+        return score;
+    }
+
+
+    /**
      * Reads the level index file.
      * @return The list of level details.
      * @throws IOException If the file couldn't be read successfully.
@@ -150,8 +166,14 @@ public class LevelDetails {
             if (matcher.matches()) {
                 String levelPath = matcher.group(REGEX_MATCHER_GROUP_1);
                 String lvlName = matcher.group(REGEX_MATCHER_GROUP_2);
+                int tempScore = 0;
+                try {
+                    tempScore = HighScoreTable.loadHighScores(lvlNum-1).get(0).getScore();
+                } catch (IOException | IndexOutOfBoundsException e) {
+                    tempScore = 0;
+                }
 
-                LevelDetails details = new LevelDetails(levelPath, lvlName, lastLevel, lvlNum);
+                LevelDetails details = new LevelDetails(levelPath, lvlName, lastLevel, lvlNum, tempScore);
                 detailsList.add(details);
             }
         }

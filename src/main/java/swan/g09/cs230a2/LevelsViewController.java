@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-import static swan.g09.cs230a2.HighScoresViewController.COLUMN_GAP;
+
 import static swan.g09.cs230a2.HighScoresViewController.NAME_COLUMN_WIDTH;
 
 /**
@@ -27,6 +27,12 @@ import static swan.g09.cs230a2.HighScoresViewController.NAME_COLUMN_WIDTH;
  * @version 0.1
  */
 public class LevelsViewController {
+
+
+    /**
+     * The width of the duration column.
+     */
+    public static final double DURATION_COLUMN_SIZE = 0.2;
     /**
      * The level table UI element.
      */
@@ -44,6 +50,12 @@ public class LevelsViewController {
      */
     @FXML
     private TableColumn<LevelDetails, String> duration;
+
+    /**
+     * The high scores table column UI element.
+     */
+    @FXML
+    private TableColumn<LevelDetails, Integer> highScores;
 
     /**
      * The loaded level subheader UI element.
@@ -73,11 +85,12 @@ public class LevelsViewController {
 
         levelName.setCellValueFactory(new PropertyValueFactory<LevelDetails, String>("name"));
         duration.setCellValueFactory(new PropertyValueFactory<LevelDetails, String>("duration"));
-
+        highScores.setCellValueFactory(new PropertyValueFactory<LevelDetails, Integer>("score"));
         // Automatically size columns
         levelName.prefWidthProperty().bind(levelTable.widthProperty().multiply(NAME_COLUMN_WIDTH));
-        duration.prefWidthProperty().bind(levelTable.widthProperty()
-                .subtract(COLUMN_GAP).subtract(levelName.widthProperty()));
+        duration.prefWidthProperty().bind(levelTable.widthProperty().multiply(DURATION_COLUMN_SIZE));
+        highScores.prefWidthProperty().bind(levelTable.widthProperty().multiply(DURATION_COLUMN_SIZE));
+          
 
         // Disable rows in the table if they're not unlocked
         int maxLevel = GameManager.getPlayerProfile().getMaxUnlockedLevel();

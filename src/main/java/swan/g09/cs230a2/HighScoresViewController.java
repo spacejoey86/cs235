@@ -21,7 +21,7 @@ public class HighScoresViewController {
     /**
      * The width of the name column.
      */
-    public static final double NAME_COLUMN_WIDTH = 0.8;
+    public static final double NAME_COLUMN_WIDTH = 0.6;
 
     /**
      * The gap between columns.
