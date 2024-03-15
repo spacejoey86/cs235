@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-
 import static swan.g09.cs230a2.HighScoresViewController.NAME_COLUMN_WIDTH;
 
 /**
@@ -27,7 +26,6 @@ import static swan.g09.cs230a2.HighScoresViewController.NAME_COLUMN_WIDTH;
  * @version 0.1
  */
 public class LevelsViewController {
-
 
     /**
      * The width of the duration column.
@@ -90,7 +88,6 @@ public class LevelsViewController {
         levelName.prefWidthProperty().bind(levelTable.widthProperty().multiply(NAME_COLUMN_WIDTH));
         duration.prefWidthProperty().bind(levelTable.widthProperty().multiply(DURATION_COLUMN_SIZE));
         highScores.prefWidthProperty().bind(levelTable.widthProperty().multiply(DURATION_COLUMN_SIZE));
-          
 
         // Disable rows in the table if they're not unlocked
         int maxLevel = GameManager.getPlayerProfile().getMaxUnlockedLevel();
@@ -128,6 +125,7 @@ public class LevelsViewController {
 
     /**
      * Loads a level from a file.
+     * 
      * @param event The event from the action trigger.
      */
     @FXML
@@ -159,6 +157,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the game view.
+     * 
      * @param event The event from the action trigger.
      */
     @FXML
@@ -190,6 +189,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the game view.
+     * 
      * @param event The event from the action trigger.
      */
     @FXML
@@ -210,6 +210,7 @@ public class LevelsViewController {
 
     /**
      * Navigates to the players view.
+     * 
      * @param event The event from the action trigger.
      */
     @FXML
