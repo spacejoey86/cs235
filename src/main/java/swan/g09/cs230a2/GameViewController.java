@@ -167,6 +167,7 @@ public class GameViewController {
                 case BUG_KILL -> "Bug ate you.";
                 case TIME_OUT -> "Ran out of time.";
                 case FROG_KILL -> "Frog killed you.";
+                case BARNACLE -> "Barnacle killed you";
                 case null -> "Died by some unknown cause...";
             };
             flavourText.setText(deathText);
