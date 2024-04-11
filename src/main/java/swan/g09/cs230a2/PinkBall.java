@@ -1,8 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
 
 /**
  * The PinkBall class represents a type of monster in the game.
@@ -89,7 +90,7 @@ public class PinkBall extends Actor {
      */
     @Override
     protected boolean checkMove(final Direction dir) {
-        Point2D newPosition = calculateNewPosition(dir);
+        Point2D newPosition = dir.calculateNewPosition(this.getPosition());
 
         Actor potActor = GameManager.checkActor(newPosition);
         if (potActor != null && potActor.getType() == TileType.PLAYER) {

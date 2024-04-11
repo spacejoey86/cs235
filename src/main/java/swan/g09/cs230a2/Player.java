@@ -1,9 +1,10 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
 
 /**
  * Player is an actor which is controlled by the user and interacts with other
@@ -126,7 +127,8 @@ public class Player extends Actor {
                     TileType.DIRT, TileType.EXIT, TileType.TRAP,
                     TileType.WATER, TileType.ICE, TileType.SPEED,
                     TileType.INVINC, TileType.EXTRA,
-                    TileType.INCREASETIME
+                    TileType.INCREASETIME,
+                    TileType.BOAT_PATH
             ));
 
     /**
@@ -234,7 +236,7 @@ public class Player extends Actor {
      */
     @Override
     protected boolean checkMove(Direction dir) {
-        Point2D nextPos = calculateNewPosition(dir);
+        Point2D nextPos = dir.calculateNewPosition(this.getPosition());
         Tile nextTile = GameManager.checkTile(nextPos);
 
         if (nextTile == null || !canWalkOverTile(nextTile.getType())) {

@@ -1,9 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Point2D;
 
 /**
  * A Timer that ticks every entity in the level on a variable interval.
@@ -86,14 +86,14 @@ public class GameTimer extends TimerTask {
                 Clock.tick(currentTick - levelStartTick); // Tick over the clock
             }
 
-            // Tick all actors and ice tiles
+            // Tick all actors and action tiles
             for (int x = 0; x < GameManager.getLevelWidth(); x++) {
                 for (int y = 0; y < GameManager.getLevelHeight(); y++) {
                     Point2D coordinate = new Point2D(x, y);
 
                     Tile t = GameManager.checkTile(coordinate);
-                    if (t instanceof Ice iceTile) {
-                        iceTile.tick();
+                    if (t instanceof ActionTile actionTile) {
+                        actionTile.tick();
                     }
 
                     Actor a = GameManager.checkActor(coordinate);

@@ -1,20 +1,20 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javafx.geometry.Point2D;
 
 /**
  * The level class handles reading and parsing level format data.
@@ -49,10 +49,16 @@ public class Level {
             = Pattern.compile("^([crygb]) */ *(\\d+)");
 
     /**
-     * Regex pattern for matching lines containing a level's loading flags.
+     * In save files, whether this was from a custom save and if not, whether it is the last level.
      */
     private static final Pattern LEVEL_FLAGS_PATTERN
             = Pattern.compile("(\\d+|null), *([01])");
+
+    /**
+     * Whether a boat path currently has a boat on it.
+     */
+    private static final Pattern BOAT_PRESENCE_PATTERN =
+            Pattern.compile("^\\((\\d+), *(\\d+)\\) _(\\??)");
 
     /**
      * Index used for groups in regex matching.
@@ -113,6 +119,11 @@ public class Level {
      * Map storing the connections to traps for buttons at given coordinates.
      */
     private final Map<Point2D, LinkedList<Point2D>> buttonConnections = new HashMap<>();
+
+    /**
+     * Map storing the precense of boats and whether it is reversing.
+     */
+    private final Map<Point2D, Boolean> boatPresences = new HashMap<>();
 
     /**
      * The inventory read from the level file. (Defaults to empty inventory.
@@ -231,7 +242,7 @@ public class Level {
                 itemGrid.add(reader.nextLine());
             }
 
-            // Read button connections and socket counts
+            // Read meta data (button connections, socket counts etc.)
             while (reader.hasNextLine()) {
                 lineNumber++;
                 String line = reader.nextLine();
@@ -257,6 +268,9 @@ public class Level {
                         }
                         isLastLevel = matcher.group(REGEX_MATCHER_GROUP_2).equals("1");
                     }
+                } else if (line.matches(BOAT_PRESENCE_PATTERN.pattern())) {
+                    // Boat on boat path
+                    setBoatPresence(line);
                 }
             }
         } catch (InputMismatchException e) {
@@ -342,51 +356,50 @@ public class Level {
     }
 
     /**
-     * Creates the correct Tile for the corresponding character in the level
-     * format key.
-     *
+     * Puts a boat on a boat path based on the provided line.
+     * @param line The line to be parsed
+     */
+    private void setBoatPresence(String line) {
+        Matcher matcher = BOAT_PRESENCE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            int boatPathX = Integer.parseInt(matcher.group(REGEX_MATCHER_GROUP_1));
+            int boatPathY = Integer.parseInt(matcher.group(REGEX_MATCHER_GROUP_2));
+            Boolean boatPathReversing = matcher.group(REGEX_MATCHER_GROUP_3).equals("?");
+
+            boatPresences.put(new Point2D(boatPathX, boatPathY), boatPathReversing);
+        }
+    }
+
+    /**
+     * Creates the correct Tile for the corresponding character in the level format key.
      * @param gridChar The character to convert.
      * @param coordinate The coordinate of the tile.
      * @return The Tile which was created.
      */
     private Tile parseTileFromChar(Character gridChar, Point2D coordinate) {
         return switch (gridChar) {
-            case 'P' ->
-                new Path(coordinate);
-            case 'D' ->
-                new Dirt(coordinate);
-            case 'W' ->
-                new Wall(coordinate);
-            case 'E' ->
-                new Exit(coordinate);
-            case 'C' ->
-                new Button(coordinate);
-            case 'T' ->
-                new Trap(coordinate);
-            case 'O' ->
-                new Water(coordinate);
-            case 'S' ->
-                new ChipSocket(coordinate);
-            case 'R' ->
-                new LockedDoor(coordinate, 'R');
-            case 'G' ->
-                new LockedDoor(coordinate, 'G');
-            case 'Y' ->
-                new LockedDoor(coordinate, 'Y');
-            case 'B' ->
-                new LockedDoor(coordinate, 'B');
-            case 'I' ->
-                new Ice(coordinate, Ice.IceType.NORMAL);
-            case 'U' ->
-                new Ice(coordinate, Ice.IceType.TOP_LEFT);
-            case 'J' ->
-                new Ice(coordinate, Ice.IceType.TOP_RIGHT);
-            case 'K' ->
-                new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
-            case 'L' ->
-                new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
-            default ->
-                null;
+            case 'P' -> new Path(coordinate);
+            case 'D' -> new Dirt(coordinate);
+            case 'W' -> new Wall(coordinate);
+            case 'E' -> new Exit(coordinate);
+            case 'C' -> new Button(coordinate);
+            case 'T' -> new Trap(coordinate);
+            case 'O' -> new Water(coordinate);
+            case 'S' -> new ChipSocket(coordinate);
+            case 'R' -> new LockedDoor(coordinate, 'R');
+            case 'G' -> new LockedDoor(coordinate, 'G');
+            case 'Y' -> new LockedDoor(coordinate, 'Y');
+            case 'B' -> new LockedDoor(coordinate, 'B');
+            case 'I' -> new Ice(coordinate, Ice.IceType.NORMAL);
+            case 'U' -> new Ice(coordinate, Ice.IceType.TOP_LEFT);
+            case 'J' -> new Ice(coordinate, Ice.IceType.TOP_RIGHT);
+            case 'K' -> new Ice(coordinate, Ice.IceType.BOTTOM_LEFT);
+            case 'L' -> new Ice(coordinate, Ice.IceType.BOTTOM_RIGHT);
+            case 'A' -> new BoatPath(coordinate, Direction.NORTH, false);
+            case 'F' -> new BoatPath(coordinate, Direction.EAST, false);
+            case 'H' -> new BoatPath(coordinate, Direction.SOUTH, false);
+            case 'M' -> new BoatPath(coordinate, Direction.WEST, false);
+            default -> null;
         };
     }
 
@@ -469,6 +482,14 @@ public class Level {
                         int socketCount = socketCounts.get(coordinate);
                         ChipSocket socket = (ChipSocket) tile;
                         socket.setRequiredChips(socketCount);
+                    }
+
+                    if (tile.getType() == TileType.BOAT_PATH && boatPresences.containsKey(coordinate)) {
+                        BoatPath boatPath = (BoatPath) tile;
+                        boatPath.moveBoatTo(false);
+                        if (boatPresences.get(coordinate)) {
+                            boatPath.setReverse();
+                        }
                     }
 
                     layer.setAtPosition(coordinate, tile);
