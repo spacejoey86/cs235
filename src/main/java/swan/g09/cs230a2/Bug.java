@@ -92,12 +92,14 @@ public class Bug extends Actor {
         }
 
         if (isTileOccupiedByActor(newPosition)) {
-            if (GameManager.checkActor(newPosition) instanceof Player) {
-                GameManager.endGame(GameManager.DeathState.BUG_KILL);
-                GameManager.removeActor(newPosition);
-            } else {
-                return false;
+            Actor collidedActor = GameManager.checkActor(newPosition);
+            if (collidedActor instanceof Player) {
+                if (!((Player) collidedActor).isInvincible()) {
+                    GameManager.endGame(GameManager.DeathState.BUG_KILL);
+                    GameManager.removeActor(newPosition);
+                }  // Player is invincible, no action taken
             }
+            return false;
         }
         return true;
     }
@@ -203,7 +205,7 @@ public class Bug extends Actor {
 
     /**
      * Gets the current status of edge-following behavior for the Bug.
-     *
+
      * @return True if the Bug follows the left edge; otherwise, false.
      */
     public boolean isFollowLeftEdge() {

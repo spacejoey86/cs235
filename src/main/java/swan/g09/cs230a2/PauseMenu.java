@@ -1,6 +1,5 @@
 package swan.g09.cs230a2;
 
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,44 +12,64 @@ import java.io.IOException;
 
 /**
  * Pause screen for the level.
+ *
  * @author Connor Milford
  */
-
 public class PauseMenu extends VBox {
 
-    //TODO: Add save, restart from save, quit game, return to menu
-
-    /** Text displayed on the resume button. */
+    /**
+     * Text displayed on the resume button.
+     */
     private static final String RESUME_BUTTON_TEXT = "Resume";
 
-    /** Text displayed on the quit button. */
-    private static final String  RETURN_BUTTON_TEXT = "Return";
+    /**
+     * Text displayed on the quit button.
+     */
+    private static final String RETURN_BUTTON_TEXT = "Return";
 
-    /** Text displayed on the help menu button. */
+    /**
+     * Text displayed on the help menu button.
+     */
     private static final String HELP_MENU_BUTTON_TEXT = "Help menu";
 
-    /** Text displayed on the restart button. */
+    /**
+     * Text displayed on the restart button.
+     */
     private static final String RESTART_BUTTON_TEXT = "Restart";
 
-    /** Text displayed on the restart button. */
+    /**
+     * Text displayed on the restart button.
+     */
     private static final String SAVE_BUTTON_TEXT = "Save";
 
-    /** Text displayed on the load from save button. */
+    /**
+     * Text displayed on the load from save button.
+     */
     private static final String LOAD_FROM_SAVE_BUTTON_TEXT = "Load from save";
 
-    /** Text displayed on popup when saved from pause menu. */
+    /**
+     * Text displayed on popup when saved from pause menu.
+     */
     private static final String SAVE_ALERT_TEXT = "Game data saved.";
 
-    /** Text displayed on popup when save loaded from pause menu. */
+    /**
+     * Text displayed on popup when save loaded from pause menu.
+     */
     private static final String LOAD_ALERT_TEXT = "Game loaded from save.";
 
-    /** Pause menu item width, relative to the window. */
+    /**
+     * Pause menu item width, relative to the window.
+     */
     private static final int PAUSE_MENU_WIDGET_WIDTH = 10;
 
-    /** Pause menu item height, relative to the window. */
+    /**
+     * Pause menu item height, relative to the window.
+     */
     private static final double PAUSE_MENU_WIDGET_HEIGHT = 10;
 
-    /** Pause menu item spacing. */
+    /**
+     * Pause menu item spacing.
+     */
     private static final int PAUSE_MENU_SPACING = 50;
 
     /**
@@ -97,18 +116,21 @@ public class PauseMenu extends VBox {
     }
 
     /**
-     * Opens the pause menu.
+     * Closes the pause menu.
      */
     private void resumeGame() {
         ChipsChallengeApplication.closePauseMenu();
     }
 
     /**
-     * Quits the current game scene and navigates to the main menu view fxml file.
+     * Quits the current game scene and navigates to the levels view fxml
+     * file.
      */
     private void quitGame() {
+        GameManager.stopTimer();
+        ChipsChallengeApplication.setPaused(false);
         try {
-            ChipsChallengeApplication.changeScene("main-view.fxml",
+            ChipsChallengeApplication.changeScene("levels-view.fxml",
                     ChipsChallengeApplication.DEFAULT_VIEW_WIDTH,
                     ChipsChallengeApplication.DEFAULT_VIEW_HEIGHT, false
             );
@@ -121,7 +143,7 @@ public class PauseMenu extends VBox {
      * Restarts the current level.
      */
     private void restartLevel() {
-        GameManager.restartLevel();
+        GameManager.restartLevel(false);
         GameManager.resetTimer();
         resumeGame();
     }
@@ -157,6 +179,7 @@ public class PauseMenu extends VBox {
 
     /**
      * Chooses a save file to be loaded.
+     *
      * @return path, the path of the file chosen
      */
     private String filePicker() {

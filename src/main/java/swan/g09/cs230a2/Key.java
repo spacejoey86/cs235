@@ -15,8 +15,8 @@ public class Key extends Item {
 
     /**
      * Default constructor for class Key.
-     * @param pos the position of the door.
-     * @param col the colour of the door.
+     * @param pos the position of the key.
+     * @param col the colour of the key.
      * */
     Key(Point2D pos, char col) {
         super(TileType.KEY, "sprites/Key_Red.png", pos);

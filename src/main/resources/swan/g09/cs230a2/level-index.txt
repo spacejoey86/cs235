@@ -9,3 +9,4 @@ levels/level8.txt, Loss
 levels/level9.txt, Crossy Road
 levels/level10.txt, Boat Ride
 levels/level11.txt, Landlubber
+levels/level12.txt, Powerups Test

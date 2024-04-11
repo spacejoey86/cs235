@@ -42,7 +42,7 @@ public class Block extends Actor {
      * If yes, the block moves in that direction.
      *
      * @param dir The direction.
-     * @return true if the player can move.
+     * @return true if the player can move; otherwise, returns false.
      * */
     @Override
     protected boolean checkMove(Direction dir) {

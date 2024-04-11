@@ -3,7 +3,8 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 
 /**
- * The ChipSocket is like the LockedDoor but deducts a currency of chips from the player's inventory.
+ * The {@code ChipSocket} is a tile that acts like the {@code LockedDoor}
+ * but deducts a currency of chips from the player's inventory.
  *
  * @author Samuel Lomas
  * */

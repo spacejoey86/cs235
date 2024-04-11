@@ -143,7 +143,6 @@ public class ChipsChallengeApplication extends Application {
     /**
      * Opens the pause menu.
      */
-
     public static void openPauseMenu() {
         // ensures thread is open
         Platform.runLater(() -> {
@@ -169,5 +168,13 @@ public class ChipsChallengeApplication extends Application {
                 paused = false;
             }
         });
+    }
+
+    /**
+     * Set the paused state of the game.
+     * @param isPaused Whether the game should be paused
+     */
+    public static void setPaused(boolean isPaused) {
+        paused = isPaused;
     }
 }
