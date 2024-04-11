@@ -1,15 +1,15 @@
-10,10
+10, 10
 120
 
 WWWWWWWWWW
-WOOOOOOOOW
-WPPPPPDPPW
-WPPPPPWOOW
-WPPPPPPPDW
-WWTWWPPPDW
-WPPPWWWYWW
-WPEPWPPPPW
-WPPPWPCPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPPW
+WPPPPPPPEW
 WWWWWWWWWW
 
 ----------
@@ -18,18 +18,18 @@ WWWWWWWWWW
 ----------
 ----------
 ----------
+-------@--
 ----------
-----------
---%-------
+--$-------
 ----------
 
 ----------
 ----------
---------y-
-----------
-----------
-----------
-----------
+------+---
+----]-----
+-------x--
+------v---
+----c-----
 ----------
 ----------
 ----------
