@@ -291,6 +291,7 @@ public class Player extends Actor {
                         case 'Y' -> inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
                         case 'B' -> inventory[InventorySlot.BLUE_KEY.ordinal()]++;
                     }
+                    GameManager.removeItem(nextPos);
                 }
                 case SPEED -> {
                     if (!hasSpeedPowerup) {
