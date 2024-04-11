@@ -21,7 +21,7 @@ abstract class Actor extends Tile {
     private Direction facing = Direction.NORTH;
 
     /**
-     * Handles whether the actor is trapped.
+     * Declares whether the actor is trapped or not.
      * */
     private boolean trapped;
 
@@ -79,7 +79,6 @@ abstract class Actor extends Tile {
 
     /**
      * Checks if the Actor can walk over a specific tile type.
-     *
      * @param tileType The type of tile to check.
      * @return True if the Actor can walk over the tile; otherwise, false.
      */

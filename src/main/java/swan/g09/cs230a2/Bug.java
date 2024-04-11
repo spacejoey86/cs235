@@ -204,7 +204,7 @@ public class Bug extends Actor {
 
     /**
      * Gets the current status of edge-following behavior for the Bug.
-     *
+
      * @return True if the Bug follows the left edge; otherwise, false.
      */
     public boolean isFollowLeftEdge() {

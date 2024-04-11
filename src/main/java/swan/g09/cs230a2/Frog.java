@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * The Frog class represents a type of monster that tries to move
+ * The {@code Frog} class, a subclass of {@code Actor}, represents a type of monster that tries to move
  * in the shortest path to the player's location.
  *
  * @author Barnaby Morley-Smith

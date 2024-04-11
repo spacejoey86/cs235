@@ -3,7 +3,7 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 
 /**
- * Dirt is a tile that becomes a path when walked on.
+ * The {@code Dirt} class is a tile that becomes a path once the player has walked on it.
  *
  * @author Samuel Lomas
  * @version 0.1
