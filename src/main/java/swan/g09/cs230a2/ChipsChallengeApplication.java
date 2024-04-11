@@ -1,8 +1,10 @@
 package swan.g09.cs230a2;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,6 +41,8 @@ public class ChipsChallengeApplication extends Application {
      * The stage being shown to the user.
      */
     private static Stage primaryStage;
+
+    private static boolean barnacleEventStarted = false;
 
     /**
      * Runs when the JavaFX program is started.
@@ -131,5 +135,26 @@ public class ChipsChallengeApplication extends Application {
      */
     public static Stage getStage() {
         return primaryStage;
+    }
+
+    public static void startEvent() {
+        // ensures thread is open
+        Platform.runLater(() -> {
+            if (!barnacleEventStarted) {
+                final StackPane root = (StackPane) getStage().getScene().getRoot();
+                root.getChildren().add(new BarnacleEvent());
+                barnacleEventStarted = true;
+            }
+        });
+    }
+
+    public static void endEvent() {
+        Platform.runLater(() -> {
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            if (root.getChildren().size() > 1 && barnacleEventStarted) {
+                root.getChildren().remove(root.getChildren().size() -1);
+                barnacleEventStarted = false;
+            }
+        });
     }
 }

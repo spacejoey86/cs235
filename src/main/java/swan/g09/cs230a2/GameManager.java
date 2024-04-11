@@ -34,7 +34,9 @@ public class GameManager {
         /** Player has been crushed by the block. */
         CRUSH,
         /** Player has been bounced on by the pink ball. */
-        BOUNCED
+        BOUNCED,
+        /** Player has been killed by a barnacle */
+        BARNACLE
     }
 
     /**
@@ -119,10 +121,11 @@ public class GameManager {
 
     /**
      * Checks for an actor at a position.
+     *
      * @param position the position to be checked
      * @return An actor if found, null if none
      * @throws IllegalStateException if level not yet started
-     * */
+     */
     public static Actor checkActor(Point2D position) {
         if (actorLayer == null) {
             throw new IllegalStateException("Level has not yet been loaded!");
@@ -375,6 +378,7 @@ public class GameManager {
         }
     }
 
+
     /**
      * Gets the width of the currently loaded level.
      *
@@ -610,4 +614,14 @@ public class GameManager {
     public static boolean isLevelRunning() {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
+
+
+    public static Player getPlayerInstance() {
+        return (Player) checkActor(getPlayerPosition());
+    }
+
+    public static ArrayList<Point2D> getBlockedTile(TileType tileType) {
+        return tileLayer.findPositionsOf(tileType);
+    }
+
 }

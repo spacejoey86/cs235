@@ -384,6 +384,7 @@ public class Level {
             case '%' -> new Bug(coordinate, false);
             case '$' -> new Bug(coordinate, true);
             case '^' -> new Frog(coordinate);
+            case ';' -> new Barnacle(coordinate);
             default -> null;
         };
     }
