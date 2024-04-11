@@ -42,6 +42,9 @@ public class ChipsChallengeApplication extends Application {
      */
     private static Stage primaryStage;
 
+    /**
+     * Whether or not the barnacle event has started, true if started.
+     */
     private static boolean barnacleEventStarted = false;
 
     /**
@@ -137,6 +140,10 @@ public class ChipsChallengeApplication extends Application {
         return primaryStage;
     }
 
+
+    /**
+     * Starts the barnacle event
+     */
     public static void startEvent() {
         // ensures thread is open
         Platform.runLater(() -> {
@@ -148,6 +155,9 @@ public class ChipsChallengeApplication extends Application {
         });
     }
 
+    /**
+     * Ends the barnacle event
+     */
     public static void endEvent() {
         Platform.runLater(() -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
