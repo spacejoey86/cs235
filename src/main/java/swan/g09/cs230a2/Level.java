@@ -47,7 +47,7 @@ public class Level {
             Pattern.compile("^([crygb]) */ *(\\d+)");
 
     /**
-     * Regex pattern for matching lines containing a slot in the inventory.
+     * Regex pattern for matching lines containing a level's loading flags.
      */
     private static final Pattern LEVEL_FLAGS_PATTERN =
             Pattern.compile("(\\d+|null), *([01])");
