@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
  * An ExtraLife item can be picked up by the player and gain an extra life.
  *
  * @version 0.1
- * @Author Juned
+ * @author Juned
  * */
 public class ExtraLife extends Item {
 

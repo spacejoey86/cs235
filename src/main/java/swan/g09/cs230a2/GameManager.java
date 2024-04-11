@@ -7,7 +7,6 @@ import java.io.Writer;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -331,6 +330,7 @@ public class GameManager {
     /**
      * Restart the current level.
      * Resets the state of the level.
+     * @param usedExtraLife true if this restart was due to using an extra life
      */
     public static void restartLevel(boolean usedExtraLife) {
         if (level == null) {
@@ -491,9 +491,9 @@ public class GameManager {
         }
 
         if (deathState != DeathState.EXTRA) {
-            if (Player.extraLives > 0) {
+            if (Player.getExtraLives() > 0) {
                 // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
-                Player.extraLives--;
+                Player.setExtraLives(Player.getExtraLives() - 1);
                 Player player = (Player) checkActor(getPlayerPosition());
                 player.setInventory(new int[]{0, 0, 0, 0, 0});
                 restartLevel(true);

@@ -149,13 +149,14 @@ public class GameTimer extends TimerTask {
     /**
      * Adds time to the level timer.
      * @param seconds The number of seconds to add to the timer.
+     * @return the number of ticks now remaining
      * */
     public static int addTime(int seconds) {
         if (timingLevel) {
             levelStartTick += (seconds * (int) (MILLIS_IN_SECOND / TICK_RATE));
             return levelStartTick;
         }
-        return -1;  // Indicate that time wasn't added (e.g., if not in a timed level)
+        throw new IllegalStateException("Attempted to add time to level while it isn't being timed");
     }
 
     /**
