@@ -121,7 +121,7 @@ public class PauseMenu extends VBox {
      * Restarts the current level.
      */
     private void restartLevel() {
-        GameManager.restartLevel();
+        GameManager.restartLevel(false);
         GameManager.resetTimer();
         resumeGame();
     }
