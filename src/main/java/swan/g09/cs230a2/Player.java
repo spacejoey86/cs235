@@ -2,7 +2,6 @@ package swan.g09.cs230a2;
 
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,10 +137,20 @@ public class Player extends Actor {
         InputManager.addTickHandler(KeyCode.DOWN, () -> handleMovement(Direction.SOUTH));
 
         // Add tick handlers for WASD keys
-        InputManager.addTickHandler(KeyCode.A, () -> handleMovement(Direction.WEST));
-        InputManager.addTickHandler(KeyCode.D, () -> handleMovement(Direction.EAST));
-        InputManager.addTickHandler(KeyCode.W, () -> handleMovement(Direction.NORTH));
-        InputManager.addTickHandler(KeyCode.S, () -> handleMovement(Direction.SOUTH));
+        InputManager.addTickHandler(KeyCode.A, () -> {
+            handleMovement(Direction.WEST);
+        });
+        InputManager.addTickHandler(KeyCode.D, () -> {
+            handleMovement(Direction.EAST);
+        });
+        InputManager.addTickHandler(KeyCode.W, () -> {
+            handleMovement(Direction.NORTH);
+        });
+        InputManager.addTickHandler(KeyCode.S, () -> {
+            handleMovement(Direction.SOUTH);
+        });
+        InputManager.addTickHandler(KeyCode.ESCAPE,
+                ChipsChallengeApplication::openPauseMenu);
 
         // Set lastMoveTick to allow moving on the first tick
         lastMoveTick = -ORIGINAL_MOVE_INTERVAL;

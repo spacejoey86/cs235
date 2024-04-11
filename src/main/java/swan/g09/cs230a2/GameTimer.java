@@ -53,6 +53,11 @@ public class GameTimer extends TimerTask {
     private static boolean timingLevel;
 
     /**
+     * A boolean used to pause and unpause the timer.
+     */
+    private boolean paused;
+
+    /**
      * The view controller for rendering the game.
      * */
     private GameViewController gameViewController;
@@ -64,6 +69,7 @@ public class GameTimer extends TimerTask {
         timerRunning = false;
         timingLevel = false;
         currentTick = 0;
+        paused = false;
         timer = new Timer();
     }
 
@@ -72,7 +78,7 @@ public class GameTimer extends TimerTask {
      * */
     @Override
     public void run() {
-        if (timerRunning) {
+        if (timerRunning && !paused) {
             currentTick++; //Increment Tick
             InputManager.tick(); //Tick over the input manager
 
@@ -216,5 +222,35 @@ public class GameTimer extends TimerTask {
      * */
     public boolean isTimingLevel() {
         return timingLevel;
+    }
+
+    /**
+     * Pauses the timer at the current time.
+     */
+    public void pauseTimer() {
+        this.paused = true;
+
+    }
+
+    /**
+     * Unpauses the timer.
+     */
+    public void unpauseTimer() {
+        this.paused = false;
+    }
+
+    /**
+     * Returns true if timer is paused, otherwise false.
+     * @return paused, Whether the timer is paused.
+     */
+    public boolean isPaused() {
+        return paused;
+    }
+
+    /**
+     * Restarts the timer to the level default.
+     */
+    public void resetLevelTimer() {
+        levelStartTick = currentTick;
     }
 }
