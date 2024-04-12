@@ -1,9 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.geometry.Point2D;
 
 /**
  * A Timer that ticks every entity in the level on a variable interval.
@@ -35,12 +35,12 @@ public class GameTimer extends TimerTask {
     /**
      * The tick for the start of a level.
      * */
-    private int levelStartTick;
+    private static int levelStartTick;
 
     /**
      * The tick for the end of a level.
      * */
-    private int levelEndTick;
+    private static int levelEndTick;
 
     /**
      * Boolean used to control the state of the timer.
@@ -50,7 +50,7 @@ public class GameTimer extends TimerTask {
     /**
      * A boolean used for detecting whether a level is being timed.
      * */
-    private boolean timingLevel;
+    private static boolean timingLevel;
 
     /**
      * A boolean used to pause and unpause the timer.
@@ -86,14 +86,14 @@ public class GameTimer extends TimerTask {
                 Clock.tick(currentTick - levelStartTick); // Tick over the clock
             }
 
-            // Tick all actors and ice tiles
+            // Tick all actors and action tiles
             for (int x = 0; x < GameManager.getLevelWidth(); x++) {
                 for (int y = 0; y < GameManager.getLevelHeight(); y++) {
                     Point2D coordinate = new Point2D(x, y);
 
                     Tile t = GameManager.checkTile(coordinate);
-                    if (t instanceof Ice iceTile) {
-                        iceTile.tick();
+                    if (t instanceof ActionTile actionTile) {
+                        actionTile.tick();
                     }
 
                     Actor a = GameManager.checkActor(coordinate);
@@ -108,6 +108,7 @@ public class GameTimer extends TimerTask {
             }
         }
     }
+
 
     /**
      * Set the view controller that draws the game.
@@ -143,6 +144,19 @@ public class GameTimer extends TimerTask {
         }
         levelStartTick = currentTick;
         timingLevel = true;
+    }
+
+    /**
+     * Adds time to the level timer.
+     * @param seconds The number of seconds to add to the timer.
+     * @return the number of ticks now remaining
+     * */
+    public static int addTime(int seconds) {
+        if (timingLevel) {
+            levelStartTick += (seconds * (int) (MILLIS_IN_SECOND / TICK_RATE));
+            return levelStartTick;
+        }
+        throw new IllegalStateException("Attempted to add time to level while it isn't being timed");
     }
 
     /**

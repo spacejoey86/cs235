@@ -139,6 +139,10 @@ public class Layer<T> {
                     Ice ic = (Ice) t;
                     yield ic.toChar();
                 }
+                case BOAT_PATH -> {
+                    BoatPath bp = (BoatPath) t;
+                    yield bp.toChar();
+                }
                 default -> '-';
             };
         }

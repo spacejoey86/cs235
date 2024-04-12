@@ -1,12 +1,13 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.PriorityQueue;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PriorityQueue;
+
+import javafx.geometry.Point2D;
 
 /**
  * The {@code Frog} class, a subclass of {@code Actor}, represents a type of monster that tries to move
@@ -74,7 +75,7 @@ public class Frog extends Actor {
      */
     @Override
     protected boolean checkMove(Direction dir) {
-        Point2D newPosition = calculateNewPosition(dir);
+        Point2D newPosition = dir.calculateNewPosition(this.getPosition());
         GameManager.checkTile(newPosition);
 
         TileType newTileType = checkPosition(newPosition);
@@ -83,15 +84,18 @@ public class Frog extends Actor {
         }
 
         if (isTileOccupiedByActor(newPosition)) {
-            if (GameManager.checkActor(newPosition) instanceof Player) {
-                GameManager.endGame(GameManager.DeathState.FROG_KILL);
-                GameManager.removeActor(newPosition);
-            } else {
-                return false;
+            Actor collidedActor = GameManager.checkActor(newPosition);
+            if (collidedActor instanceof Player) {
+                if (!((Player) collidedActor).isInvincible()) {
+                    GameManager.endGame(GameManager.DeathState.BUG_KILL);
+                    GameManager.removeActor(newPosition);
+                }  // Player is invincible, no action taken
             }
+            return false;
         }
         return true;
     }
+
 
     /**
      * Determines the next direction for the Frog to move based

@@ -1,14 +1,14 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.io.FileNotFoundException;
-import java.io.Writer;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+
+import javafx.geometry.Point2D;
 
 
 /**
@@ -34,7 +34,9 @@ public class GameManager {
         /** Player has been crushed by the block. */
         CRUSH,
         /** Player has been bounced on by the pink ball. */
-        BOUNCED
+        BOUNCED,
+        /** Player has died from an extra life. */
+        EXTRA
     }
 
     /**
@@ -290,7 +292,7 @@ public class GameManager {
     }
 
     /**
-     * Load a level from an autosave.
+     * Load a level from an Auto save.
      * @param path The path to the level file,
      * @throws InputMismatchException If the level format was wrong (should never occur).
      */
@@ -328,8 +330,9 @@ public class GameManager {
     /**
      * Restart the current level.
      * Resets the state of the level.
+     * @param usedExtraLife true if this restart was due to using an extra life
      */
-    public static void restartLevel() {
+    public static void restartLevel(boolean usedExtraLife) {
         if (level == null) {
             throw new IllegalStateException("Level has not yet been loaded!");
         }
@@ -346,8 +349,17 @@ public class GameManager {
             }
         }
 
-        Clock.setLevelDuration(level.getDuration());
+        // Reset the timer and level duration if an extra life was used
+        if (usedExtraLife) {
+            Clock.resetLevelDuration();
+            Clock.resetRemainingTime();
+        } else {
+            Clock.setLevelDuration(level.getDuration());
+        }
+
     }
+
+
 
     /**
      * Checks if a level has been loaded.
@@ -472,17 +484,32 @@ public class GameManager {
      *
      * @param deathState Enum death state pertaining to the way the player died.
      * @throws IllegalStateException if level not initiated.
-     * */
+     */
     public static void endGame(DeathState deathState) throws IllegalStateException {
         if (tileLayer == null) {
             throw new IllegalStateException("Level not loaded!");
         }
+
+        if (deathState != DeathState.EXTRA) {
+            if (Player.getExtraLives() > 0) {
+                // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
+                Player.setExtraLives(Player.getExtraLives() - 1);
+                Player player = (Player) checkActor(getPlayerPosition());
+                player.setInventory(new int[]{0, 0, 0, 0, 0});
+                restartLevel(true);
+                return;
+            }
+        }
+
         if (levelNumber != null) {
             PlayerViewController.tryDeleteAutoSave(levelNumber);
         }
+
         stopTimer();
         gameViewController.gameLose(deathState);
     }
+
+
 
     /**
      * Processes score for the level, and loads the next.
@@ -542,14 +569,14 @@ public class GameManager {
      * @return String of actors and their directions.
      * */
     private static String getActorDirections() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
 
         for (Actor a : actorLayer.getAllElements()) {
             Point2D pos = a.getPosition();
             char d = Actor.directionToChar(a.getFacingDir());
-            outStr += String.format("(%d,%d) @ %s\n", (int) pos.getX(), (int) pos.getY(), d);
+            outStr.append(String.format("(%d,%d) @ %s\n", (int) pos.getX(), (int) pos.getY(), d));
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -557,15 +584,15 @@ public class GameManager {
      * @return list of chip readers and counts
      * */
     private static String getChipCounts() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         ArrayList<Point2D> chipSockets = tileLayer.findPositionsOf(TileType.CHIP_SOCKET);
         for (Point2D p : chipSockets) {
             if (tileLayer.getAtPosition(p) instanceof ChipSocket chipSocket) {
-                outStr += String.format("(%d,%d) # %d\n",
-                        (int) p.getX(), (int) p.getY(), chipSocket.getRequiredChips());
+                outStr.append(String.format("(%d,%d) # %d\n",
+                        (int) p.getX(), (int) p.getY(), chipSocket.getRequiredChips()));
             }
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -573,15 +600,15 @@ public class GameManager {
      * @return List of items in the player's inventory.
      */
     private static String getInventory() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         Actor playerActor = checkActor(getPlayerPosition());
         if (playerActor instanceof Player player) {
             int[] inv = player.getInventory();
             for (int i = 0; i < inv.length; i++) {
-                outStr += String.format("%s / %d\n", Player.InventorySlot.values()[i].toString(), inv[i]);
+                outStr.append(String.format("%s / %d\n", Player.InventorySlot.values()[i].toString(), inv[i]));
             }
         }
-        return outStr;
+        return outStr.toString();
     }
 
     /**
@@ -589,17 +616,40 @@ public class GameManager {
      * @return A list of buttons and the traps they are linked to
      * */
     private static String getButtonAssocs() {
-        String outStr = "";
+        StringBuilder outStr = new StringBuilder();
         ArrayList<Point2D> buttons = tileLayer.findPositionsOf(TileType.BUTTON);
         for (Point2D p : buttons) {
             Button b = (Button) tileLayer.getAtPosition(p);
             ArrayList<Trap> linkedTraps = b.getLinkedTraps();
             for (Trap t : linkedTraps) {
                 Point2D pos = t.getPosition();
-                outStr += String.format("(%d,%d) -> (%d,%d)\n",
-                        (int) p.getX(), (int) p.getY(), (int) pos.getX(), (int) pos.getY());
+                outStr.append(String.format("(%d,%d) -> (%d,%d)\n",
+                        (int) p.getX(), (int) p.getY(), (int) pos.getX(), (int) pos.getY()));
             }
         }
+        return outStr.toString();
+    }
+
+    /**
+     * Get boat path meta data.
+     * @return A string containing the boat path meta data
+     */
+    private static String getBoatMetaData() {
+        String outStr = "";
+
+        for (Point2D pos : tileLayer.findPositionsOf(TileType.BOAT_PATH)) {
+            BoatPath boatPath = (BoatPath) tileLayer.getAtPosition(pos);
+            if (boatPath.getBoatPresence()) {
+                String reverseString = "";
+                if (boatPath.getReversing()) {
+                    reverseString = "?";
+                }
+
+                outStr += String.format("(%d,%d) _%s\n",
+                    (int) pos.getX(), (int) pos.getY(), reverseString);
+            }
+        }
+
         return outStr;
     }
 
@@ -616,11 +666,13 @@ public class GameManager {
         String buttonAssocs = getButtonAssocs();
         String actorDirecitons = getActorDirections();
         String inventory = getInventory();
+        String boatMetaData = getBoatMetaData();
         String levelFlags = String.format("%d,%d", levelNumber, isLastLevel ? 1 : 0);
 
         String saveFile = String.format("%s\n%s\n\n%s\n%s\n%s\n%s%s%s\n%s\n%s", levelDims, timeRemaining,
                 tileLayerStr, actorLayerStr, itemLayerStr,
-                buttonAssocs, chipCounts, actorDirecitons, inventory, levelFlags);
+                buttonAssocs, chipCounts, actorDirecitons,
+                inventory, boatMetaData, levelFlags);
         String fileName = String.format("%s-%s.sav", playerProfile.getPlayerName(), levelName);
         String workingDir = PlayerProfileManager.getAppDataDirectory();
 
@@ -640,4 +692,6 @@ public class GameManager {
     public static boolean isLevelRunning() {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
+
+
 }
