@@ -52,7 +52,6 @@ public class LockedDoor extends Tile {
 
         if (unlocked) {
             GameManager.setPath(getPosition()); // Open the door
-            GameManager.updateInventoryDisplay(); // Reflect the change in the UI
             return true;
         }
         return false;

@@ -157,6 +157,12 @@ public class GameViewController {
 
         gameEndOverlay.setVisible(false);
 
+        chipImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Chip.png"))));
+        redKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Red.png"))));
+        greenKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Green.png"))));
+        yellowKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Yellow.png"))));
+        blueKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Blue.png"))));
+
         canvas.widthProperty().bind(canvasPane.widthProperty());
         canvas.heightProperty().bind(canvasPane.heightProperty());
 
@@ -185,6 +191,7 @@ public class GameViewController {
             if (!renderedSinceLastTick) {
                 renderedSinceLastTick = true;
                 clock.setText(formatLevelTime(Clock.getRemainingTime()));
+                GameManager.updateInventoryDisplay();
                 canvas.draw();
             }
         });
@@ -240,40 +247,14 @@ public class GameViewController {
      * @param inventory The player's inventory.
      */
     public void updateInventoryDisplay(int[] inventory) {
-        chipImage.setVisible(inventory[Player.InventorySlot.CHIP.ordinal()] > 0);
         int chipCount = inventory[Player.InventorySlot.CHIP.ordinal()];
         chipImage.setVisible(chipCount > 0);
+        chipCountLabel.setVisible(chipCount > 0);
         chipCountLabel.setText(String.valueOf(chipCount));
         redKeyImage.setVisible(inventory[Player.InventorySlot.RED_KEY.ordinal()] > 0);
         greenKeyImage.setVisible(inventory[Player.InventorySlot.GREEN_KEY.ordinal()] > 0);
         yellowKeyImage.setVisible(inventory[Player.InventorySlot.YELLOW_KEY.ordinal()] > 0);
         blueKeyImage.setVisible(inventory[Player.InventorySlot.BLUE_KEY.ordinal()] > 0);
-
-        // Update images to reflect the count
-        chipImage.setImage(generateImageForInventoryItem(Player.InventorySlot.CHIP.ordinal(),
-                inventory[Player.InventorySlot.CHIP.ordinal()]));
-        redKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.RED_KEY.ordinal(),
-                inventory[Player.InventorySlot.RED_KEY.ordinal()]));
-        greenKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.GREEN_KEY.ordinal(),
-                inventory[Player.InventorySlot.GREEN_KEY.ordinal()]));
-        yellowKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.YELLOW_KEY.ordinal(),
-                inventory[Player.InventorySlot.YELLOW_KEY.ordinal()]));
-        blueKeyImage.setImage(generateImageForInventoryItem(Player.InventorySlot.BLUE_KEY.ordinal(),
-                inventory[Player.InventorySlot.BLUE_KEY.ordinal()]));
-    }
-
-    /**
-     * Generate an image for an inventory item.
-     * @param index The index of the item in the inventory.
-     * @param count The count of the item in the inventory.
-     * @return The image for the inventory item.
-     */
-    private Image generateImageForInventoryItem(int index, int count) {
-        String imagePath = INVENTORY_IMAGE_PATH_MAP.get(index);
-        if (imagePath == null) {
-            return null; // Or handle invalid index appropriately
-        }
-        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
     }
 
     /**

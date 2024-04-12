@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
+import javafx.application.Platform;
+
 
 /**
  * The GameManager class is responsible for managing communications between tiles on each layer.
@@ -148,7 +150,9 @@ public class GameManager {
      * */
     public static void updateInventoryDisplay() {
         if (gameViewController != null && playerProfile != null) {
-            gameViewController.updateInventoryDisplay(Player.getInventory());
+            Platform.runLater(() -> {
+                gameViewController.updateInventoryDisplay(Player.getInventory());
+            });
         }
     }
 

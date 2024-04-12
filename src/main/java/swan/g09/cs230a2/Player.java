@@ -225,7 +225,6 @@ public class Player extends Actor {
         if (nextItem != null && nextItem.getType() == TileType.CHIP) {
             INVENTORY[0]++;
             GameManager.removeItem(nextPos);
-            GameManager.updateInventoryDisplay();
         } else if (nextItem != null && nextItem.getType() == TileType.KEY) {
             Key key = (Key) nextItem;
             switch (key.getColour()) {
@@ -245,7 +244,6 @@ public class Player extends Actor {
                     break;
             }
             GameManager.removeItem(nextPos);
-            GameManager.updateInventoryDisplay();
         }
         return true;
     }
