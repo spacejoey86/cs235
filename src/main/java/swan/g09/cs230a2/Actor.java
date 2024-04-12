@@ -1,8 +1,8 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.ArrayList;
+
+import javafx.geometry.Point2D;
 
 /**
  * The Actor Class is an abstract class that defines the behaviours for each of the on-screen actors.
@@ -21,7 +21,7 @@ abstract class Actor extends Tile {
     private Direction facing = Direction.NORTH;
 
     /**
-     * Handles whether the actor is trapped.
+     * Declares whether the actor is trapped or not.
      * */
     private boolean trapped;
 
@@ -79,7 +79,6 @@ abstract class Actor extends Tile {
 
     /**
      * Checks if the Actor can walk over a specific tile type.
-     *
      * @param tileType The type of tile to check.
      * @return True if the Actor can walk over the tile; otherwise, false.
      */
@@ -105,7 +104,7 @@ abstract class Actor extends Tile {
      * Check if a tile at a certain position is able to be moved to.
      * @param pos Position to move to.
      * @param isMonster If the actor is a monster, consider players to not be an obstacle.
-     * @return Whether the actor can move to the position.
+     * @return True if the actor can move to the position.
      */
     protected boolean positionTraversable(Point2D pos, boolean isMonster) {
         TileType newTileType = checkPosition(pos);
@@ -114,7 +113,9 @@ abstract class Actor extends Tile {
         }
 
         if (isTileOccupiedByActor(pos)) {
-            return isMonster && GameManager.checkActor(pos) instanceof Player;
+            if (isMonster && GameManager.checkActor(pos) instanceof Player) {
+                return !((Player) GameManager.checkActor(pos)).isInvincible();
+            }
         }
 
         return true;
@@ -145,35 +146,6 @@ abstract class Actor extends Tile {
     protected boolean isTileOccupiedByActor(final Point2D position) {
         Actor actorAtPosition = GameManager.checkActor(position);
         return actorAtPosition != null;
-    }
-
-    /**
-     * Calculates the new position after moving in a specific direction.
-     *
-     * @param dir The direction in which the Bug intends to move.
-     * @return The new position after moving in the specified direction.
-     */
-    protected Point2D calculateNewPosition(final Direction dir) {
-        double newX = getPosition().getX();
-        double newY = getPosition().getY();
-
-        switch (dir) {
-            case NORTH:
-                newY--;
-                break;
-            case EAST:
-                newX++;
-                break;
-            case SOUTH:
-                newY++;
-                break;
-            case WEST:
-                newX--;
-                break;
-            default:
-        }
-
-        return new Point2D(newX, newY);
     }
 
     /**
