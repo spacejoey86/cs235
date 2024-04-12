@@ -146,9 +146,10 @@ public class Player extends Actor {
     private int lastMoveTick;
 
     /**
-     * Stores the player's inventory.
-     * This stores the amount of each item in the order [Chips, Key_R, Key_G, Key_Y, Key_B, EXTRA_LIFE].
-     * */
+     * Stores the player's inventory. This stores the amount of each item in the
+     * order [Chips, Key_R, Key_G, Key_Y, Key_B, EXTRA_LIFE].
+     *
+     */
     private static final int[] INVENTORY = new int[]{0, 0, 0, 0, 0, 0};
 
     /**
@@ -432,8 +433,8 @@ public class Player extends Actor {
     }
 
     /**
-     * Get the duration of invincibility remaining
-     * 
+     * Get the duration of invincibility remaining.
+     *
      * @return the duration of invincibility remaining (0 means none remaining)
      */
     public int getInvincibleRemaining() {
@@ -463,6 +464,7 @@ public class Player extends Actor {
 
     /**
      * Get the time remaining of speed boost powerup.
+     *
      * @return the time remaining (0 if there is no speed boost applied)
      */
     public int getSpeedBoostRemaining() {

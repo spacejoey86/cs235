@@ -14,8 +14,6 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.Objects;
 
-
-
 /**
  * The UI controller for the game view.
  *
@@ -28,6 +26,11 @@ public class GameViewController {
      * Number of seconds in a minute.
      */
     private static final int SECONDS_IN_MINUTE = 60;
+
+    /**
+     * Number of milliseconds in a second.
+     */
+    private static final int MILLIS_IN_SECOND = 1000;
 
     /**
      * The clock UI element.
@@ -161,6 +164,7 @@ public class GameViewController {
 
     /**
      * Turns seconds to minutes and seconds.
+     *
      * @param seconds Level time remaining.
      * @return A string with the duration formatted.
      */
@@ -178,14 +182,22 @@ public class GameViewController {
 
         gameEndOverlay.setVisible(false);
 
-        chipImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Chip.png"))));
-        redKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Red.png"))));
-        greenKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Green.png"))));
-        yellowKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Yellow.png"))));
-        blueKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Blue.png"))));
-        extraLifeImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/ExtraLife.png"))));
-        invincibleImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Invincible.png"))));
-        speedImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Speed.png"))));
+        chipImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Chip.png"))));
+        redKeyImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Red.png"))));
+        greenKeyImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Green.png"))));
+        yellowKeyImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Yellow.png"))));
+        blueKeyImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Blue.png"))));
+        extraLifeImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/ExtraLife.png"))));
+        invincibleImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Invincible.png"))));
+        speedImage.setImage(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("sprites/Speed.png"))));
 
         canvas.widthProperty().bind(canvasPane.widthProperty());
         canvas.heightProperty().bind(canvasPane.heightProperty());
@@ -196,6 +208,7 @@ public class GameViewController {
 
     /**
      * Starts the game.
+     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -241,6 +254,7 @@ public class GameViewController {
 
     /**
      * Handle GUI changes when losing the level.
+     *
      * @param deathState The player's death state.
      */
     public void gameLose(GameManager.DeathState deathState) {
@@ -249,13 +263,20 @@ public class GameViewController {
             winLoseText.setText("You lose!");
 
             String deathText = switch (deathState) {
-                case CRUSH -> "Crushed by a moving block.";
-                case DROWN -> "You couldn't swim.";
-                case BOUNCED -> "Bounced on by a pink ball.";
-                case BUG_KILL -> "Bug ate you.";
-                case TIME_OUT -> "Ran out of time.";
-                case FROG_KILL -> "Frog killed you.";
-                case EXTRA -> "You have an extra life.";
+                case CRUSH ->
+                    "Crushed by a moving block.";
+                case DROWN ->
+                    "You couldn't swim.";
+                case BOUNCED ->
+                    "Bounced on by a pink ball.";
+                case BUG_KILL ->
+                    "Bug ate you.";
+                case TIME_OUT ->
+                    "Ran out of time.";
+                case FROG_KILL ->
+                    "Frog killed you.";
+                case EXTRA ->
+                    "You have an extra life.";
             };
             flavourText.setText(deathText);
 
@@ -268,6 +289,7 @@ public class GameViewController {
 
     /**
      * Update the canvas to reflect the game state.
+     *
      * @param inventory The player's inventory.
      */
     public void updateInventoryDisplay(int[] inventory) {
@@ -288,12 +310,12 @@ public class GameViewController {
         extraLifeCountLabel.setVisible(extraLives > 0);
         extraLifeCountLabel.setText(String.valueOf(extraLives));
 
-        int invincibleRemaining = player.getInvincibleRemaining() / (1000 / GameTimer.getTickRate());
+        int invincibleRemaining = player.getInvincibleRemaining() / (MILLIS_IN_SECOND / GameTimer.getTickRate());
         invincibleImage.setVisible(invincibleRemaining > 0);
         invincibleRemainingLabel.setVisible(invincibleRemaining > 0);
         invincibleRemainingLabel.setText(formatLevelTime(invincibleRemaining));
 
-        int speedBoostRemaining = player.getSpeedBoostRemaining() / (1000 / GameTimer.getTickRate());
+        int speedBoostRemaining = player.getSpeedBoostRemaining() / (MILLIS_IN_SECOND / GameTimer.getTickRate());
         speedImage.setVisible(speedBoostRemaining > 0);
         speedRemainingLabel.setVisible(speedBoostRemaining > 0);
         speedRemainingLabel.setText(formatLevelTime(speedBoostRemaining));
@@ -313,6 +335,7 @@ public class GameViewController {
 
     /**
      * Navigate to the level select view.
+     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -340,6 +363,7 @@ public class GameViewController {
 
     /**
      * Play the next level.
+     *
      * @param event The event from the action trigger.
      */
     @FXML

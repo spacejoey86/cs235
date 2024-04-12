@@ -25,6 +25,7 @@ public class LockedDoor extends Tile {
             case 'G' -> updateImagePath("sprites/LockedDoor_Green.png");
             case 'Y' -> updateImagePath("sprites/LockedDoor_Yellow.png");
             case 'B' -> updateImagePath("sprites/LockedDoor_Blue.png");
+            default -> throw new IllegalArgumentException("invalid door save character");
         }
         colour = col;
     }
