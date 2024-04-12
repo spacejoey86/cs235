@@ -88,7 +88,7 @@ public class Player extends Actor {
          */
         @Override
         public String toString() {
-            return Character.toString("crgyb".charAt(this.ordinal()));
+            return Character.toString("crgybe".charAt(this.ordinal()));
         }
 
         /**
@@ -109,8 +109,10 @@ public class Player extends Actor {
                     YELLOW_KEY;
                 case "b" ->
                     BLUE_KEY;
+                case "e" ->
+                    EXTRA_LIFE;
                 default ->
-                    null;
+                    throw new IllegalArgumentException("Invalid inventory slot character");
             };
         }
 
@@ -145,10 +147,10 @@ public class Player extends Actor {
 
     /**
      * Stores the player's inventory. This stores the amount of each item in the
-     * order [Chips, Key_R, Key_G, Key_Y, Key_B].
+     * order [Chips, Key_R, Key_G, Key_Y, Key_B, EXTRA_LIFE].
      *
      */
-    private final int[] inventory = new int[]{0, 0, 0, 0, 0};
+    private static final int[] INVENTORY = new int[]{0, 0, 0, 0, 0, 0};
 
     /**
      * Default Constructor for Player.
@@ -206,6 +208,14 @@ public class Player extends Actor {
                 setFacingDir(dir);
             }
         }
+    }
+
+    /**
+     * Allows the timer to tick the player class.
+     */
+    @Override
+    protected void tick() {
+        currentTick++;
 
         if (speedPowerupDurationRemaining > 0) {
             speedPowerupDurationRemaining--;
@@ -217,14 +227,6 @@ public class Player extends Actor {
         if (isInvincible()) {
             invincibleDurationRemaining--;
         }
-    }
-
-    /**
-     * Allows the timer to tick the player class.
-     */
-    @Override
-    protected void tick() {
-        currentTick++;
     }
 
     /**
@@ -263,16 +265,16 @@ public class Player extends Actor {
         switch (nextTile.getType()) {
             case LOCKED_DOOR -> {
                 LockedDoor door = (LockedDoor) nextTile;
-                if (!door.testLock(inventory)) {
+                if (!door.testLock(INVENTORY)) {
                     return false;
                 }
             }
             case CHIP_SOCKET -> {
                 ChipSocket socket = (ChipSocket) nextTile;
-                int oldChips = inventory[InventorySlot.CHIP.ordinal()];
-                inventory[InventorySlot.CHIP.ordinal()] = oldChips - socket.getRequiredChips();
-                if (inventory[InventorySlot.CHIP.ordinal()] < 1) {
-                    inventory[InventorySlot.CHIP.ordinal()] = 0;
+                int oldChips = INVENTORY[InventorySlot.CHIP.ordinal()];
+                INVENTORY[InventorySlot.CHIP.ordinal()] = oldChips - socket.getRequiredChips();
+                if (INVENTORY[InventorySlot.CHIP.ordinal()] < 1) {
+                    INVENTORY[InventorySlot.CHIP.ordinal()] = 0;
                 }
                 if (!socket.deductChips(oldChips)) {
                     return false;
@@ -353,54 +355,49 @@ public class Player extends Actor {
         if (nextItem != null) {
             switch (nextItem.getType()) {
                 case CHIP -> {
-                    inventory[0]++;
-                    GameManager.removeItem(tilePosition);
+                    INVENTORY[0]++;
                 }
                 case KEY -> {
                     Key key = (Key) nextItem;
                     switch (key.getColour()) {
                         case 'R' ->
-                            inventory[InventorySlot.RED_KEY.ordinal()]++;
+                            INVENTORY[InventorySlot.RED_KEY.ordinal()]++;
                         case 'G' ->
-                            inventory[InventorySlot.GREEN_KEY.ordinal()]++;
+                            INVENTORY[InventorySlot.GREEN_KEY.ordinal()]++;
                         case 'Y' ->
-                            inventory[InventorySlot.YELLOW_KEY.ordinal()]++;
+                            INVENTORY[InventorySlot.YELLOW_KEY.ordinal()]++;
                         case 'B' ->
-                            inventory[InventorySlot.BLUE_KEY.ordinal()]++;
+                            INVENTORY[InventorySlot.BLUE_KEY.ordinal()]++;
                         default -> {
                             throw new UnsupportedOperationException("unknown key colour picked up by player");
                         }
                     }
-                    GameManager.removeItem(tilePosition);
                 }
                 case SPEED -> {
                     if (speedPowerupDurationRemaining == 0) {
                         speedPowerupDurationRemaining = POWERUP_DURATION;
                         moveInterval = 2;
                     }
-                    GameManager.removeItem(tilePosition); // Remove the speed powerup from the level
                 }
                 case INVINC -> {
                     invincibleDurationRemaining = POWERUP_DURATION;
-                    GameManager.removeItem(tilePosition); // Remove the invincibility from the level
                 }
                 case EXTRA -> {
                     if (extraLives < 1) {
                         // Increment extra lives
                         extraLives++;
                     } else {
-                        inventory[InventorySlot.EXTRA_LIFE.ordinal()]++;
+                        INVENTORY[InventorySlot.EXTRA_LIFE.ordinal()]++;
                     }
-                    GameManager.removeItem(tilePosition); // Remove the extra life from the level
                 }
                 case INCREASETIME -> {
                     GameTimer.addTime(EXTRA_TIME);
-                    GameManager.removeItem(tilePosition); // Remove the increase time from the level
                 }
                 default -> {
                     throw new UnsupportedOperationException("Unknown item picked up by player");
                 }
             }
+            GameManager.removeItem(tilePosition);
         }
     }
 
@@ -409,8 +406,8 @@ public class Player extends Actor {
      *
      * @return The player's inventory.
      */
-    public int[] getInventory() {
-        return inventory;
+    public static int[] getInventory() {
+        return INVENTORY;
     }
 
     /**
@@ -419,11 +416,11 @@ public class Player extends Actor {
      * @param inv The player's inventory.
      */
     public void setInventory(int[] inv) {
-        if (inv.length != inventory.length) {
+        if (inv.length != INVENTORY.length) {
             throw new RuntimeException("Inventory length didn't match expected: "
-                    + inv.length + " != " + inventory.length);
+                    + inv.length + " != " + INVENTORY.length);
         }
-        System.arraycopy(inv, 0, inventory, 0, inventory.length);
+        System.arraycopy(inv, 0, INVENTORY, 0, INVENTORY.length);
     }
 
     /**
@@ -433,6 +430,15 @@ public class Player extends Actor {
      */
     public boolean isInvincible() {
         return invincibleDurationRemaining > 0;
+    }
+
+    /**
+     * Get the duration of invincibility remaining.
+     *
+     * @return the duration of invincibility remaining (0 means none remaining)
+     */
+    public int getInvincibleRemaining() {
+        return invincibleDurationRemaining;
     }
 
     /**
@@ -454,5 +460,14 @@ public class Player extends Actor {
             throw new IllegalArgumentException("Extra lives cannot be negative");
         }
         extraLives = numLives;
+    }
+
+    /**
+     * Get the time remaining of speed boost powerup.
+     *
+     * @return the time remaining (0 if there is no speed boost applied)
+     */
+    public int getSpeedBoostRemaining() {
+        return this.speedPowerupDurationRemaining;
     }
 }

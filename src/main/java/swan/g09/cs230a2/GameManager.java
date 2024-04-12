@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 
 
@@ -148,6 +149,17 @@ public class GameManager {
             throw new IllegalStateException("Level has not yet been loaded!");
         }
         return itemLayer.getAtPosition(position);
+    }
+
+    /**
+      * Update the inventory display in the game view.
+     * */
+    public static void updateInventoryDisplay() {
+        if (gameViewController != null && playerProfile != null) {
+            Platform.runLater(() -> {
+                gameViewController.updateInventoryDisplay(Player.getInventory());
+            });
+        }
     }
 
     /**
@@ -492,6 +504,7 @@ public class GameManager {
 
         gameTimer.start();
         gameTimer.startLevel();
+        gameViewController.resetInventoryDisplay();
     }
 
     /**
@@ -510,7 +523,7 @@ public class GameManager {
                 // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
                 Player.setExtraLives(Player.getExtraLives() - 1);
                 Player player = (Player) checkActor(getPlayerPosition());
-                player.setInventory(new int[]{0, 0, 0, 0, 0});
+                player.setInventory(new int[]{0, 0, 0, 0, 0, 0});
                 restartLevel(true);
                 return;
             }
@@ -522,6 +535,7 @@ public class GameManager {
 
         stopTimer();
         gameViewController.gameLose(deathState);
+        gameViewController.resetInventoryDisplay();
     }
 
 
