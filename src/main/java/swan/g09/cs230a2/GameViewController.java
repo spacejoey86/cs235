@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -24,17 +23,6 @@ import java.util.Objects;
  * @version 0.1
  */
 public class GameViewController {
-
-    /**
-     * The map of inventory item indices to their image paths.
-     */
-    private static final Map<Integer, String> INVENTORY_IMAGE_PATH_MAP = Map.of(
-            0, "sprites/Chip.png",
-            1, "sprites/Key_Red.png",
-            2, "sprites/Key_Green.png",
-            3, "sprites/Key_Yellow.png",
-            4, "sprites/Key_Blue.png"
-    );
 
     /**
      * Number of seconds in a minute.
@@ -101,6 +89,12 @@ public class GameViewController {
     private ImageView chipImage;
 
     /**
+     * The label for the chip count.
+     */
+    @FXML
+    private Label chipCountLabel;
+
+    /**
      * The image of the player's red key count.
      */
     @FXML
@@ -125,13 +119,40 @@ public class GameViewController {
     private ImageView blueKeyImage;
 
     /**
-     * The label for the chip count.
+     * Extra life inventory indicator.
      */
     @FXML
-    private Label chipCountLabel;
+    private ImageView extraLifeImage;
 
+    /**
+     * Label for the count of extra lifes.
+     */
+    @FXML
+    private Label extraLifeCountLabel;
 
+    /**
+     * Invincibility inventory indicator.
+     */
+    @FXML
+    private ImageView invincibleImage;
 
+    /**
+     * Label for the duration of invincibility remaining.
+     */
+    @FXML
+    private Label invincibleRemainingLabel;
+
+    /**
+     * Speed boost inventory indicator.
+     */
+    @FXML
+    private ImageView speedImage;
+
+    /**
+     * Label for the duration of speed boost remaining.
+     */
+    @FXML
+    private Label speedRemainingLabel;
 
     /**
      * If the canvas has drawn since the last tick.
@@ -143,7 +164,7 @@ public class GameViewController {
      * @param seconds Level time remaining.
      * @return A string with the duration formatted.
      */
-    private String formatLevelTime(int seconds) {
+    private static String formatLevelTime(int seconds) {
         return String.format("%02d:%02d", seconds / SECONDS_IN_MINUTE, seconds % SECONDS_IN_MINUTE);
     }
 
@@ -162,6 +183,9 @@ public class GameViewController {
         greenKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Green.png"))));
         yellowKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Yellow.png"))));
         blueKeyImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Key_Blue.png"))));
+        extraLifeImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/ExtraLife.png"))));
+        invincibleImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Invincible.png"))));
+        speedImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("sprites/Speed.png"))));
 
         canvas.widthProperty().bind(canvasPane.widthProperty());
         canvas.heightProperty().bind(canvasPane.heightProperty());
@@ -247,14 +271,32 @@ public class GameViewController {
      * @param inventory The player's inventory.
      */
     public void updateInventoryDisplay(int[] inventory) {
+        Player player = (Player) GameManager.checkActor(GameManager.getPlayerPosition());
+
         int chipCount = inventory[Player.InventorySlot.CHIP.ordinal()];
         chipImage.setVisible(chipCount > 0);
         chipCountLabel.setVisible(chipCount > 0);
         chipCountLabel.setText(String.valueOf(chipCount));
+
         redKeyImage.setVisible(inventory[Player.InventorySlot.RED_KEY.ordinal()] > 0);
         greenKeyImage.setVisible(inventory[Player.InventorySlot.GREEN_KEY.ordinal()] > 0);
         yellowKeyImage.setVisible(inventory[Player.InventorySlot.YELLOW_KEY.ordinal()] > 0);
         blueKeyImage.setVisible(inventory[Player.InventorySlot.BLUE_KEY.ordinal()] > 0);
+
+        int extraLives = Player.getExtraLives();
+        extraLifeImage.setVisible(extraLives > 0);
+        extraLifeCountLabel.setVisible(extraLives > 0);
+        extraLifeCountLabel.setText(String.valueOf(extraLives));
+
+        int invincibleRemaining = player.getInvincibleRemaining() / (1000 / GameTimer.getTickRate());
+        invincibleImage.setVisible(invincibleRemaining > 0);
+        invincibleRemainingLabel.setVisible(invincibleRemaining > 0);
+        invincibleRemainingLabel.setText(formatLevelTime(invincibleRemaining));
+
+        int speedBoostRemaining = player.getSpeedBoostRemaining() / (1000 / GameTimer.getTickRate());
+        speedImage.setVisible(speedBoostRemaining > 0);
+        speedRemainingLabel.setVisible(speedBoostRemaining > 0);
+        speedRemainingLabel.setText(formatLevelTime(speedBoostRemaining));
     }
 
     /**

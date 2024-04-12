@@ -24,11 +24,17 @@
                 <Insets top="10" right="20" bottom="20" left="20"/>
             </padding>
             <ImageView fx:id="chipImage" visible="false"/>
-            <Label fx:id="chipCountLabel" visible="false" />
+            <Label fx:id="chipCountLabel" visible="false"/>
             <ImageView fx:id="redKeyImage" visible="false"/>
             <ImageView fx:id="greenKeyImage" visible="false"/>
             <ImageView fx:id="yellowKeyImage" visible="false"/>
             <ImageView fx:id="blueKeyImage" visible="false"/>
+            <ImageView fx:id="extraLifeImage" visible="false"/>
+            <Label fx:id="extraLifeCountLabel" visible="false"/>
+            <ImageView fx:id="invincibleImage" visible="false"/>
+            <Label fx:id="invincibleRemainingLabel" visible="false"/>
+            <ImageView fx:id="speedImage" visible="false"/>
+            <Label fx:id="speedRemainingLabel" visible="false"/>
         </HBox>
         <Pane fx:id="canvasPane" VBox.vgrow="ALWAYS" />
     </VBox>

@@ -88,7 +88,7 @@ public class Player extends Actor {
          */
         @Override
         public String toString() {
-            return Character.toString("crgyb".charAt(this.ordinal()));
+            return Character.toString("crgybe".charAt(this.ordinal()));
         }
 
         /**
@@ -109,8 +109,10 @@ public class Player extends Actor {
                     YELLOW_KEY;
                 case "b" ->
                     BLUE_KEY;
+                case "e" ->
+                    EXTRA_LIFE;
                 default ->
-                    null;
+                    throw new IllegalArgumentException("Invalid inventory slot character");
             };
         }
 
@@ -145,9 +147,9 @@ public class Player extends Actor {
 
     /**
      * Stores the player's inventory.
-     * This stores the amount of each item in the order [Chips, Key_R, Key_G, Key_Y, Key_B].
+     * This stores the amount of each item in the order [Chips, Key_R, Key_G, Key_Y, Key_B, EXTRA_LIFE].
      * */
-    private static final int[] INVENTORY = new int[]{0, 0, 0, 0, 0};
+    private static final int[] INVENTORY = new int[]{0, 0, 0, 0, 0, 0};
 
     /**
      * Default Constructor for Player.
@@ -205,6 +207,14 @@ public class Player extends Actor {
                 setFacingDir(dir);
             }
         }
+    }
+
+    /**
+     * Allows the timer to tick the player class.
+     */
+    @Override
+    protected void tick() {
+        currentTick++;
 
         if (speedPowerupDurationRemaining > 0) {
             speedPowerupDurationRemaining--;
@@ -216,14 +226,6 @@ public class Player extends Actor {
         if (isInvincible()) {
             invincibleDurationRemaining--;
         }
-    }
-
-    /**
-     * Allows the timer to tick the player class.
-     */
-    @Override
-    protected void tick() {
-        currentTick++;
     }
 
     /**
@@ -430,6 +432,15 @@ public class Player extends Actor {
     }
 
     /**
+     * Get the duration of invincibility remaining
+     * 
+     * @return the duration of invincibility remaining (0 means none remaining)
+     */
+    public int getInvincibleRemaining() {
+        return invincibleDurationRemaining;
+    }
+
+    /**
      * Get the number of extra lives the player has.
      *
      * @return the number of extra lives the player has
@@ -448,5 +459,13 @@ public class Player extends Actor {
             throw new IllegalArgumentException("Extra lives cannot be negative");
         }
         extraLives = numLives;
+    }
+
+    /**
+     * Get the time remaining of speed boost powerup.
+     * @return the time remaining (0 if there is no speed boost applied)
+     */
+    public int getSpeedBoostRemaining() {
+        return this.speedPowerupDurationRemaining;
     }
 }

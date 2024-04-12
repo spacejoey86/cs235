@@ -46,7 +46,7 @@ public class Level {
      * Regex pattern for matching lines containing a slot in the inventory.
      */
     private static final Pattern INVENTORY_SLOT_PATTERN
-            = Pattern.compile("^([crygb]) */ *(\\d+)");
+            = Pattern.compile("^([crygbe]) */ *(\\d+)");
 
     /**
      * In save files, whether this was from a custom save and if not, whether it is the last level.
@@ -128,7 +128,7 @@ public class Level {
     /**
      * The inventory read from the level file. (Defaults to empty inventory.
      */
-    private final int[] inventory = new int[]{0, 0, 0, 0, 0};
+    private final int[] inventory = new int[]{0, 0, 0, 0, 0, 0};
 
     /**
      * The level number read from the level file, if the level is an autosave.

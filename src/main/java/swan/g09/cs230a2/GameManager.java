@@ -523,7 +523,7 @@ public class GameManager {
                 // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
                 Player.setExtraLives(Player.getExtraLives() - 1);
                 Player player = (Player) checkActor(getPlayerPosition());
-                player.setInventory(new int[]{0, 0, 0, 0, 0});
+                player.setInventory(new int[]{0, 0, 0, 0, 0, 0});
                 restartLevel(true);
                 return;
             }
