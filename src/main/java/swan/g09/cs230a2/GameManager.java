@@ -50,6 +50,11 @@ public class GameManager {
     private static int levelHeight;
 
     /**
+     * The fov of the loaded level.
+     */
+    private static double levelFov;
+
+    /**
      * The Layer class containing all Tiles.
      * */
     private static Layer<Tile> tileLayer;
@@ -309,6 +314,7 @@ public class GameManager {
 
             levelNumber = level.getLevelNumber();
             isLastLevel = level.isLastLevel();
+            levelFov = level.getLevelFov();
 
             Player p = (Player) checkActor(actorLayer.findPositionsOf(TileType.PLAYER).get(0));
             p.setInventory(level.getInventory());
@@ -433,6 +439,15 @@ public class GameManager {
      */
     public static int getLevelHeight() {
         return levelHeight;
+    }
+
+    /**
+     * Gets the fov of the currently loaded level.
+     *
+     * @return The fov of the level.
+     */
+    public static double getLevelFov() {
+        return level.getLevelFov();
     }
 
     /**

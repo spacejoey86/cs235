@@ -158,6 +158,11 @@ public class Level {
     private int duration;
 
     /**
+     * The fov of the level, specified in the parsed file.
+     */
+    private double levelFov;
+
+    /**
      * Default constructor for Level.
      *
      * @param filePath The file path to load the level from.
@@ -213,6 +218,11 @@ public class Level {
 
             // Read level duration
             duration = reader.nextInt();
+            lineNumber++;
+            reader.nextLine();
+
+            //Read FOV
+            levelFov = reader.nextDouble();
             lineNumber += 2;
             reader.nextLine();
             reader.nextLine();
@@ -627,5 +637,13 @@ public class Level {
      */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * Gets the fov of the currently loaded level.
+     * @return The height of the level.
+     */
+    public double getLevelFov() {
+        return levelFov;
     }
 }
