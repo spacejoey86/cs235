@@ -62,7 +62,7 @@ public class LevelDetails {
     /**
      * The Highest score for this level.
      */
-    private final int score;
+    private final String score;
 
     /**
      * Default constructor for LevelDetails.
@@ -80,7 +80,7 @@ public class LevelDetails {
         name = levelName;
         isLastLevel = lastLevel;
         levelNum = lvlNum;
-        score = tempScore;
+        score = formatLevelTime(tempScore);
 
         // Read the duration from the level file
         InputStream stream = getClass().getResourceAsStream(resourcePath);
@@ -144,7 +144,7 @@ public class LevelDetails {
      *
      * @return The highest score on the level.
      */
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
