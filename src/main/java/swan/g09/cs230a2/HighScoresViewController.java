@@ -21,7 +21,7 @@ public class HighScoresViewController {
     /**
      * The width of the name column.
      */
-    public static final double NAME_COLUMN_WIDTH = 0.8;
+    public static final double NAME_COLUMN_WIDTH = 0.6;
 
     /**
      * The gap between columns.
@@ -51,7 +51,6 @@ public class HighScoresViewController {
      */
     @FXML
     private ComboBox<LevelDetails> levelComboBox;
-
 
     /**
      * Initialisation method for the High Scores view.
@@ -88,6 +87,7 @@ public class HighScoresViewController {
 
     /**
      * Select a level to show high scores for.
+     *
      * @param index The level index.
      */
     private void selectLevel(int index) {
@@ -102,6 +102,7 @@ public class HighScoresViewController {
 
     /**
      * Navigates to the main view.
+     *
      * @param event The event from the action trigger.
      */
     @FXML

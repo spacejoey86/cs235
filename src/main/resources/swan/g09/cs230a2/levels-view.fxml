@@ -27,6 +27,7 @@
                 <columns>
                     <TableColumn text="Level Name" fx:id="levelName" resizable="false" />
                     <TableColumn text="Duration" fx:id="duration" resizable="false" />
+                    <TableColumn text="High Score" fx:id="highScores" resizable="false" />
                 </columns>
             </TableView>
             <HBox>
