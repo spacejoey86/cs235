@@ -8,6 +8,7 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 import java.util.*;
 import static swan.g09.cs230a2.GameManager.*;
+import static swan.g09.cs230a2.Level.barnacles;
 
 
 /**
@@ -102,6 +103,7 @@ public class Barnacle extends Actor {
     public void trapPlayer() {
         if (canTrapPlayer()) {
             getPlayerInstance().setTrapped(true);
+            playerTrapped = true;
             ChipsChallengeApplication.startEvent();
         }
     }
@@ -126,12 +128,21 @@ public class Barnacle extends Actor {
      * */
     private void checkEvent() {
         if (BarnacleEvent.eventWon) {
-            removeActor(this.getPosition());
+            removeActor(findNearest().getPosition());
             getPlayerInstance().setTrapped(false);
             ChipsChallengeApplication.endEvent();
             BarnacleEvent.eventWon = false;
+
         }
     }
+
+    private Barnacle findNearest() {
+        double playerpos = getPlayerInstance().getPosition().getY();
+        return barnacles.stream().filter(
+                b -> b.getPosition().getY() == playerpos).findFirst().orElse(null);
+    }
+
+
 
 
 

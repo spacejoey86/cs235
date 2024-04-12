@@ -63,21 +63,16 @@ public class BarnacleEvent extends VBox {
      */
     private void eventController() {
         numClicks++;
-        System.out.println(System.currentTimeMillis()+ " " + endTime );
-        
+
         if (numClicks >= endEventClicks && !(System.currentTimeMillis() > endTime)) {
             ChipsChallengeApplication.endEvent();
             eventWon = true;
         }
 
-        if (System.currentTimeMillis() > endTime){
+        if (System.currentTimeMillis() > endTime) {
             ChipsChallengeApplication.endEvent();
             GameManager.endGame(GameManager.DeathState.BARNACLE);
             eventWon = false;
         }
-            
     }
-
-
-
 }

@@ -146,7 +146,6 @@ public class GameTimer extends TimerTask {
      * */
     public double getTimeToComplete() throws IllegalStateException {
 
-        //TODO: Find a way to tell if a level has never been timed before
         if (!timerRunning) {
             throw new IllegalStateException("Timer has not been started!");
         }  else if (timingLevel) {

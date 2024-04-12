@@ -142,6 +142,12 @@ public class Level {
      */
     private int duration;
 
+
+    /**
+     * Stores the instances of the barnacles.
+     */
+    public static ArrayList<Barnacle> barnacles = new ArrayList<>();
+
     /**
      * Default constructor for Level.
      * @param filePath The file path to load the level from.
@@ -472,6 +478,10 @@ public class Level {
 
                     if (actor instanceof Player player) {
                         player.setInventory(inventory);
+                    }
+
+                    if (actor instanceof Barnacle barnacle) {
+                        barnacles.add(barnacle);
                     }
 
                     layer.setAtPosition(coordinate, actor);
