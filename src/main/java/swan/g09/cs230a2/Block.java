@@ -1,9 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
 
 /**
  * The block class is an actor that only moves when pushed by the player or sliding over ice.
@@ -17,7 +17,8 @@ public class Block extends Actor {
      * */
     private static final ArrayList<TileType> WALKABLE =
             new ArrayList<>(List.of(TileType.PATH, TileType.BUTTON,
-                    TileType.TRAP, TileType.WATER, TileType.DIRT, TileType.ICE));
+                    TileType.TRAP, TileType.WATER, TileType.DIRT,
+                    TileType.ICE, TileType.BOAT_PATH));
 
     /**
      * Default constructor for class Block.
@@ -45,7 +46,7 @@ public class Block extends Actor {
      * */
     @Override
     protected boolean checkMove(Direction dir) {
-        Point2D nextPos = calculateNewPosition(dir);
+        Point2D nextPos = dir.calculateNewPosition(this.getPosition());
         Tile nextTile = GameManager.checkTile(nextPos);
         Actor nextActor = GameManager.checkActor(nextPos);
 

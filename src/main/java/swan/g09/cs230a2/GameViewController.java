@@ -231,7 +231,7 @@ public class GameViewController {
                 case BUG_KILL -> "Bug ate you.";
                 case TIME_OUT -> "Ran out of time.";
                 case FROG_KILL -> "Frog killed you.";
-                case null -> "Died by some unknown cause...";
+                case EXTRA -> "You have an extra life.";
             };
             flavourText.setText(deathText);
 
@@ -287,11 +287,10 @@ public class GameViewController {
 
     /**
      * Play the level again.
-     * @param event The event from the action trigger.
      */
     @FXML
-    public void playAgain(ActionEvent event) {
-        GameManager.restartLevel();
+    public void playAgain() {
+        GameManager.restartLevel(false);
         gameEndOverlay.setVisible(false);
 
         GameManager.startGame(this);

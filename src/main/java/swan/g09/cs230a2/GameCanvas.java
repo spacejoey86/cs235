@@ -30,7 +30,7 @@ class GameCanvas extends Canvas {
     /**
      * The maximum size (in pixels) that a tile may be rendered.
      */
-    private static final int MAX_TILE_SIZE = 64;
+    private static final int MAX_TILE_SIZE = 150;
 
     /**
      * The amount (in pixels) of padding to render the game grid with.
@@ -114,16 +114,9 @@ class GameCanvas extends Canvas {
 
         double paddedWidth = width - PADDING_AMOUNT - PADDING_AMOUNT;
         double paddedHeight = height - PADDING_AMOUNT - PADDING_AMOUNT;
-        int scaledTileSize = Math.max(
-                MIN_TILE_SIZE,
-                Math.min(
-                        (int) Math.min(
-                                paddedWidth / GameManager.getLevelWidth(),
-                                paddedHeight / GameManager.getLevelHeight()
-                        ),
-                        MAX_TILE_SIZE
-                )
-        );
+
+        int scaledTileSize = (int) (Math.min(paddedHeight / GameManager.getLevelHeight()
+                + GameManager.getLevelFov(), MAX_TILE_SIZE));
 
         int gridLeft = ((int) width / 2) - (GameManager.getLevelWidth() * scaledTileSize / 2);
         int gridTop = ((int) height / 2) - (GameManager.getLevelHeight() * scaledTileSize / 2);
@@ -144,7 +137,6 @@ class GameCanvas extends Canvas {
                         )
                 );
             }
-
             // If the grid height is too large, center it on the player
             if (GameManager.getLevelHeight() * scaledTileSize > paddedHeight) {
                 int canvasMiddleY = (int) height / 2;
@@ -183,7 +175,6 @@ class GameCanvas extends Canvas {
         for (int x = 0; x < GameManager.getLevelWidth(); x++) {
             for (int y = 0; y < GameManager.getLevelHeight(); y++) {
                 Point2D coordinate = new Point2D(x, y);
-
                 Tile tile = GameManager.checkTile(coordinate);
                 Actor actor = GameManager.checkActor(coordinate);
                 Item item = GameManager.checkItem(coordinate);

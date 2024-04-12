@@ -1,31 +1,20 @@
 10,10
-300
+25
 0
 
-WWWWWWWWWW
-WPPPPPPPPW
-WPPPPPPPPW
-WPPPPPPPPW
-WOOOOOOOOW
-WPPPPPPPPW
-WPPPPPPPPW
-WPCPPPPWWW
-WPPPPPPTEW
-WWWWWWWWWW
+OOOOOOPPWW
+OFFFHOOPPW
+OWWOHOOOPP
+HMMMMMMMMM
+HOOOOOOOOA
+HOPPPPPPOA
+HOOOOOPOOA
+FFFFFFFFFA
+WWWWWWPWWW
+WWWEYPPWWW
 
 ----------
 -*--------
---#-------
-----------
-----------
-----------
---#-------
-----------
-----------
-----------
-
-----------
-----------
 ----------
 ----------
 ----------
@@ -35,5 +24,16 @@ WWWWWWWWWW
 ----------
 ----------
 
-(1,1) @ S
-(2,7) -> (7,8)
+----------
+----------
+----------
+----------
+----------
+---y------
+----------
+----------
+----------
+----------
+
+(1,1) @ N
+(1,1) _

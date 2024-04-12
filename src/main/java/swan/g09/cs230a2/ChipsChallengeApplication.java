@@ -169,4 +169,12 @@ public class ChipsChallengeApplication extends Application {
             }
         });
     }
+
+    /**
+     * Set the paused state of the game.
+     * @param isPaused Whether the game should be paused
+     */
+    public static void setPaused(boolean isPaused) {
+        paused = isPaused;
+    }
 }

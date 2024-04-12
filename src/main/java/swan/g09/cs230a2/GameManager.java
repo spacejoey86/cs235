@@ -1,7 +1,5 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
-
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +9,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
 
 
 /**
@@ -36,7 +35,9 @@ public class GameManager {
         /** Player has been crushed by the block. */
         CRUSH,
         /** Player has been bounced on by the pink ball. */
-        BOUNCED
+        BOUNCED,
+        /** Player has died from an extra life. */
+        EXTRA
     }
 
     /**
@@ -48,6 +49,11 @@ public class GameManager {
      * The height of the loaded level.
      */
     private static int levelHeight;
+
+    /**
+     * The fov of the loaded level.
+     */
+    private static double levelFov;
 
     /**
      * The Layer class containing all Tiles.
@@ -303,7 +309,7 @@ public class GameManager {
     }
 
     /**
-     * Load a level from an autosave.
+     * Load a level from an Auto save.
      * @param path The path to the level file,
      * @throws InputMismatchException If the level format was wrong (should never occur).
      */
@@ -320,6 +326,7 @@ public class GameManager {
 
             levelNumber = level.getLevelNumber();
             isLastLevel = level.isLastLevel();
+            levelFov = level.getLevelFov();
 
             Player p = (Player) checkActor(actorLayer.findPositionsOf(TileType.PLAYER).get(0));
             p.setInventory(level.getInventory());
@@ -341,8 +348,9 @@ public class GameManager {
     /**
      * Restart the current level.
      * Resets the state of the level.
+     * @param usedExtraLife true if this restart was due to using an extra life
      */
-    public static void restartLevel() {
+    public static void restartLevel(boolean usedExtraLife) {
         if (level == null) {
             throw new IllegalStateException("Level has not yet been loaded!");
         }
@@ -359,8 +367,17 @@ public class GameManager {
             }
         }
 
-        Clock.setLevelDuration(level.getDuration());
+        // Reset the timer and level duration if an extra life was used
+        if (usedExtraLife) {
+            Clock.resetLevelDuration();
+            Clock.resetRemainingTime();
+        } else {
+            Clock.setLevelDuration(level.getDuration());
+        }
+
     }
+
+
 
     /**
      * Checks if a level has been loaded.
@@ -437,6 +454,15 @@ public class GameManager {
     }
 
     /**
+     * Gets the fov of the currently loaded level.
+     *
+     * @return The fov of the level.
+     */
+    public static double getLevelFov() {
+        return level.getLevelFov();
+    }
+
+    /**
      * Returns whether it is possible to load a next level.
      * @return whether it is possible to load a next level.
      * @throws IllegalStateException if level not loaded.
@@ -486,18 +512,33 @@ public class GameManager {
      *
      * @param deathState Enum death state pertaining to the way the player died.
      * @throws IllegalStateException if level not initiated.
-     * */
+     */
     public static void endGame(DeathState deathState) throws IllegalStateException {
         if (tileLayer == null) {
             throw new IllegalStateException("Level not loaded!");
         }
+
+        if (deathState != DeathState.EXTRA) {
+            if (Player.getExtraLives() > 0) {
+                // If the player has an extra life, reset the player, decrement the extra lives, and reset the timer
+                Player.setExtraLives(Player.getExtraLives() - 1);
+                Player player = (Player) checkActor(getPlayerPosition());
+                player.setInventory(new int[]{0, 0, 0, 0, 0});
+                restartLevel(true);
+                return;
+            }
+        }
+
         if (levelNumber != null) {
             PlayerViewController.tryDeleteAutoSave(levelNumber);
         }
+
         stopTimer();
         gameViewController.gameLose(deathState);
         gameViewController.resetInventoryDisplay();
     }
+
+
 
     /**
      * Processes score for the level, and loads the next.
@@ -619,6 +660,29 @@ public class GameManager {
     }
 
     /**
+     * Get boat path meta data.
+     * @return A string containing the boat path meta data
+     */
+    private static String getBoatMetaData() {
+        String outStr = "";
+
+        for (Point2D pos : tileLayer.findPositionsOf(TileType.BOAT_PATH)) {
+            BoatPath boatPath = (BoatPath) tileLayer.getAtPosition(pos);
+            if (boatPath.getBoatPresence()) {
+                String reverseString = "";
+                if (boatPath.getReversing()) {
+                    reverseString = "?";
+                }
+
+                outStr += String.format("(%d,%d) _%s\n",
+                    (int) pos.getX(), (int) pos.getY(), reverseString);
+            }
+        }
+
+        return outStr;
+    }
+
+    /**
      * On an abrupt exit, the level progress is to be saved.
      * */
     public static void saveLevelProgress() {
@@ -631,11 +695,13 @@ public class GameManager {
         String buttonAssocs = getButtonAssocs();
         String actorDirecitons = getActorDirections();
         String inventory = getInventory();
+        String boatMetaData = getBoatMetaData();
         String levelFlags = String.format("%d,%d", levelNumber, isLastLevel ? 1 : 0);
 
         String saveFile = String.format("%s\n%s\n\n%s\n%s\n%s\n%s%s%s\n%s\n%s", levelDims, timeRemaining,
                 tileLayerStr, actorLayerStr, itemLayerStr,
-                buttonAssocs, chipCounts, actorDirecitons, inventory, levelFlags);
+                buttonAssocs, chipCounts, actorDirecitons,
+                inventory, boatMetaData, levelFlags);
         String fileName = String.format("%s-%s.sav", playerProfile.getPlayerName(), levelName);
         String workingDir = PlayerProfileManager.getAppDataDirectory();
 
@@ -655,4 +721,6 @@ public class GameManager {
     public static boolean isLevelRunning() {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
+
+
 }
