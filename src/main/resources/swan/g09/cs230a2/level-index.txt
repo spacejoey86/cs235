@@ -1,14 +1,14 @@
-levels/level1.txt, An unassuming corridor
-levels/level2.txt, Escape room
-levels/level3.txt, Bug hunter
-levels/level4.txt, Timing traps
-levels/level5.txt, Slippery Slopes
-levels/level6.txt, Road Blocks
-levels/level7.txt, Binley Mega Chippy
-levels/level8.txt, Loss
-levels/level9.txt, Fov Test Maze
-levels/level10.txt, Boat Ride
-levels/level11.txt, Landlubber
-levels/level12.txt, Powerups Test
-levels/level13.txt, Crossy Road
+levels/corridor.txt, An unassuming corridor
+levels/escape.txt, Escape room
+levels/bug_hunter.txt, Bug hunter
+levels/traps.txt, Timing traps
+levels/slippery_slope.txt, Slippery Slopes
+levels/road_blocks.txt, Road Blocks
+levels/binley.txt, Binley Mega Chippy
+levels/loss.txt, Loss
+levels/maze.txt, Fov Test Maze
+levels/boat_ride.txt, Boat Ride
+levels/landlubber.txt, Landlubber
+levels/powerups.txt, Powerups Test
+levels/crossy_road.txt, Crossy Road
 levels/outrun.txt, Outrun
