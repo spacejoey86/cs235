@@ -12,3 +12,4 @@ levels/landlubber.txt, Landlubber
 levels/powerups.txt, Powerups Test
 levels/crossy_road.txt, Crossy Road
 levels/outrun.txt, Outrun
+levels/time.txt, Low on Time
