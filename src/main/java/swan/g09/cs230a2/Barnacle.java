@@ -6,11 +6,7 @@
 package swan.g09.cs230a2;
 
 import javafx.geometry.Point2D;
-
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
-
 import static swan.g09.cs230a2.GameManager.*;
 import static swan.g09.cs230a2.Level.barnacles;
 
@@ -163,6 +159,8 @@ public class Barnacle extends Actor {
 
         }
     }
+
+    /** Finds the nearest barnacle in order to delete it. */
 
     private Barnacle findNearest() {
         Point2D playerPos = getPlayerInstance().getPosition();
