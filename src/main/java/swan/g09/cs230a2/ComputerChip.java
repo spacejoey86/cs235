@@ -3,7 +3,7 @@ package swan.g09.cs230a2;
 import javafx.geometry.Point2D;
 
 /**
- * A computer chip can be picked up by the player and used to unlock doors.
+ * A {@code ComputerChip} is a item that can be picked up by the player and used to unlock doors.
  *
  * @author Samuel Lomas
  * */

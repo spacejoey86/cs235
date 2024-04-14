@@ -1,22 +1,22 @@
-20,16
-180
+20,15
+300
+200
 
-WWWWWWWWWW----------
-WPPPPPPPPW----------
-WPPPPPPPPW----------
-WPPPPPPPPWWWWWW-----
-WPPPPPPPPSPPPPW-----
-WPPPPPPPPWPPPPW-----
-WPPPPPPPPWWWWWW-----
-WPPPPPPPPW----------
-WPPPPPPPPW----------
-WPPPPPPPPW----------
-WPPPPPPPPWWWWWWWWWWW
-WPPPPPPPPOOPPPPPPPPW
-WPPPPPPPPSDPPPPPPPEW
-WPPPPPPPPOOPPPPPPPPW
-WPPPPPPPPOOPPPPPPPPW
 WWWWWWWWWWWWWWWWWWWW
+WPPPWPPWPWPPPPPWPWPW
+WPWPWPWWPWPWPWPWPWPW
+WPWPWPWPPWPWPWPWPWPW
+WPWPWPWPPWPWPWPWPWPW
+WPWPWPWPPWWWPWPWPWPW
+WPWPWPWPPPPPPPPPPWPW
+WPPPPPWPPPPPPPPPPWPW
+WPWPPPPPPPPWWPWWWWPW
+WPWWWWWPPPPWPWWWWPPW
+WPWPPPWPPPPWPWWPWPPW
+WPWPWPPPPPPWPPWPWWPW
+WPWPWPWWWWPWPPPPPPPW
+WPWPWPPPPWPWPPWPPPPW
+WWWEWWWWWWWWWWWWWWWW
 
 --------------------
 --*-----------------
@@ -33,14 +33,12 @@ WWWWWWWWWWWWWWWWWWWW
 --------------------
 --------------------
 --------------------
---------------------
 
 --------------------
 --------------------
 --------------------
-----c---------------
-----c------ccc------
------------ccc------
+--------------------
+--------------------
 --------------------
 --------------------
 --------------------
@@ -52,5 +50,4 @@ WWWWWWWWWWWWWWWWWWWW
 --------------------
 --------------------
 
-(9,4) # 2
-(9,12) # 6
+(2,1) @ S

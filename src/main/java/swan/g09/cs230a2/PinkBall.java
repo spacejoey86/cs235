@@ -1,8 +1,9 @@
 package swan.g09.cs230a2;
 
-import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.geometry.Point2D;
 
 /**
  * The PinkBall class represents a type of monster in the game.
@@ -63,26 +64,19 @@ public class PinkBall extends Actor {
             // If the current direction is not a valid move,
             // reverse the direction
             switch (getFacingDir()) {
-                case NORTH:
-                    setFacingDir(Direction.SOUTH);
-                    break;
-                case EAST:
-                    setFacingDir(Direction.WEST);
-                    break;
-                case SOUTH:
-                    setFacingDir(Direction.NORTH);
-                    break;
-                case WEST:
-                    setFacingDir(Direction.EAST);
-                    break;
-                default:
-                    break;
+                case NORTH -> setFacingDir(Direction.SOUTH);
+                case EAST -> setFacingDir(Direction.WEST);
+                case SOUTH -> setFacingDir(Direction.NORTH);
+                case WEST -> setFacingDir(Direction.EAST);
+                default -> {
+                }
             }
         }
         if (checkMove(getFacingDir())) {
             move(getFacingDir());
         }
     }
+
     /**
      * Checks if moving in a specific direction is valid for the PinkBall.
      * Subclasses extending PinkBall may override this method to customize
@@ -96,13 +90,15 @@ public class PinkBall extends Actor {
      */
     @Override
     protected boolean checkMove(final Direction dir) {
-        Point2D newPosition = calculateNewPosition(dir);
+        Point2D newPosition = dir.calculateNewPosition(this.getPosition());
 
         Actor potActor = GameManager.checkActor(newPosition);
         if (potActor != null && potActor.getType() == TileType.PLAYER) {
-            GameManager.endGame(GameManager.DeathState.BOUNCED);
-            GameManager.removeActor(newPosition);
-            return false;
+            if (!(potActor instanceof Player) || !((Player) potActor).isInvincible()) {
+                GameManager.endGame(GameManager.DeathState.BOUNCED);
+                GameManager.removeActor(newPosition);
+                return false;
+            }
         }
 
         TileType newTileType = checkPosition(newPosition);

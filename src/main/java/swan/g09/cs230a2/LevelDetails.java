@@ -51,27 +51,36 @@ public class LevelDetails {
 
     /**
      * If this level is the last in the load order.
-     * */
+     */
     private final boolean isLastLevel;
 
     /**
      * The number of the level in the load order.
-     * */
+     */
     private final int levelNum;
 
     /**
+     * The Highest score for this level.
+     */
+    private final String score;
+
+    /**
      * Default constructor for LevelDetails.
+     *
      * @param resourcePath The path to the level in the project resources.
-     * @param levelName The name of the level.
-     * @param lastLevel Is this level the last
-     * @param lvlNum The number of the level in the load order
+     * @param levelName    The name of the level.
+     * @param lastLevel    Is this level the last
+     * @param lvlNum       The number of the level in the load order
+     * @param tempScore    The highest score for this level
      * @throws IOException If the file doesn't exist.
      */
-    public LevelDetails(String resourcePath, String levelName, boolean lastLevel, int lvlNum) throws IOException {
+    public LevelDetails(String resourcePath, String levelName, boolean lastLevel, int lvlNum, int tempScore)
+            throws IOException {
         path = resourcePath;
         name = levelName;
         isLastLevel = lastLevel;
         levelNum = lvlNum;
+        score = formatLevelTime(tempScore);
 
         // Read the duration from the level file
         InputStream stream = getClass().getResourceAsStream(resourcePath);
@@ -86,6 +95,7 @@ public class LevelDetails {
 
     /**
      * Turns seconds to minutes and seconds.
+     *
      * @param seconds Level time remaining.
      * @return A string with the duration formatted.
      */
@@ -95,6 +105,7 @@ public class LevelDetails {
 
     /**
      * Get the level's resource path.
+     *
      * @return The path to the level's resource.
      */
     public String getPath() {
@@ -103,14 +114,16 @@ public class LevelDetails {
 
     /**
      * Get the level number in ordering.
+     *
      * @return levelNum
-     * */
+     */
     public int getLevelNum() {
         return levelNum;
     }
 
     /**
      * Get the level's name.
+     *
      * @return The name of the level.
      */
     public String getName() {
@@ -119,6 +132,7 @@ public class LevelDetails {
 
     /**
      * Get the level's duration.
+     *
      * @return The duration on the level.
      */
     public String getDuration() {
@@ -126,7 +140,17 @@ public class LevelDetails {
     }
 
     /**
+     * Get the level's highest score.
+     *
+     * @return The highest score on the level.
+     */
+    public String getScore() {
+        return score;
+    }
+
+    /**
      * Reads the level index file.
+     *
      * @return The list of level details.
      * @throws IOException If the file couldn't be read successfully.
      */
@@ -150,8 +174,14 @@ public class LevelDetails {
             if (matcher.matches()) {
                 String levelPath = matcher.group(REGEX_MATCHER_GROUP_1);
                 String lvlName = matcher.group(REGEX_MATCHER_GROUP_2);
+                int tempScore = 0;
+                try {
+                    tempScore = HighScoreTable.loadHighScores(lvlNum - 1).get(0).getScore();
+                } catch (IOException | IndexOutOfBoundsException e) {
+                    tempScore = 0;
+                }
 
-                LevelDetails details = new LevelDetails(levelPath, lvlName, lastLevel, lvlNum);
+                LevelDetails details = new LevelDetails(levelPath, lvlName, lastLevel, lvlNum, tempScore);
                 detailsList.add(details);
             }
         }
@@ -161,14 +191,16 @@ public class LevelDetails {
 
     /**
      * returns true if this is the last level in the defined order.
+     *
      * @return true if last level in levels file.
-     * */
+     */
     public boolean isLastLevel() {
         return isLastLevel;
     }
 
     /**
      * Converts the LevelDetails to a string, gets the level name.
+     *
      * @return The level name.
      */
     @Override

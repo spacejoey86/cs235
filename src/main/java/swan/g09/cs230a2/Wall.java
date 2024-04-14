@@ -10,9 +10,9 @@ import javafx.geometry.Point2D;
 public class Wall extends Tile {
 
     /**
-     * Default Constructor for Path.
+     * Default Constructor for wall.
      *
-     * @param position the position of the path
+     * @param position the position of the wall
      * */
     public Wall(Point2D position) {
         super(TileType.WALL, "sprites/Wall.png", position);

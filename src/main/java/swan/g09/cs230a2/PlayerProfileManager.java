@@ -1,5 +1,7 @@
 package swan.g09.cs230a2;
 
+import javafx.scene.control.Alert;
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +22,7 @@ import java.util.Scanner;
  *
  * @author Haliat Sanusi, Samuel Lomas
  */
- public final class PlayerProfileManager {
+public final class PlayerProfileManager {
     /**
      * Map containing player profiles indexed by player names.
      * It stores PlayerProfile objects associated with their
@@ -91,17 +93,18 @@ import java.util.Scanner;
      * */
     public static void savePlayerProfiles() throws IOException {
         Writer fileWriter = new FileWriter(appDataDirectory + "users.csv", false);
-        String toWrite = "";
+        StringBuilder toWrite = new StringBuilder();
         for (PlayerProfile p : PLAYER_PROFILES.values()) {
-            toWrite += p.toString() + "\n";
+            toWrite.append(p.toString()).append("\n");
         }
-        toWrite = toWrite.substring(0, Math.max(0, toWrite.length() - 1)); //remove trailing linebreak
-        fileWriter.write(toWrite);
+        toWrite =
+                new StringBuilder(toWrite.substring(0, Math.max(0, toWrite.length() - 1)));
+        fileWriter.write(toWrite.toString());
         fileWriter.close();
     }
 
     /**
-     * Populates the hashmap with playerprofiles loaded from file.
+     * Populates the hashmap with player profiles loaded from file.
      * @throws FileNotFoundException If the file cannot be found.
      * */
     private static void populateHashMap() throws FileNotFoundException {
@@ -121,14 +124,32 @@ import java.util.Scanner;
      * @throws IllegalArgumentException if profile name has a comma or already exists
      */
     public static void createPlayerProfile(final String playerName) throws IllegalArgumentException {
-        if (playerName.contains(",")) {
-            throw new IllegalArgumentException("Profile name cannot contain a comma!");
+        if (!playerName.matches("^[a-zA-Z0-9_-]+$")) {
+            showAlert("Name can only contain letters,"
+                    + " numbers, hyphen and underscore!");
+            throw new IllegalArgumentException(""
+                    + "Name can only contain letters, "
+                    + "numbers, hyphen and underscore!");
         }
         if (hasPlayerProfile(playerName)) {
+            showAlert("Profile already exists!");
             throw new IllegalArgumentException("Profile already exists!");
         }
         PlayerProfile profile = new PlayerProfile(playerName);
         PLAYER_PROFILES.put(playerName, profile);
+    }
+
+    /**
+     * Shows an alert with the given message.
+     *
+     * @param message The message to be displayed in the alert.
+     */
+    private static void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**
