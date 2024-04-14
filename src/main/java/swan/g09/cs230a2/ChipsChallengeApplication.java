@@ -45,7 +45,7 @@ public class ChipsChallengeApplication extends Application {
     /**
      * Whether or not the barnacle event has started, true if started.
      */
-    private static boolean barnacleEventStarted = false;
+    public static boolean barnacleEventStarted = false;
 
     /**
      * Runs when the JavaFX program is started.

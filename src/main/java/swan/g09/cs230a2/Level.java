@@ -149,6 +149,11 @@ public class Level {
     public static ArrayList<Barnacle> barnacles = new ArrayList<>();
 
     /**
+     *  Stores block instances
+     */
+    public static ArrayList<Block> blocksList = new ArrayList<>();
+
+    /**
      * Default constructor for Level.
      * @param filePath The file path to load the level from.
      * @throws FileNotFoundException If the file path does not point to a file an exception will be thrown.
@@ -482,6 +487,10 @@ public class Level {
 
                     if (actor instanceof Barnacle barnacle) {
                         barnacles.add(barnacle);
+                    }
+
+                    if (actor instanceof Block block) {
+                        blocksList.add(block);
                     }
 
                     layer.setAtPosition(coordinate, actor);

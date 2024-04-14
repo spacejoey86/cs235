@@ -6,7 +6,11 @@
 package swan.g09.cs230a2;
 
 import javafx.geometry.Point2D;
+
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import static swan.g09.cs230a2.GameManager.*;
 import static swan.g09.cs230a2.Level.barnacles;
 
@@ -21,7 +25,7 @@ public class Barnacle extends Actor {
      * */
 
     private static final ArrayList<TileType> BLOCKED_TILES =
-            new ArrayList<>(List.of(TileType.WALL, TileType.BLOCK));
+            new ArrayList<>(List.of(TileType.BLOCK, TileType.WALL));
 
     /**
      * Stores how many times the barnacle has ticked.
@@ -71,31 +75,46 @@ public class Barnacle extends Actor {
      *
      * @return true, if the player can be trapped.
      * */
+
     private boolean canTrapPlayer() {
         Point2D playerPos = getPlayerPosition();
         Point2D barnaclePos = this.getPosition();
         HashMap<Tile, Point2D> blockedTilesMap = getBlockedTiles(); // map used to keep track of blocked tiles
 
-        // check if the player is in front of any blocked tile
-        boolean blocked = false;
+        int direction = (int) Math.signum(barnaclePos.getX() - playerPos.getX());
 
-        for (Map.Entry<Tile, Point2D> entry : blockedTilesMap.entrySet()) {
-            Point2D blockedTilePos = entry.getValue();
-            // check tiles to the right and left of the player
-            if ((blockedTilePos.getX() == playerPos.getX() + 1 || blockedTilePos.getX() == playerPos.getX() - 1)
-                    && blockedTilePos.getY() == playerPos.getY()) {
-                blocked = true;
-                break; // No need to continue checking if player is already blocked
+        // Iterate over the tiles between the player and the barnacle
+        double startX = playerPos.getX();
+        double endX = barnaclePos.getX();
+        for (double x = startX + direction; x != endX; x += direction) {
+            Point2D tilePos = new Point2D(x, playerPos.getY());
+            // Check if the tile at the current position is blocked
+            if (blockedTilesMap.containsValue(tilePos)) {
+                return false; // Player is blocked by a tile
             }
         }
 
-
-        boolean playerInDir = playerPos.getY() == barnaclePos.getY() && !blocked;
-
-
-
-        return !blocked && playerInDir;
+        // Check if the player is on the same Y coordinate as the barnacle
+        return playerPos.getY() == barnaclePos.getY();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Traps the player, starting the barnacle event.
@@ -115,11 +134,20 @@ public class Barnacle extends Actor {
     private HashMap<Tile, Point2D> getBlockedTiles() {
         HashMap<Tile, Point2D> blockedTilesMap = new HashMap<>();
 
-        for (TileType tileType: BLOCKED_TILES) {
-            for (Point2D pos :GameManager.getBlockedTile(tileType)) {
-                blockedTilesMap.put(GameManager.checkTile(pos), GameManager.checkTile(pos).getPosition());
+        // First, add the blocked tiles from BLOCKED_TILES
+        for (TileType tileType : BLOCKED_TILES) {
+            for (Point2D pos : GameManager.getBlockedTile(tileType)) {
+                Tile blockedTile = GameManager.checkTile(pos);
+                blockedTilesMap.put(blockedTile, pos);
             }
         }
+
+        // Then, add the blocked tiles from Level.blocksList
+        for (Tile blockedTile : Level.blocksList) {
+            Point2D pos = blockedTile.getPosition();
+            blockedTilesMap.put(blockedTile, pos);
+        }
+
         return blockedTilesMap;
     }
 
@@ -137,15 +165,11 @@ public class Barnacle extends Actor {
     }
 
     private Barnacle findNearest() {
-        double playerpos = getPlayerInstance().getPosition().getY();
-        return barnacles.stream().filter(
-                b -> b.getPosition().getY() == playerpos).findFirst().orElse(null);
+        Point2D playerPos = getPlayerInstance().getPosition();
+        return barnacles.stream()
+                .min(Comparator.comparingDouble(b -> Math.sqrt(Math.pow(b.getPosition()
+                        .getX() - playerPos.getX(), 2)
+                        + Math.pow(b.getPosition().getY() - playerPos.getY(), 2))))
+                .orElse(null);
     }
-
-
-
-
-
-
-
 }
