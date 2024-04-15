@@ -150,7 +150,7 @@ public class ChipsChallengeApplication extends Application {
      * Opens the help menu.
      * @throws IOException If the help menu cannot be loaded.
      */
-    static void openHelpMenu() throws IOException{
+    static void openHelpMenu() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(ChipsChallengeApplication.class.getResource("ingame-help-screen.fxml"));
             Parent helpRoot = loader.load();
