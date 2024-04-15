@@ -3,6 +3,13 @@
     -fx-font-weight: bold;
 }
 
+.ingame-help-screen .text,
+.help-screen .text {
+    -fx-wrap-text: true;
+    -fx-font-size: 14px;
+    -fx-font-family: Arial, sans-serif;
+}
+
 .table-column .label {
     -fx-alignment: center-left;
     -fx-padding: 2px;
