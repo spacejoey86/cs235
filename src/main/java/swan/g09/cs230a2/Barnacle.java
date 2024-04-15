@@ -19,6 +19,7 @@ import static swan.g09.cs230a2.GameManager.removeActor;
 
 /**
  * The Barnacle class creates a type of monster that traps the player if it is in a horizontal line from the barnacle.
+ * Barnacles can be placed on either the left or right wall of the level.
  * */
 public class Barnacle extends Actor {
 
