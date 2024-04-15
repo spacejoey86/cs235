@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -258,9 +257,7 @@ public class GameViewController {
     public void gameLose(GameManager.DeathState deathState) {
         Platform.runLater(() -> {
 
-            if (ChipsChallengeApplication.barnacleEventStarted) {
-                ChipsChallengeApplication.endEvent();
-            }
+            ChipsChallengeApplication.endEvent();
 
             gameEndOverlay.setVisible(true);
             winLoseText.setText("You lose!");

@@ -6,9 +6,15 @@
 package swan.g09.cs230a2;
 
 import javafx.geometry.Point2D;
-import java.util.*;
-import static swan.g09.cs230a2.GameManager.*;
-import static swan.g09.cs230a2.Level.barnacles;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
+import static swan.g09.cs230a2.GameManager.getPlayerInstance;
+import static swan.g09.cs230a2.GameManager.getPlayerPosition;
+import static swan.g09.cs230a2.GameManager.removeActor;
 
 
 /**
@@ -94,24 +100,6 @@ public class Barnacle extends Actor {
         return playerPos.getY() == barnaclePos.getY();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Traps the player, starting the barnacle event.
      * */
@@ -125,7 +113,7 @@ public class Barnacle extends Actor {
 
     /**
      * Searches through the map for blocked tiles to exclude from the canTrapPlayer() method.
-     * @returns a hashmap of blocked tiles, that do not need to be checked.
+     * @return a hashmap of blocked tiles, that do not need to be checked.
      * */
     private HashMap<Tile, Point2D> getBlockedTiles() {
         HashMap<Tile, Point2D> blockedTilesMap = new HashMap<>();
@@ -139,7 +127,7 @@ public class Barnacle extends Actor {
         }
 
         // Then, add the blocked tiles from Level.blocksList
-        for (Tile blockedTile : Level.blocksList) {
+        for (Tile blockedTile : GameManager.getBlocks()) {
             Point2D pos = blockedTile.getPosition();
             blockedTilesMap.put(blockedTile, pos);
         }
@@ -151,20 +139,23 @@ public class Barnacle extends Actor {
      * Checks if the barnacle needs to be removed from the map.
      * */
     private void checkEvent() {
-        if (BarnacleEvent.eventWon) {
+        if (BarnacleEvent.isEventWon()) {
             removeActor(findNearest().getPosition());
             getPlayerInstance().setTrapped(false);
             ChipsChallengeApplication.endEvent();
-            BarnacleEvent.eventWon = false;
+            BarnacleEvent.setEventWon(false);
 
         }
     }
 
-    /** Finds the nearest barnacle in order to delete it. */
+    /**
+     * Finds the nearest barnacle in order to delete it.
+     * @return the nearest barnacle to the player.
+     */
 
     private Barnacle findNearest() {
         Point2D playerPos = getPlayerInstance().getPosition();
-        return barnacles.stream()
+        return GameManager.getBarnacles().stream()
                 .min(Comparator.comparingDouble(b -> Math.sqrt(Math.pow(b.getPosition()
                         .getX() - playerPos.getX(), 2)
                         + Math.pow(b.getPosition().getY() - playerPos.getY(), 2))))

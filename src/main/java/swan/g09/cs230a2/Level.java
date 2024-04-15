@@ -156,16 +156,15 @@ public class Level {
      */
     private int duration;
 
-
     /**
      * Stores the instances of the barnacles.
      */
-    public static ArrayList<Barnacle> barnacles = new ArrayList<>();
+    private static ArrayList<Barnacle> barnacles = new ArrayList<>();
 
     /**
-     *  Stores block instances
+     *  Stores block instances.
      */
-    public static ArrayList<Block> blocksList = new ArrayList<>();
+    private static ArrayList<Block> blocksList = new ArrayList<>();
 
     /**
      * The fov of the level, specified in the parsed file.
@@ -663,4 +662,21 @@ public class Level {
     public double getLevelFov() {
         return levelFov;
     }
+
+    /**
+     * Returns all barnacles within the level.
+     * @return an arraylist of barnacles.
+     */
+    public static ArrayList<Barnacle> getBarnacles() {
+        return barnacles;
+    }
+
+    /**
+     * Returns all barnacles within the level.
+     * @return an arraylist of barnacles.
+     */
+    public static ArrayList<Block> getBlocksList() {
+        return blocksList;
+    }
+
 }

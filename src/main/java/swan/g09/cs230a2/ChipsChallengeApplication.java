@@ -50,7 +50,7 @@ public class ChipsChallengeApplication extends Application {
     /**
      * Whether or not the barnacle event has started, true if started.
      */
-    public static boolean barnacleEventStarted = false;
+    private static boolean barnacleEventStarted = false;
 
     /**
      * Runs when the JavaFX program is started.
@@ -146,7 +146,7 @@ public class ChipsChallengeApplication extends Application {
 
 
     /**
-     * Starts the barnacle event
+     * Starts the barnacle event.
      */
     public static void startEvent() {
         // ensures thread is open
@@ -160,13 +160,13 @@ public class ChipsChallengeApplication extends Application {
     }
 
     /**
-     * Ends the barnacle event
+     * Ends the barnacle event.
      */
     public static void endEvent() {
         Platform.runLater(() -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
             if (root.getChildren().size() > 1 && barnacleEventStarted) {
-                root.getChildren().remove(root.getChildren().size() -1);
+                root.getChildren().remove(root.getChildren().size() - 1);
                 barnacleEventStarted = false;
             }
         });
@@ -209,4 +209,6 @@ public class ChipsChallengeApplication extends Application {
     public static void setPaused(boolean isPaused) {
         paused = isPaused;
     }
+
+
 }

@@ -38,7 +38,7 @@ public class GameManager {
         BOUNCED,
         /** Player has died from an extra life. */
         EXTRA,
-        /** Player has been killed by a barnacle */
+        /** Player has been killed by a barnacle. */
         BARNACLE
     }
 
@@ -465,6 +465,22 @@ public class GameManager {
     }
 
     /**
+     * Returns an arraylist of all barnacles in the level.
+     * @return an arraylist of all barnacles in the level.
+     */
+    public static ArrayList<Barnacle> getBarnacles() {
+        return level.getBarnacles();
+    }
+
+    /**
+     * Returns an arraylist of all blocks in the level.
+     * @return an arraylist of all blocks in the level.
+     */
+    public static ArrayList<Block> getBlocks() {
+        return level.getBlocksList();
+    }
+
+    /**
      * Returns whether it is possible to load a next level.
      * @return whether it is possible to load a next level.
      * @throws IllegalStateException if level not loaded.
@@ -721,11 +737,19 @@ public class GameManager {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
 
-
+    /**
+     * Returns the player instance.
+     * @return the player instance
+     * */
     public static Player getPlayerInstance() {
         return (Player) checkActor(getPlayerPosition());
     }
 
+    /**
+     * Returns a list of point2d of tiles of the type of the parameter.
+     * @param tileType the type of tile to return.
+     * @return an arraylist list of point2d, referring to the position of the tiles.
+     * */
     public static ArrayList<Point2D> getBlockedTile(TileType tileType) {
         return tileLayer.findPositionsOf(tileType);
     }
