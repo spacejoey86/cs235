@@ -444,7 +444,9 @@ public class Level {
             case '^' ->
                 new Frog(coordinate);
             case ';' ->
-                new Barnacle(coordinate);
+                new Barnacle(coordinate, "sprites/barnacleLeft.png");
+            case ':' ->
+                new Barnacle(coordinate, "sprites/barnacleRight.png");
             default ->
                 null;
         };

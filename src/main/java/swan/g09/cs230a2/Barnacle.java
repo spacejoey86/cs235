@@ -44,8 +44,8 @@ public class Barnacle extends Actor {
      * Constructor to intialize barnacle instance.
      * @param position the position of the barnacle.
      * */
-    public Barnacle(Point2D position) {
-        super(TileType.BARNACLE, "sprites/barnacle.png", BLOCKED_TILES, position);
+    public Barnacle(Point2D position, String url) {
+        super(TileType.BARNACLE, url, BLOCKED_TILES, position);
     }
 
     /**
