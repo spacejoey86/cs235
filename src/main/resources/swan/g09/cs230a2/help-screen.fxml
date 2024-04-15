@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="swan.g09.cs230a2.HelpScreenController" stylesheets="@style.css" alignment="TOP_CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <children>
+        <Text text="Game Help" styleClass="title-text"/>
+        <ScrollPane fitToWidth="true" prefHeight="500">
+            <VBox spacing="20">
+                <!-- Entry for Wall -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@sprites/Wall.png"/>
+                    </ImageView>
+                    <VBox spacing="5">
+                        <Text text="Wall:" styleClass="bold-text" />
+                        <Text text="Blocks all movement. Neither the player nor monsters can move over walls. Blocks cannot be pushed onto walls." />
+                    </VBox>
+                </HBox>
+
+                <!-- Entry for Exit -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@sprites/Exit.png"/>
+                    </ImageView>
+                    <VBox spacing="5">
+                        <Text text="Exit:" styleClass="bold-text" />
+                        <Text text="Win the level by walking on the exit tile before time elapses." />
+                    </VBox>
+                </HBox>
+
+                <!-- Entry for Button -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@sprites/Button.png"/>
+                    </ImageView>
+                    <VBox spacing="5">
+                        <Text text="Button:" styleClass="bold-text" />
+                        <Text text="Connected with traps. Pressed when any actor is on it." />
+                    </VBox>
+                </HBox>
+
+                <!-- Add more game elements here with similar structure -->
+            </VBox>
+        </ScrollPane>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Back to Game" onAction="#closeHelp"/>
+        </HBox>
+    </children>
+</VBox>

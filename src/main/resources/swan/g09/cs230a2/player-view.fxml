@@ -38,6 +38,7 @@
     <HBox spacing="20.0" alignment="CENTER_LEFT">
         <Button text="Back" onAction="#goBack" />
         <Pane HBox.hgrow="ALWAYS" />
+        <Button text="Help" onAction="#openHelpScreen" />
         <Button text="Delete" onAction="#deletePlayer" />
         <Button text="Select" onAction="#selectPlayer" />
     </HBox>

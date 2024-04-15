@@ -152,7 +152,11 @@ public class PauseMenu extends VBox {
      * Opens the help menu.
      */
     private void openHelpMenu() {
-        //TODO: probably do something here
+        try {
+            ChipsChallengeApplication.openHelpMenu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

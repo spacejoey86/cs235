@@ -13,6 +13,10 @@
     -fx-font-weight: bold;
 }
 
+.bold-text {
+    -fx-font-weight: bold;
+}
+
 .error {
     -fx-text-fill: red;
 }
