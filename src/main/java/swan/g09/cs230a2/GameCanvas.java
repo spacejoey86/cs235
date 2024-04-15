@@ -178,7 +178,6 @@ class GameCanvas extends Canvas {
                 Tile tile = GameManager.checkTile(coordinate);
                 Actor actor = GameManager.checkActor(coordinate);
                 Item item = GameManager.checkItem(coordinate);
-
                 if (tile != null) {
                     if (TILE_IMAGE_CACHE.containsKey(tile.getImagePath())) {
                         Image img = TILE_IMAGE_CACHE.get(tile.getImagePath());
@@ -187,10 +186,9 @@ class GameCanvas extends Canvas {
                         try (InputStream stream = getClass().getResourceAsStream(tile.getImagePath())) {
                             if (stream != null) {
                                 Image img = new Image(stream);
-                                gc.drawImage(img, gridLeft + x * tileSize, gridTop + y * tileSize,
-                                        tileSize, tileSize);
+                                gc.drawImage(img, gridLeft + x * tileSize, gridTop + y * tileSize, tileSize, tileSize);
 
-                                TILE_IMAGE_CACHE.put(tile.getImagePath(), img); // Cache the image for this tile
+                                TILE_IMAGE_CACHE.put(tile.getImagePath(), img);
                             } else {
                                 System.out.println("Image not found for tile at: (" + x + ", " + y + ")");
                             }
@@ -214,7 +212,6 @@ class GameCanvas extends Canvas {
                     gc.setFill(Color.BLACK);
                     gc.fillRect(gridLeft + x * tileSize, gridTop + y * tileSize, tileSize, tileSize);
                 }
-
                 if (actor != null) {
                     try (InputStream stream = getClass().getResourceAsStream(actor.getImagePath())) {
                         if (stream != null) {
@@ -228,7 +225,6 @@ class GameCanvas extends Canvas {
                         System.out.println("Failed loading image: " + actor.getImagePath());
                     }
                 }
-
                 if (item != null) {
                     if (TILE_IMAGE_CACHE.containsKey(item.getImagePath())) {
                         Image img = TILE_IMAGE_CACHE.get(item.getImagePath());
@@ -240,7 +236,7 @@ class GameCanvas extends Canvas {
                                 gc.drawImage(img, gridLeft + x * tileSize, gridTop + y * tileSize,
                                         tileSize, tileSize);
 
-                                TILE_IMAGE_CACHE.put(item.getImagePath(), img); // Cache the image for this item
+                                TILE_IMAGE_CACHE.put(item.getImagePath(), img);
                             } else {
                                 System.out.println("Image not found for item at: (" + x + ", " + y + ")");
                             }

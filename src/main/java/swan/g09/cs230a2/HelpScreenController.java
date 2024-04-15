@@ -24,10 +24,10 @@ public class HelpScreenController {
     /**
      * Setter for the openedFromPauseMenu flag.
      *
-     * @param openedFromPauseMenu the flag to set
+     * @param openedFromPauseMenuFlag the flag to set
      */
-    public void setOpenedFromPauseMenu(boolean openedFromPauseMenu) {
-        this.openedFromPauseMenu = openedFromPauseMenu;
+    public void setOpenedFromPauseMenu(boolean openedFromPauseMenuFlag) {
+        this.openedFromPauseMenu = openedFromPauseMenuFlag;
     }
 
     /**

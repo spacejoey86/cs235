@@ -50,6 +50,9 @@ public class ChipsChallengeApplication extends Application {
      */
     private static boolean paused = false;
 
+    /**
+     * Closes the help menu.
+     */
     public static void closeHelpMenu() {
         Platform.runLater(() -> {
             final StackPane root = (StackPane) getStage().getScene().getRoot();
@@ -143,6 +146,10 @@ public class ChipsChallengeApplication extends Application {
         InputManager.setScene(scene);
     }
 
+    /**
+     * Opens the help menu.
+     * @throws IOException If the help menu cannot be loaded.
+     */
     static void openHelpMenu() throws IOException{
         try {
             FXMLLoader loader = new FXMLLoader(ChipsChallengeApplication.class.getResource("ingame-help-screen.fxml"));
