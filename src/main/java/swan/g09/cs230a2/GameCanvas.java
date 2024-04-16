@@ -33,6 +33,11 @@ class GameCanvas extends Canvas {
     private static final int MAX_TILE_SIZE = 150;
 
     /**
+     * Current Tile size in pixels.
+     */
+    private static int currentTileSize;
+
+    /**
      * The amount (in pixels) of padding to render the game grid with.
      */
     private static final int PADDING_AMOUNT = 32;
@@ -296,5 +301,9 @@ class GameCanvas extends Canvas {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         return iv.snapshot(params, null);
+    }
+
+    public static int getCurrentTileSize() {
+        return currentTileSize;
     }
 }

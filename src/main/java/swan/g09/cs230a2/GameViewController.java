@@ -21,7 +21,6 @@ import java.util.Objects;
  * @version 0.1
  */
 public class GameViewController {
-
     /**
      * Number of seconds in a minute.
      */
@@ -164,7 +163,6 @@ public class GameViewController {
 
     /**
      * Turns seconds to minutes and seconds.
-     *
      * @param seconds Level time remaining.
      * @return A string with the duration formatted.
      */
@@ -254,11 +252,13 @@ public class GameViewController {
 
     /**
      * Handle GUI changes when losing the level.
-     *
      * @param deathState The player's death state.
      */
     public void gameLose(GameManager.DeathState deathState) {
         Platform.runLater(() -> {
+
+            ChipsChallengeApplication.endEvent();
+
             gameEndOverlay.setVisible(true);
             winLoseText.setText("You lose!");
 
@@ -277,6 +277,8 @@ public class GameViewController {
                     "Frog killed you.";
                 case EXTRA ->
                     "You have an extra life.";
+                case BARNACLE ->
+                    "Barnacle killed you";
             };
             flavourText.setText(deathText);
 
@@ -335,7 +337,6 @@ public class GameViewController {
 
     /**
      * Navigate to the level select view.
-     *
      * @param event The event from the action trigger.
      */
     @FXML
@@ -363,7 +364,6 @@ public class GameViewController {
 
     /**
      * Play the next level.
-     *
      * @param event The event from the action trigger.
      */
     @FXML

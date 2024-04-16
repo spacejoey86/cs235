@@ -159,10 +159,10 @@ public final class BoatPath extends ActionTile {
      */
     public char toChar() {
         return switch (this.pushDirection) {
-            case Direction.NORTH -> 'A';
-            case Direction.EAST -> 'F';
-            case Direction.SOUTH -> 'H';
-            case Direction.WEST -> 'M';
+            case NORTH -> 'A';
+            case EAST -> 'F';
+            case SOUTH -> 'H';
+            case WEST -> 'M';
         };
     }
 }

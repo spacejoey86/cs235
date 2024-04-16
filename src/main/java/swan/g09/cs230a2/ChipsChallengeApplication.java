@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 /**
  * Application class for the JavaFX application.
  * Handles navigating to different views and saving persistent files.
@@ -47,6 +46,11 @@ public class ChipsChallengeApplication extends Application {
      * Whether the game is paused or not.
      */
     private static boolean paused = false;
+
+    /**
+     * Whether or not the barnacle event has started, true if started.
+     */
+    private static boolean barnacleEventStarted = false;
 
     /**
      * Runs when the JavaFX program is started.
@@ -140,6 +144,34 @@ public class ChipsChallengeApplication extends Application {
         return primaryStage;
     }
 
+
+    /**
+     * Starts the barnacle event.
+     */
+    public static void startEvent() {
+        // ensures thread is open
+        Platform.runLater(() -> {
+            if (!barnacleEventStarted) {
+                final StackPane root = (StackPane) getStage().getScene().getRoot();
+                root.getChildren().add(new BarnacleEvent());
+                barnacleEventStarted = true;
+            }
+        });
+    }
+
+    /**
+     * Ends the barnacle event.
+     */
+    public static void endEvent() {
+        Platform.runLater(() -> {
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            if (root.getChildren().size() > 1 && barnacleEventStarted) {
+                root.getChildren().remove(root.getChildren().size() - 1);
+                barnacleEventStarted = false;
+            }
+        });
+    }
+
     /**
      * Opens the pause menu.
      */
@@ -177,4 +209,6 @@ public class ChipsChallengeApplication extends Application {
     public static void setPaused(boolean isPaused) {
         paused = isPaused;
     }
+
+
 }
