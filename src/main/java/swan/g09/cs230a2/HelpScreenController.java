@@ -41,7 +41,7 @@ public class HelpScreenController {
             try {
                 ChipsChallengeApplication.changeScene("main-view.fxml",
                         ChipsChallengeApplication.DEFAULT_VIEW_WIDTH,
-                        ChipsChallengeApplication.DEFAULT_VIEW_HEIGHT, true);
+                        ChipsChallengeApplication.DEFAULT_VIEW_HEIGHT, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
