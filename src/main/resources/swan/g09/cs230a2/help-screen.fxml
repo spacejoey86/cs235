@@ -149,17 +149,6 @@
         </VBox>
     </HBox>
 
-    <!-- Entry for Flying_Monster -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="5">
-        <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
-            <Image url="@sprites/Flying_Monster.png"/>
-        </ImageView>
-        <VBox spacing="5">
-            <Text text="Flying Monster:" styleClass="bold-text"/>
-            <Text text="An airborne enemy that moves in straight lines until it encounters an obstacle."/>
-        </VBox>
-    </HBox>
-
     <!-- Entry for Frog -->
     <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
