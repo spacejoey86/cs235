@@ -172,7 +172,7 @@
     </HBox>
 
     <!-- Entry for Invincible -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="6">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="5">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Invincible.png"/>
         </ImageView>
@@ -183,7 +183,7 @@
     </HBox>
 
     <!-- Entry for Key_Blue -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="6">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Key_Blue.png"/>
         </ImageView>
@@ -194,7 +194,7 @@
     </HBox>
 
     <!-- Entry for Key_Green -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="6">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Key_Green.png"/>
         </ImageView>
@@ -205,7 +205,7 @@
     </HBox>
 
     <!-- Entry for Key_Red -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="7">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="6">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Key_Red.png"/>
         </ImageView>
@@ -216,7 +216,7 @@
     </HBox>
 
     <!-- Entry for Key_Yellow -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="7">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="7">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Key_Yellow.png"/>
         </ImageView>
@@ -227,7 +227,7 @@
     </HBox>
 
     <!-- Entry for Locked Door_Blue -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="7">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="7">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/LockedDoor_Blue.png"/>
         </ImageView>
@@ -238,7 +238,7 @@
     </HBox>
 
     <!-- Entry for Locked Door_Green -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="8">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="7">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/LockedDoor_Green.png"/>
         </ImageView>
@@ -249,7 +249,7 @@
     </HBox>
 
     <!-- Entry for Locked Door_Red -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="8">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="8">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/LockedDoor_Red.png"/>
         </ImageView>
@@ -260,7 +260,7 @@
     </HBox>
 
     <!-- Entry for Locked Door_Yellow -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="8">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="8">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/LockedDoor_Yellow.png"/>
         </ImageView>
@@ -271,7 +271,7 @@
     </HBox>
 
     <!-- Entry for Path -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="9">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="8">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Path.png"/>
         </ImageView>
@@ -282,7 +282,7 @@
     </HBox>
 
     <!-- Entry for PinkBall -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="9">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="9">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/PinkBall.png"/>
         </ImageView>
@@ -293,7 +293,7 @@
     </HBox>
 
     <!-- Entry for Player -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="9">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="9">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Player.png"/>
         </ImageView>
@@ -304,7 +304,7 @@
     </HBox>
 
     <!-- Entry for Speed -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="10">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="9">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Speed.png"/>
         </ImageView>
@@ -315,7 +315,7 @@
     </HBox>
 
     <!-- Entry for Water -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="10">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="10">
         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
             <Image url="@sprites/Water.png"/>
         </ImageView>
@@ -326,7 +326,7 @@
     </HBox>
 
     <!-- Entry for Barnacles -->
-    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="10">
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="10">
          <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
              <Image url="@sprites/barnacle.png"/>
          </ImageView>
