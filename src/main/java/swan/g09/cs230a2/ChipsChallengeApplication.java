@@ -3,8 +3,10 @@ package swan.g09.cs230a2;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,9 +50,21 @@ public class ChipsChallengeApplication extends Application {
     private static boolean paused = false;
 
     /**
-     * Whether or not the barnacle event has started, true if started.
+     * Whether the barnacle event has started, true if started.
      */
     private static boolean barnacleEventStarted = false;
+
+    /**
+     * Closes the help menu.
+     */
+    public static void closeHelpMenu() {
+        Platform.runLater(() -> {
+            final StackPane root = (StackPane) getStage().getScene().getRoot();
+            if (!root.getChildren().isEmpty()) {
+                root.getChildren().remove(root.getChildren().size() - 1);
+            }
+        });
+    }
 
     /**
      * Runs when the JavaFX program is started.
@@ -137,6 +151,28 @@ public class ChipsChallengeApplication extends Application {
     }
 
     /**
+     * Opens the help menu.
+     * @throws IOException If the help menu cannot be loaded.
+     */
+    static void openHelpMenu() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(ChipsChallengeApplication.class.getResource("ingame-help-screen.fxml"));
+            Parent helpRoot = loader.load();
+            HelpScreenController controller = loader.getController();
+            controller.setOpenedFromPauseMenu(true);
+
+            Stage helpStage = new Stage();
+            helpStage.initModality(Modality.APPLICATION_MODAL);
+            helpStage.setTitle("Help");
+            helpStage.setScene(new Scene(helpRoot));
+            helpStage.initOwner(ChipsChallengeApplication.getStage());
+            helpStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Gets the currently loaded stage.
      * @return The stage being shown to the user.
      */
@@ -209,6 +245,4 @@ public class ChipsChallengeApplication extends Application {
     public static void setPaused(boolean isPaused) {
         paused = isPaused;
     }
-
-
 }

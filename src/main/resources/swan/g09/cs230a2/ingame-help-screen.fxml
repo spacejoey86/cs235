@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="swan.g09.cs230a2.HelpScreenController" stylesheets="@style.css"
+      alignment="TOP_CENTER" prefWidth="800">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Text text="Game Help" styleClass="title-text"/>
+    <ScrollPane fitToWidth="true" prefHeight="500" >
+        <VBox spacing="20">
+
+            <!-- Entry for Wall -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Wall.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Wall:" styleClass="bold-text"/>
+                    <Text text="Blocks all movement. Neither the player nor monsters can move over walls. Blocks cannot be pushed onto walls." wrappingWidth="300"/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Exit -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Exit.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Exit:" styleClass="bold-text"/>
+                    <Text text="Win the level by walking on the exit tile before time elapses."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Button -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Button.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Button:" styleClass="bold-text"/>
+                    <Text text="Connected with traps. Pressed when any actor is on it."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Ice -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Ice.png"/>
+                </ImageView>
+                <VBox spacing="5" >
+                    <Text text="Ice:" styleClass="bold-text"/>
+                    <Text text="Causes the player to slide across the surface until they hit a wall or another type of tile. Directional control is lost while sliding." wrappingWidth="250"/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Trap -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Trap_Set.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Trap:" styleClass="bold-text"/>
+                    <Text text="Stops the player if they step on it."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Block -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Block.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Block:" styleClass="bold-text"/>
+                    <Text text="Blocks movement and can be pushed by the player onto other tiles."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Boat -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Boat.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Boat:" styleClass="bold-text"/>
+                    <Text text="Allows the player to traverse over water tiles."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Bug -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Bug.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Bug:" styleClass="bold-text"/>
+                    <Text text="An enemy that moves one tile at a time in a random direction."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Chip -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Chip.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Chip:" styleClass="bold-text"/>
+                    <Text text="Collectible items that the player must gather to complete the level."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Chip_Socket -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Chip_Socket.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Chip Socket:" styleClass="bold-text"/>
+                    <Text text="Destination points for chips. The player must place chips in corresponding sockets to complete the level." wrappingWidth="350"/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Dirt -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Dirt.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Dirt:" styleClass="bold-text"/>
+                    <Text text="A basic tile that can be traversed by the player and monsters."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for ExtraLife -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/ExtraLife.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Extra Life:" styleClass="bold-text"/>
+                    <Text text="Grants the player an additional life when collected."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Frog -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Frog.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Frog:" styleClass="bold-text"/>
+                    <Text text="An amphibious enemy that moves between land and water tiles."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for IncreaseTime -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/IncreaseTime.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Increase Time:" styleClass="bold-text"/>
+                    <Text text="Adds extra time to the level timer when collected."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Invincible -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Invincible.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Invincible:" styleClass="bold-text"/>
+                    <Text text="Grants the player temporary invincibility from enemy attacks."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Key_Blue -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Key_Blue.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Blue Key:" styleClass="bold-text"/>
+                    <Text text="Used to unlock blue-colored doors."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Key_Green -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Key_Green.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Green Key:" styleClass="bold-text"/>
+                    <Text text="Used to unlock green-colored doors."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Key_Red -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Key_Red.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Red Key:" styleClass="bold-text"/>
+                    <Text text="Used to unlock red-colored doors."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Key_Yellow -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Key_Yellow.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Yellow Key:" styleClass="bold-text"/>
+                    <Text text="Used to unlock yellow-colored doors."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Locked Door_Blue -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/LockedDoor_Blue.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Blue Locked Door:" styleClass="bold-text"/>
+                    <Text text="Can only be opened with a blue key."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Locked Door_Green -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/LockedDoor_Green.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Green Locked Door:" styleClass="bold-text"/>
+                    <Text text="Can only be opened with a green key."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Locked Door_Red -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/LockedDoor_Red.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Red Locked Door:" styleClass="bold-text"/>
+                    <Text text="Can only be opened with a red key."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Locked Door_Yellow -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/LockedDoor_Yellow.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Yellow Locked Door:" styleClass="bold-text"/>
+                    <Text text="Can only be opened with a yellow key."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Path -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Path.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Path:" styleClass="bold-text"/>
+                    <Text text="The main route for the player to traverse through the level."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for PinkBall -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/PinkBall.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Pink Ball:" styleClass="bold-text"/>
+                    <Text text="A moving object that can be kill by the player."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Player -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Player.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Player:" styleClass="bold-text"/>
+                    <Text text="The controllable character representing the player."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Speed -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Speed.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Speed Power-up:" styleClass="bold-text"/>
+                    <Text text="Increases the player's movement speed temporarily."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Water -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/Water.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Water:" styleClass="bold-text"/>
+                    <Text text="Blocks movement unless traversed by a boat."/>
+                </VBox>
+            </HBox>
+
+            <!-- Entry for Barnacles -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/barnacle.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Barnacles:" styleClass="bold-text"/>
+                    <Text text="Makes the player stuck until they press a button three times to break free." wrappingWidth="200"/>
+                </VBox>
+            </HBox>
+
+
+        </VBox>
+    </ScrollPane>
+    <HBox spacing="10" alignment="CENTER">
+    </HBox>
+</VBox>

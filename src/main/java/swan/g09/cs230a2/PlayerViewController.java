@@ -56,6 +56,11 @@ public class PlayerViewController {
     private static File candidateAutoSave;
 
     /**
+     * The help screen controller.
+     */
+    private HelpScreenController helpScreenController;
+
+    /**
      * Initialisation method for the Players view.
      */
     @FXML
@@ -78,8 +83,8 @@ public class PlayerViewController {
             throw new RuntimeException("Error loading profile data!");
         }
         List<PlayerProfile> playerProfiles = PlayerProfileManager.getAllPlayerProfiles();
-        playerName.setCellValueFactory(new PropertyValueFactory<PlayerProfile, String>("playerName"));
-        maxUnlockedLevel.setCellValueFactory(new PropertyValueFactory<PlayerProfile, String>("maxUnlockedLevel"));
+        playerName.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        maxUnlockedLevel.setCellValueFactory(new PropertyValueFactory<>("maxUnlockedLevel"));
         playerTable.getItems().setAll(playerProfiles);
     }
 
@@ -241,4 +246,20 @@ public class PlayerViewController {
             }
         }
     }
+
+    /**
+     * Open the help screen.
+     * @param actionEvent The event from the action trigger.
+     */
+    @FXML
+    private void openHelpScreen(ActionEvent actionEvent) {
+        try {
+            ChipsChallengeApplication.changeScene("help-screen.fxml",
+                    ChipsChallengeApplication.DEFAULT_VIEW_WIDTH,
+                    ChipsChallengeApplication.DEFAULT_VIEW_HEIGHT, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -120,12 +120,12 @@ public class Level {
     private final Map<Point2D, LinkedList<Point2D>> buttonConnections = new HashMap<>();
 
     /**
-     * Map storing the precense of boats and whether it is reversing.
+     * Map storing the presence of boats and whether it is reversing.
      */
     private final Map<Point2D, Boolean> boatPresences = new HashMap<>();
 
     /**
-     * The inventory read from the level file. (Defaults to empty inventory.
+     * The inventory read from the level file. Defaults to empty inventory.
      */
     private final int[] inventory = new int[]{0, 0, 0, 0, 0, 0};
 
@@ -214,10 +214,9 @@ public class Level {
         } else {
             reader = new Scanner(stream);
         }
-        int lineNumber = 1; // For descriptive exceptions.
+        int lineNumber = 1;
 
         try {
-            // Read grid size then progress to the next line
             reader.useDelimiter("(\\r?\\n)|(, *)");
             width = reader.nextInt();
             height = reader.nextInt();
@@ -225,18 +224,15 @@ public class Level {
             reader.nextLine();
             reader.useDelimiter("(\\r?\\n)");
 
-            // Read level duration
             duration = reader.nextInt();
             lineNumber++;
             reader.nextLine();
 
-            //Read FOV
             levelFov = reader.nextDouble();
             lineNumber += 2;
             reader.nextLine();
             reader.nextLine();
 
-            // Read tile grid
             tileGrid.clear();
             for (int i = 0; i < height; i++) {
                 lineNumber++;
@@ -245,7 +241,6 @@ public class Level {
             lineNumber++;
             reader.nextLine();
 
-            // Read actor grid
             actorGrid.clear();
             for (int i = 0; i < height; i++) {
                 lineNumber++;
@@ -254,28 +249,22 @@ public class Level {
             lineNumber++;
             reader.nextLine();
 
-            // Read item grid
             itemGrid.clear();
             for (int i = 0; i < height; i++) {
                 lineNumber++;
                 itemGrid.add(reader.nextLine());
             }
 
-            // Read meta data (button connections, socket counts etc.)
             while (reader.hasNextLine()) {
                 lineNumber++;
                 String line = reader.nextLine();
                 if (line.matches(BUTTON_CONN_PATTERN.pattern())) {
-                    // Button connection
                     addButtonConnection(line);
                 } else if (line.matches(SOCKET_COUNT_PATTERN.pattern())) {
-                    // Socket count
                     setSocketCount(line);
                 } else if (line.matches(ACTOR_FACING_PATTERN.pattern())) {
-                    // Actor facing
                     setActorFacing(line);
                 } else if (line.matches(INVENTORY_SLOT_PATTERN.pattern())) {
-                    // Inventory slot
                     setInventorySlot(line);
                 } else if (line.matches(LEVEL_FLAGS_PATTERN.pattern())) {
                     Matcher matcher = LEVEL_FLAGS_PATTERN.matcher(line);
@@ -288,7 +277,6 @@ public class Level {
                         isLastLevel = matcher.group(REGEX_MATCHER_GROUP_2).equals("1");
                     }
                 } else if (line.matches(BOAT_PRESENCE_PATTERN.pattern())) {
-                    // Boat on boat path
                     setBoatPresence(line);
                 }
             }
@@ -299,7 +287,6 @@ public class Level {
             reader.close();
             throw new InputMismatchException("Level file ended early at " + (lineNumber - 1));
         }
-
         reader.close();
     }
 
