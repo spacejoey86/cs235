@@ -96,5 +96,10 @@ public enum TileType {
     /**
      * Represents Increase Time.
      */
-    INCREASETIME
+    INCREASETIME,
+
+    /**
+     * Represents a barnacle.
+     */
+    BARNACLE
 }

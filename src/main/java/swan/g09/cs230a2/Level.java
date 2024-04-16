@@ -18,7 +18,6 @@ import javafx.geometry.Point2D;
 
 /**
  * The level class handles reading and parsing level format data.
- *
  * @author Barnaby Morley-Smith
  * @version 0.1
  */
@@ -158,6 +157,16 @@ public class Level {
     private int duration;
 
     /**
+     * Stores the instances of the barnacles.
+     */
+    private static ArrayList<Barnacle> barnacles = new ArrayList<>();
+
+    /**
+     *  Stores block instances.
+     */
+    private static ArrayList<Block> blocksList = new ArrayList<>();
+
+    /**
      * The fov of the level, specified in the parsed file.
      */
     private double levelFov;
@@ -283,7 +292,6 @@ public class Level {
 
     /**
      * Adds a button connection based on the provided line.
-     *
      * @param line The line to be parsed.
      */
     private void addButtonConnection(String line) {
@@ -422,6 +430,10 @@ public class Level {
                 new Bug(coordinate, true);
             case '^' ->
                 new Frog(coordinate);
+            case ';' ->
+                new Barnacle(coordinate, "sprites/barnacleLeft.png");
+            case ':' ->
+                new Barnacle(coordinate, "sprites/barnacleRight.png");
             default ->
                 null;
         };
@@ -538,6 +550,14 @@ public class Level {
                         player.setInventory(inventory);
                     }
 
+                    if (actor instanceof Barnacle barnacle) {
+                        barnacles.add(barnacle);
+                    }
+
+                    if (actor instanceof Block block) {
+                        blocksList.add(block);
+                    }
+
                     layer.setAtPosition(coordinate, actor);
                 }
             }
@@ -590,10 +610,8 @@ public class Level {
 
     /**
      * Returns the player's inventory.
-     *
      * @return the player's inventory.
-     *
-     */
+     * */
     public int[] getInventory() {
         return inventory;
     }
@@ -633,4 +651,21 @@ public class Level {
     public double getLevelFov() {
         return levelFov;
     }
+
+    /**
+     * Returns all barnacles within the level.
+     * @return an arraylist of barnacles.
+     */
+    public static ArrayList<Barnacle> getBarnacles() {
+        return barnacles;
+    }
+
+    /**
+     * Returns all barnacles within the level.
+     * @return an arraylist of barnacles.
+     */
+    public static ArrayList<Block> getBlocksList() {
+        return blocksList;
+    }
+
 }

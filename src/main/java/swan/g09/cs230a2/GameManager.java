@@ -37,7 +37,9 @@ public class GameManager {
         /** Player has been bounced on by the pink ball. */
         BOUNCED,
         /** Player has died from an extra life. */
-        EXTRA
+        EXTRA,
+        /** Player has been killed by a barnacle. */
+        BARNACLE
     }
 
     /**
@@ -130,7 +132,7 @@ public class GameManager {
      * @param position the position to be checked
      * @return An actor if found, null if none
      * @throws IllegalStateException if level not yet started
-     * */
+     */
     public static Actor checkActor(Point2D position) {
         if (actorLayer == null) {
             throw new IllegalStateException("Level has not yet been loaded!");
@@ -463,6 +465,22 @@ public class GameManager {
     }
 
     /**
+     * Returns an arraylist of all barnacles in the level.
+     * @return an arraylist of all barnacles in the level.
+     */
+    public static ArrayList<Barnacle> getBarnacles() {
+        return level.getBarnacles();
+    }
+
+    /**
+     * Returns an arraylist of all blocks in the level.
+     * @return an arraylist of all blocks in the level.
+     */
+    public static ArrayList<Block> getBlocks() {
+        return level.getBlocksList();
+    }
+
+    /**
      * Returns whether it is possible to load a next level.
      * @return whether it is possible to load a next level.
      * @throws IllegalStateException if level not loaded.
@@ -532,13 +550,10 @@ public class GameManager {
         if (levelNumber != null) {
             PlayerViewController.tryDeleteAutoSave(levelNumber);
         }
-
         stopTimer();
         gameViewController.gameLose(deathState);
         gameViewController.resetInventoryDisplay();
     }
-
-
 
     /**
      * Processes score for the level, and loads the next.
@@ -722,5 +737,21 @@ public class GameManager {
         return gameTimer != null && gameTimer.isRunning() && gameTimer.isTimingLevel();
     }
 
+    /**
+     * Returns the player instance.
+     * @return the player instance
+     * */
+    public static Player getPlayerInstance() {
+        return (Player) checkActor(getPlayerPosition());
+    }
+
+    /**
+     * Returns a list of point2d of tiles of the type of the parameter.
+     * @param tileType the type of tile to return.
+     * @return an arraylist list of point2d, referring to the position of the tiles.
+     * */
+    public static ArrayList<Point2D> getBlockedTile(TileType tileType) {
+        return tileLayer.findPositionsOf(tileType);
+    }
 
 }
