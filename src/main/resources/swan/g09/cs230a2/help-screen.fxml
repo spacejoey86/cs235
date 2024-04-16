@@ -5,8 +5,10 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="swan.g09.cs230a2.HelpScreenController" stylesheets="@style.css"
-            fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" vvalue="0.0">
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="swan.g09.cs230a2.HelpScreenController"
+            stylesheets="@style.css" fitToWidth="true" fitToHeight="true"
+            hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" vvalue="0.0"
+            maxWidth="1920" maxHeight="1080">
     <content>
         <GridPane alignment="TOP_CENTER" hgap="20" vgap="20" prefWidth="1000">
             <padding>
@@ -77,7 +79,7 @@
         </ImageView>
         <VBox spacing="5">
             <Text text="Block:" styleClass="bold-text"/>
-            <Text text="Blocks movement and can be pushed by the player onto other tiles."/>
+            <Text text="Blocks movement and can be pushed by the player onto other tiles." wrappingWidth="200"/>
         </VBox>
     </HBox>
 
@@ -110,7 +112,7 @@
         </ImageView>
         <VBox spacing="5">
             <Text text="Chip:" styleClass="bold-text"/>
-            <Text text="Collectible items that the player must gather to complete the level."/>
+            <Text text="Collectible items that the player must gather to complete the level." wrappingWidth="200"/>
         </VBox>
     </HBox>
 
@@ -332,6 +334,17 @@
             <Text text="Water:" styleClass="bold-text"/>
             <Text text="Blocks movement unless traversed by a boat."/>
         </VBox>
+    </HBox>
+
+    <!-- Entry for Barnacles -->
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="10">
+         <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+             <Image url="@sprites/barnacle.png"/>
+         </ImageView>
+         <VBox spacing="5">
+             <Text text="Barnacles:" styleClass="bold-text"/>
+             <Text text="Makes the player stuck until they press a button three times to break free." wrappingWidth="200"/>
+         </VBox>
     </HBox>
 
             <Button text="Back to Game" onAction="#closeHelp" GridPane.columnSpan="3" GridPane.rowIndex="11" alignment="BOTTOM_CENTER"/>

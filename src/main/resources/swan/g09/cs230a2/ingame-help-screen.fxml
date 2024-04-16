@@ -333,6 +333,17 @@
                 </VBox>
             </HBox>
 
+            <!-- Entry for Barnacles -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="50" fitWidth="50" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@sprites/barnacle.png"/>
+                </ImageView>
+                <VBox spacing="5">
+                    <Text text="Barnacles:" styleClass="bold-text"/>
+                    <Text text="Makes the player stuck until they press a button three times to break free." wrappingWidth="200"/>
+                </VBox>
+            </HBox>
+
 
         </VBox>
     </ScrollPane>
