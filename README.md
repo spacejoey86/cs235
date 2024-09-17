@@ -1,7 +1,8 @@
 # CS-230 Coursework A2 - Group 09
+Assigned to group 39 / group C for CS-235
 
-Repository for Group 09's A2 coursework. (Game 2) **DO NOT MAKE PUBLIC!**
-
+Repository for Group 09's A2 coursework. (Game 2) ~~**DO NOT MAKE PUBLIC!**~~
+Permission to make public from Ghidra
 ----
 
 
@@ -35,6 +36,4 @@ Repository for Group 09's A2 coursework. (Game 2) **DO NOT MAKE PUBLIC!**
 
 [Functional Specification](https://canvas.swansea.ac.uk/courses/44554/files/5038295?module_item_id=2381294)
 
-----
-### CS-235 Documents Folder
-https://swanseauniversity-my.sharepoint.com/:f:/g/personal/2212766_swansea_ac_uk/En1LmUk0aFRPr4toYbSPJS8B7EYL9yScnEmm288vwuXsyQ?e=G6rHN5
+
